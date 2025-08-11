@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { contactInfo } from '../data/contactInfo';
-import { Wrench, Phone, Mail, MapPin, Linkedin, Instagram, Facebook, ChevronUp } from 'lucide-react';
+import { Linkedin, Instagram, Facebook, ChevronUp } from 'lucide-react';
 
 const Footer = () => {
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
-
+ 
   return (
     <footer className="bg-gray-900 text-white">
       {/* Main Footer Content */}

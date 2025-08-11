@@ -10,6 +10,7 @@ import Catalog from './pages/Catalog';
 import Contact from './pages/Contact';
 import Service from './pages/Services';
 
+
 function App() {
   return (
     <Router>
