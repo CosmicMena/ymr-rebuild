@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Header from './components/Header';
 import Footer from './components/Footer';
+import QuickContact from './components/QuickContact';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import Categories from './pages/Categories';
@@ -29,6 +30,7 @@ function App() {
             <Route path="/userprofile" element={<UserProfile />} />
           </Routes>
         </main>
+        <QuickContact />
         <Footer />
       </div>
     </Router>

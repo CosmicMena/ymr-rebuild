@@ -2,14 +2,15 @@ import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Search, ChevronDown, User } from 'lucide-react';
 
+
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
-  const [currentLanguage, setCurrentLanguage] = useState('PT');
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const location = useLocation();
+  const [currentLanguage, setCurrentLanguage] = useState('pt');
+  const [isLanguageOpen, setIsLanguageOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,21 +28,20 @@ const Header = () => {
   // ===== DADOS DOS IDIOMAS =====
   // Array contendo as opções de idioma disponíveis
   const languages = [
-    { code: 'PT', flag: '🇵🇹' },
-    { code: 'EN', flag: '🇬🇧' }
+    { code: 'pt', flagUrl: 'https://flagcdn.com/w40/pt.png', alt: 'Português' },
+    { code: 'en', flagUrl: 'https://flagcdn.com/w40/gb.png', alt: 'English' }
   ];
 
   // ===== FUNÇÕES DE MANIPULAÇÃO =====
   // Função para alternar o menu de idiomas
-  const toggleLanguageMenu = () => {
+  function toggleLanguageMenu() {
     setIsLanguageOpen(!isLanguageOpen);
-  };
+  }
 
-  // Função para selecionar um idioma
-  const selectLanguage = (languageCode: string) => {
-    setCurrentLanguage(languageCode);
+  function selectLanguage(code) {
+    setCurrentLanguage(code);
     setIsLanguageOpen(false);
-  };
+  }
 
   // Função para lidar com a busca
   const handleSearch = (e: React.FormEvent) => {
@@ -86,32 +86,61 @@ const Header = () => {
               </Link>
 
               {/* Seletor de Idioma */}
-              <div className="relative">
+              <div className="relative inline-block text-left">
+                {/* Botão que mostra a bandeira atual */}
                 <button
                   onClick={toggleLanguageMenu}
-                  className="flex items-center space-x-1 text-sm font-medium hover:text-blue-200 transition-colors"
+                  className="flex items-center space-x-1 text-sm font-medium hover:text-blue-700 transition-colors z-[9999]"
+                  aria-haspopup="true"
+                  aria-expanded={isLanguageOpen}
                 >
-                  <span className="text-lg">
-                    {languages.find(lang => lang.code === currentLanguage)?.flag || currentLanguage}
+                  <span className="inline-block w-6 h-4 overflow-hidden rounded-sm">
+                    <img
+                      src={languages.find(lang => lang.code === currentLanguage)?.flagUrl}
+                      alt={languages.find(lang => lang.code === currentLanguage)?.alt || currentLanguage}
+                      className="w-full h-auto object-cover"
+                      draggable={false}
+                    />
                   </span>
-                  <ChevronDown className="h-4 w-4" />
+                  <svg
+                    className="h-4 w-4 text-gray-500"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 20 20"
+                    fill="currentColor"
+                    aria-hidden="true"
+                  >
+                    <path
+                      fillRule="evenodd"
+                      d="M5.23 7.21a.75.75 0 011.06.02L10 10.94l3.71-3.71a.75.75 0 111.06 1.06l-4.24 4.25a.75.75 0 01-1.06 0L5.25 8.27a.75.75 0 01-.02-1.06z"
+                      clipRule="evenodd"
+                    />
+                  </svg>
                 </button>
-                
-                {/* Dropdown de Idiomas */}
+
+                {/* Dropdown de seleção */}
                 {isLanguageOpen && (
-                  <div className="absolute right-0 mt-2 w-16 bg-white rounded-md shadow-lg py-1 z-50">
+                  <div className="absolute right-0 mt-2 w-20 bg-white rounded-md shadow-lg py-1 z-[9999]">
                     {languages.map((language) => (
                       <button
                         key={language.code}
                         onClick={() => selectLanguage(language.code)}
-                        className="flex items-center justify-center w-full px-3 py-2 text-lg hover:bg-gray-100 transition-colors"
+                        className="flex items-center justify-center w-full px-3 py-2 hover:bg-gray-100 transition-colors"
+                        aria-label={`Selecionar idioma ${language.alt}`}
                       >
-                        <span>{language.flag}</span>
+                        <span className="inline-block w-7 h-5 overflow-hidden rounded-sm">
+                          <img
+                            src={language.flagUrl}
+                            alt={language.alt}
+                            className="w-full h-auto object-cover"
+                            draggable={false}
+                          />
+                        </span>
                       </button>
                     ))}
                   </div>
                 )}
               </div>
+
             </div>
           </div>
         </div>
