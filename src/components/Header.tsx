@@ -80,10 +80,10 @@ const Header = () => {
               </Link>
               
               {/* Botão de Conta */}
-              <button className="flex items-center space-x-1 text-sm font-medium hover:text-blue-200 transition-colors">
+              <Link to="/UserProfile" className="flex items-center space-x-1 text-sm font-medium hover:text-blue-200 transition-colors">
                 <User className="h-4 w-4" />
                 <span>Conta</span>
-              </button>
+              </Link>
 
               {/* Seletor de Idioma */}
               <div className="relative">

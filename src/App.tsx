@@ -9,6 +9,7 @@ import About from './pages/About';
 import Catalog from './pages/Catalog';
 import Contact from './pages/Contact';
 import Service from './pages/Services';
+import UserProfile from './pages/UserProfile';
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
             <Route path="/catalog" element={<Catalog />} />
             <Route path="/contact" element={<Contact />} />
             <Route path="/services" element={<Service />} />
+            <Route path="/userprofile" element={<UserProfile />} />
           </Routes>
         </main>
         <Footer />

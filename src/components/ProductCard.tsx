@@ -11,7 +11,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ name, image, category, href }
   return (
     <a
       href={href}
-      className="block  bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-200 group"
+      className="block w-[12rem] bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-200 group"
     >
       <div className="relative bg-gray-100 w-full aspect-square">
         <img 

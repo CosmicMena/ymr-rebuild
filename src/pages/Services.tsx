@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Wrench, Zap, Database, Users, Award, Clock, CheckCircle, ArrowRight, ChevronLeft, ChevronRight, Target, Eye, Briefcase, Cog, GraduationCap, Settings } from 'lucide-react';
+import { Wrench, Zap, Database, CheckCircle, ArrowRight, ChevronLeft, ChevronRight, Target, Eye, Briefcase, Cog, GraduationCap } from 'lucide-react';
 
 const Services = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
