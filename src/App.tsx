@@ -11,6 +11,7 @@ import Catalog from './pages/Catalog';
 import Contact from './pages/Contact';
 import Service from './pages/Services';
 import UserProfile from './pages/UserProfile';
+import ProductPage from './pages/ProductPage';
 
 
 function App() {
@@ -28,6 +29,8 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/services" element={<Service />} />
             <Route path="/userprofile" element={<UserProfile />} />
+            <Route path="/userprofile" element={<UserProfile />} />
+            <Route path="/product" element={<ProductPage />} />
           </Routes>
         </main>
         <QuickContact />
