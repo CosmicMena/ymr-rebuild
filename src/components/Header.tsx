@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Search, ChevronDown, User } from 'lucide-react';
+import { Search, ChevronDown, User, ShoppingCart } from 'lucide-react';
 
 
 const Header = () => {
@@ -192,13 +192,20 @@ const Header = () => {
               </form>
             </div>
 
-            {/* Terceira Div - Link para Produtos */}
-            <div>
+            {/* Terceira Div - Link para Produtos e Carrinho */}
+            <div className="flex items-center space-x-4">
               <Link
                 to="/products"
                 className="text-lg font-regular text-gray-900 hover:text-red-600 transition-colors"
               >
                 Products
+              </Link>
+              <Link
+                to="/cart"
+                className="text-gray-900 hover:text-red-600 transition-colors"
+                aria-label="Ir para o carrinho"
+              >
+                <ShoppingCart className="h-6 w-6" />
               </Link>
             </div>
           </div>

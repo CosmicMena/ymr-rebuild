@@ -15,7 +15,7 @@ import { heroSlides } from '../data/heroSlides';
 //import { adSlides } from "../data/adSlides";
 import { productSlides } from "../data/productSlides";
 import { newsSlides } from "../data/newsSlides";
-import { featuredCategories } from "../data/featuredCategories";
+import { apiFetch } from '../services/api';
 import { features } from "../data/features";
 import { gif } from "../data/gif";
 
@@ -23,6 +23,9 @@ const Home = () => {
   // ===== ESTADO DO SLIDER =====
   const [currentSlide, setCurrentSlide] = useState(0);
   const { open, close } = usePromoPopup(8000);
+  const [categories, setCategories] = useState<{ id: string; name: string; image?: string }[]>([]);
+  const [isLoadingCats, setIsLoadingCats] = useState(false);
+  const [catsError, setCatsError] = useState<string | null>(null);
 
   // ===== FUNÇÕES DE CONTROLE DO SLIDER =====
   const nextSlide = () => {
@@ -37,13 +40,45 @@ const Home = () => {
     return () => clearInterval(interval);
   }, [currentSlide]);
 
+  // Carregar subcategorias públicas e derivar categorias (evita 401)
+  useEffect(() => {
+    async function loadCategories() {
+      setIsLoadingCats(true);
+      setCatsError(null);
+      try {
+        const subRes = await apiFetch('/subcategories?isActive=true&limit=100', { noAuth: true });
+        const payload = subRes?.data || subRes;
+        const subArray = payload?.data || [];
+        const unique = new Map<string, { id: string; name: string; image?: string }>();
+        subArray.forEach((s: any) => {
+          const catId = s.category?.id || s.categoryId;
+          const catName = s.category?.name;
+          if (catId && catName && !unique.has(catName)) {
+            unique.set(catName, {
+              id: catId,
+              name: catName,
+              image: s.category?.imageUrl || undefined,
+            });
+          }
+        });
+        const list = Array.from(unique.values());
+        setCategories(list);
+      } catch (e: any) {
+        setCatsError(e.message || 'Falha ao carregar categorias');
+      } finally {
+        setIsLoadingCats(false);
+      }
+    }
+    loadCategories();
+  }, []);
+
   return (
     <div className="min-h-screen page-content">
       {/* ===== POPUP PROMOCIONAL ===== */}
       <PromoPopup open={open} onClose={close} />
 
       {/* ===== SEÇÃO HERO - SLIDER MODERNO ===== */}
-      <HeroSlider slides={heroSlides} />
+      <HeroSlider slides={heroSlides as any} />
 
       {/* ===== SEÇÃO PRODUTOS E ASIDE ===== */}
       <section className="py-10 bg-white">
@@ -96,13 +131,24 @@ const Home = () => {
               {/* Produtos - Principal */}
               <div className="flex-1">
                 <div className="grid grid-cols-[repeat(auto-fit,_minmax(12rem,_1fr))] gap-[30px]">
-                  {featuredCategories.map((category, index) => (
+                  {isLoadingCats && (
+                    <div className="text-gray-600">Carregando categorias...</div>
+                  )}
+                  {catsError && (
+                    <div className="text-red-600">{catsError}</div>
+                  )}
+                  {!isLoadingCats && !catsError && categories.map((category, index) => (
                     <div 
                       key={category.name}
                       className="animate-fade-in-up"
                       style={{ animationDelay: `${index * 0.1}s` }}
                     >
-                      <ProductCard {...category} />
+                      <ProductCard 
+                        name={category.name}
+                        image={category.image || `https://via.placeholder.com/300x300?text=${encodeURIComponent(category.name)}`}
+                        category={category.name}
+                        to={`/products?category=${encodeURIComponent(category.name)}`}
+                      />
                     </div>
                   ))}
                 </div>

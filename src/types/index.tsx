@@ -43,3 +43,19 @@ export type NewsSlide = {
   link: string;
   image: string;
 };
+
+export type Product = {
+  id: string;
+  name: string;
+  description: string;
+  category: string;
+  subcategory_name?: string;
+  brand?: string;
+  model?: string;
+  cod?: string;
+  availability?: string;
+  image: string; // thumbnail
+  images?: string[]; // gallery
+  features?: string[];
+  price?: number;
+};

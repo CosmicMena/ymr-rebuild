@@ -1,16 +1,18 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 interface ProductCardProps {
+  id?: string;
   name: string;
   image: string;
   category: string;
-  href: string;
+  to?: string;
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ name, image, category, href }) => {
+const ProductCard: React.FC<ProductCardProps> = ({ id, name, image, category, to }) => {
   return (
-    <a
-      href={href}
+    <Link
+      to={to || (id ? `/product/${id}` : '#')}
       className="block w-[12rem] bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-all duration-200 group"
     >
       <div className="relative bg-gray-100 w-full aspect-square">
@@ -29,7 +31,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ name, image, category, href }
           {name}
         </h3>
       </div>
-    </a>
+    </Link>
   );
 };
 

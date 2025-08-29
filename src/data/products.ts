@@ -1,79 +1,385 @@
-  // ===== DADOS DOS PRODUTOS =====
-  // Array contendo todos os produtos disponíveis na loja
-export const products = [
+import { Product } from '../types';
+
+export const products: Product[] = [
   {
-    name: 'Aluminum Safety Ladder',
-    description: 'High-durability ladder with non-slip feet, ideal for industrial maintenance and construction work.',
-    image: 'https://images.pexels.com/photos/5691924/pexels-photo-5691924.jpeg?auto=compress&cs=tinysrgb&w=600',
-    category: 'Acessórios',
-    subcategory_name: 'Acessórios'
+    id: 'fita-eletrica-3m-33-plus',
+    name: 'Fita Elétrica 3M 33+',
+    description: 'Fita isolante profissional de PVC, alta resistência a abrasão e temperatura.',
+    category: 'Adesivos, Selantes e Fitas',
+    subcategory_name: 'Fita Elétrica',
+    brand: '3M',
+    model: '33+',
+    cod: 'YMR-0001',
+    availability: 'Em Estoque',
+    image: 'https://images.pexels.com/photos/6131237/pexels-photo-6131237.jpeg?auto=compress&cs=tinysrgb&w=800',
+    images: [
+      'https://images.pexels.com/photos/6131237/pexels-photo-6131237.jpeg?auto=compress&cs=tinysrgb&w=800',
+      'https://images.pexels.com/photos/6131243/pexels-photo-6131243.jpeg?auto=compress&cs=tinysrgb&w=800'
+    ],
+    features: ['Resistente a 105°C', 'Alta aderência', 'Para isolação elétrica']
   },
   {
-    name: 'Industrial Concrete Mixer',
-    description: 'Heavy-duty concrete mixer perfect for construction sites and large-scale projects.',
-    image: 'https://images.pexels.com/photos/1198817/pexels-photo-1198817.jpeg?auto=compress&cs=tinysrgb&w=600',
-    category: 'Acessórios',
-    subcategory_name: 'Fitas'
+    id: 'fita-dupla-face-vhb',
+    name: 'Fita Dupla Face Acrílica VHB',
+    description: 'Fita VHB para fixação estrutural, substitui rebites e parafusos.',
+    category: 'Adesivos, Selantes e Fitas',
+    subcategory_name: 'fitas dupla face',
+    brand: '3M',
+    model: 'VHB 4910',
+    cod: 'YMR-0002',
+    availability: 'Sob Encomenda',
+    image: 'https://images.pexels.com/photos/4498130/pexels-photo-4498130.jpeg?auto=compress&cs=tinysrgb&w=800',
+    images: [
+      'https://images.pexels.com/photos/4498130/pexels-photo-4498130.jpeg?auto=compress&cs=tinysrgb&w=800'
+    ],
+    features: ['Transparente', 'Alta resistência', 'Uso industrial']
   },
   {
-    name: 'Premium Hydraulic Oil',
-    description: 'High-performance hydraulic fluid for industrial machinery and equipment.',
-    image: 'https://images.pexels.com/photos/4489702/pexels-photo-4489702.jpeg?auto=compress&cs=tinysrgb&w=600',
-    category: 'Acessórios',
-    subcategory_name: 'Acessórios'
+    id: 'selante-silicone-industrial',
+    name: 'Selante de Silicone Industrial',
+    description: 'Selante monocomponente para vedação e colagem em aplicações industriais.',
+    category: 'Adesivos, Selantes e Fitas',
+    subcategory_name: 'Selantes',
+    brand: 'Loctite',
+    model: 'SI 598',
+    cod: 'YMR-0003',
+    availability: 'Em Estoque',
+    image: 'https://images.pexels.com/photos/5691504/pexels-photo-5691504.jpeg?auto=compress&cs=tinysrgb&w=800',
+    images: [
+      'https://images.pexels.com/photos/5691504/pexels-photo-5691504.jpeg?auto=compress&cs=tinysrgb&w=800'
+    ],
+    features: ['Cura rápida', 'Resistente a óleo', 'Vedação confiável']
   },
   {
-    name: 'Industrial Safety Helmet',
-    description: 'Professional-grade safety helmet with ventilation system for worker protection.',
-    image: 'https://images.pexels.com/photos/1216589/pexels-photo-1216589.jpeg?auto=compress&cs=tinysrgb&w=600',
-    category: 'Safety Gear'
+    id: 'capacete-seguranca-abs',
+    name: 'Capacete de Segurança ABS',
+    description: 'Capacete classe B em ABS com ajuste catraca e suspensão interna.',
+    category: 'EPIs',
+    subcategory_name: 'Proteção de cabeça',
+    brand: 'MSA',
+    model: 'V-Gard',
+    cod: 'YMR-0004',
+    availability: 'Em Estoque',
+    image: 'https://images.pexels.com/photos/1216589/pexels-photo-1216589.jpeg?auto=compress&cs=tinysrgb&w=800',
+    images: [
+      'https://images.pexels.com/photos/1216589/pexels-photo-1216589.jpeg?auto=compress&cs=tinysrgb&w=800'
+    ],
+    features: ['Classe B', 'Ajuste por catraca', 'Conforto prolongado']
   },
   {
-    name: 'Heavy-Duty Work Gloves',
-    description: 'Cut-resistant work gloves designed for industrial and construction environments.',
-    image: 'https://images.pexels.com/photos/5691673/pexels-photo-5691673.jpeg?auto=compress&cs=tinysrgb&w=600',
-    category: 'Safety Gear'
+    id: 'luvas-nitrilicas',
+    name: 'Luvas Nitrílicas de Segurança',
+    description: 'Luvas nitrílicas com resistência a cortes e abrasão para uso industrial.',
+    category: 'EPIs',
+    subcategory_name: 'PROTEÇÃO DAS MÃOS',
+    brand: 'Ansell',
+    model: 'HyFlex',
+    cod: 'YMR-0005',
+    availability: 'Em Estoque',
+    image: 'https://images.pexels.com/photos/3867331/pexels-photo-3867331.jpeg?auto=compress&cs=tinysrgb&w=800',
+    features: ['Resistência a cortes', 'Aderência superior']
   },
   {
-    name: 'Industrial Power Drill',
-    description: 'High-torque power drill suitable for heavy-duty industrial applications.',
-    image: 'https://images.pexels.com/photos/5691661/pexels-photo-5691661.jpeg?auto=compress&cs=tinysrgb&w=600',
-    category: 'Tools'
+    id: 'respirador-pff2',
+    name: 'Respirador PFF2',
+    description: 'Respirador dobrável PFF2 com elásticos e clipe nasal para melhor vedação.',
+    category: 'EPIs',
+    subcategory_name: 'PROTEÇÃO RESPIRATÓRIA',
+    brand: '3M',
+    model: 'Aura 9320+',
+    cod: 'YMR-0006',
+    availability: 'Em Estoque',
+    image: 'https://images.pexels.com/photos/5752729/pexels-photo-5752729.jpeg?auto=compress&cs=tinysrgb&w=800'
   },
   {
-    name: 'Telescopic Extension Ladder',
-    description: 'Adjustable telescopic ladder with safety locks for versatile industrial use.',
-    image: 'https://images.pexels.com/photos/1216589/pexels-photo-1216589.jpeg?auto=compress&cs=tinysrgb&w=600',
-    category: 'Ladders'
+    id: 'chave-torque-200nm',
+    name: 'Chave de Torque 200Nm',
+    description: 'Chave de torque ajustável para aplicações de manutenção industrial.',
+    category: 'Hidráulica',
+    subcategory_name: 'Chaves de Torques',
+    brand: 'Gedore',
+    model: 'TQ-200',
+    cod: 'YMR-0007',
+    availability: 'Sob Encomenda',
+    image: 'https://images.pexels.com/photos/1249611/pexels-photo-1249611.jpeg?auto=compress&cs=tinysrgb&w=800'
   },
   {
-    name: 'Industrial Sealant',
-    description: 'Weather-resistant industrial sealant for construction and maintenance applications.',
-    image: 'https://images.pexels.com/photos/4489702/pexels-photo-4489702.jpeg?auto=compress&cs=tinysrgb&w=600',
-    category: 'Lubricants'
+    id: 'jogo-chaves-combinadas',
+    name: 'Jogo de Chaves Combinadas 8–22mm',
+    description: 'Jogo de chaves combinadas em aço cromo-vanádio com estojo.',
+    category: 'Ferramentas',
+    subcategory_name: 'Ferramentas Manuais',
+    brand: 'Stanley',
+    model: 'ProSet 14pçs',
+    cod: 'YMR-0008',
+    availability: 'Em Estoque',
+    image: 'https://images.pexels.com/photos/614110/pexels-photo-614110.jpeg?auto=compress&cs=tinysrgb&w=800'
   },
   {
-    name: 'Portable Cement Mixer',
-    description: 'Compact and portable cement mixer ideal for small to medium construction projects.',
-    image: 'https://images.pexels.com/photos/1198817/pexels-photo-1198817.jpeg?auto=compress&cs=tinysrgb&w=600',
-    category: 'Construction'
+    id: 'furadeira-impacto-800w',
+    name: 'Furadeira de Impacto 800W',
+    description: 'Furadeira de impacto com mandril 13mm e controle de velocidade.',
+    category: 'Ferramentas',
+    subcategory_name: 'Ferramentas Elétricas',
+    brand: 'Bosch',
+    model: 'GSB 16',
+    cod: 'YMR-0009',
+    availability: 'Em Estoque',
+    image: 'https://images.pexels.com/photos/3831977/pexels-photo-3831977.jpeg?auto=compress&cs=tinysrgb&w=800'
   },
   {
-    name: 'Safety Vest High-Vis',
-    description: 'High-visibility safety vest with reflective strips for worker safety.',
-    image: 'https://images.pexels.com/photos/5691673/pexels-photo-5691673.jpeg?auto=compress&cs=tinysrgb&w=600',
-    category: 'Safety Gear'
+    id: 'multimetro-true-rms',
+    name: 'Multímetro Digital True RMS',
+    description: 'Multímetro com True RMS, medição de tensão, corrente, resistência e continuidade.',
+    category: 'Instrumentos de teste',
+    subcategory_name: 'Medição Elétrica',
+    brand: 'Fluke',
+    model: '115',
+    cod: 'YMR-0010',
+    availability: 'Em Estoque',
+    image: 'https://images.pexels.com/photos/3862130/pexels-photo-3862130.jpeg?auto=compress&cs=tinysrgb&w=800',
+    features: ['True RMS', 'Backlight', 'CAT III 600V']
   },
   {
-    name: 'Industrial Angle Grinder',
-    description: 'Heavy-duty angle grinder for cutting and grinding industrial materials.',
-    image: 'https://images.pexels.com/photos/5691661/pexels-photo-5691661.jpeg?auto=compress&cs=tinysrgb&w=600',
-    category: 'Tools'
+    id: 'trena-laser-50m',
+    name: 'Trena a Laser 50m',
+    description: 'Medidor de distância a laser com precisão ±1.5mm e memória de medições.',
+    category: 'Instrumentos de teste',
+    subcategory_name: 'Medição de distância',
+    brand: 'Bosch',
+    model: 'GLM 50',
+    cod: 'YMR-0011',
+    availability: 'Em Estoque',
+    image: 'https://images.pexels.com/photos/3850301/pexels-photo-3850301.jpeg?auto=compress&cs=tinysrgb&w=800'
   },
   {
-    name: 'Excavator Hydraulic Fluid',
-    description: 'Specialized hydraulic fluid for excavators and heavy construction machinery.',
-    image: 'https://images.pexels.com/photos/4489702/pexels-photo-4489702.jpeg?auto=compress&cs=tinysrgb&w=600',
-    category: 'Lubricants'
+    id: 'graxa-industrial-ep2',
+    name: 'Graxa Industrial EP2',
+    description: 'Graxa lítio EP2 para rolamentos, proteção contra pressão extrema.',
+    category: 'Lubrificantes',
+    subcategory_name: 'Graxa',
+    brand: 'Shell',
+    model: 'Gadus S2',
+    cod: 'YMR-0012',
+    availability: 'Em Estoque',
+    image: 'https://images.pexels.com/photos/4489731/pexels-photo-4489731.jpeg?auto=compress&cs=tinysrgb&w=800'
+  },
+  {
+    id: 'oleo-hidraulico-iso46',
+    name: 'Óleo Hidráulico ISO 46',
+    description: 'Óleo hidráulico anti-desgaste ISO VG 46 para sistemas industriais.',
+    category: 'Lubrificantes',
+    subcategory_name: 'Lubrificantes',
+    brand: 'Mobil',
+    model: 'DTE 25',
+    cod: 'YMR-0013',
+    availability: 'Em Estoque',
+    image: 'https://images.pexels.com/photos/4489702/pexels-photo-4489702.jpeg?auto=compress&cs=tinysrgb&w=800'
+  },
+  {
+    id: 'antigripante-jetlube',
+    name: 'Lubrificante Antigripante',
+    description: 'Composto antigripante para roscas expostas a altas temperaturas.',
+    category: 'JET-LUBES',
+    subcategory_name: 'Lubrificantes antigripantes e de rosca',
+    brand: 'Jet-Lube',
+    model: 'Kopr-Kote',
+    cod: 'YMR-0014',
+    availability: 'Sob Encomenda',
+    image: 'https://images.pexels.com/photos/3735530/pexels-photo-3735530.jpeg?auto=compress&cs=tinysrgb&w=800'
+  },
+  {
+    id: 'bomba-centrifuga-inox-2hp',
+    name: 'Bomba Centrífuga Inox 2HP',
+    description: 'Bomba centrífuga em aço inox para transferência de água limpa.',
+    category: 'Bombas Pneumáticas',
+    subcategory_name: 'Bombas Centrífugas',
+    brand: 'KSB',
+    model: 'Inox 2HP',
+    cod: 'YMR-0015',
+    availability: 'Sob Encomenda',
+    image: 'https://images.pexels.com/photos/3560406/pexels-photo-3560406.jpeg?auto=compress&cs=tinysrgb&w=800'
+  },
+  {
+    id: 'bomba-submersa-1hp',
+    name: 'Bomba Submersa 1HP',
+    description: 'Bomba submersível para poços, alto rendimento e baixo consumo.',
+    category: 'Bombas Pneumáticas',
+    subcategory_name: 'Bombas submersas',
+    brand: 'Schneider',
+    model: 'SB-1HP',
+    cod: 'YMR-0016',
+    availability: 'Sob Encomenda',
+    image: 'https://images.pexels.com/photos/4297438/pexels-photo-4297438.jpeg?auto=compress&cs=tinysrgb&w=800'
+  },
+  {
+    id: 'bomba-transferencia-diesel-12v',
+    name: 'Bomba de Transferência Diesel 12V',
+    description: 'Bomba portátil de 12V para transferência de diesel/óleo com mangueiras.',
+    category: 'Bombas Pneumáticas',
+    subcategory_name: 'Bombas de transferência de combustível e óleo',
+    brand: 'Piusi',
+    model: '12V Pro',
+    cod: 'YMR-0017',
+    availability: 'Em Estoque',
+    image: 'https://images.pexels.com/photos/11483360/pexels-photo-11483360.jpeg?auto=compress&cs=tinysrgb&w=800'
+  },
+  {
+    id: 'valvula-borboleta-dn100',
+    name: 'Válvula Borboleta DN100',
+    description: 'Válvula borboleta com sede EPDM e alavanca, PN16.',
+    category: 'Valvulas',
+    subcategory_name: 'Válvulas',
+    brand: 'VálvTec',
+    model: 'BF-100',
+    cod: 'YMR-0018',
+    availability: 'Em Estoque',
+    image: 'https://images.pexels.com/photos/3735734/pexels-photo-3735734.jpeg?auto=compress&cs=tinysrgb&w=800'
+  },
+  {
+    id: 'valvula-esfera-inox-1pol',
+    name: 'Válvula Esfera Inox 1"',
+    description: 'Válvula de esfera em aço inox 304, rosca BSP 1".',
+    category: 'Valvulas',
+    subcategory_name: 'Válvulas',
+    brand: 'VálvTec',
+    model: 'BV-1SS',
+    cod: 'YMR-0019',
+    availability: 'Em Estoque',
+    image: 'https://images.pexels.com/photos/3734740/pexels-photo-3734740.jpeg?auto=compress&cs=tinysrgb&w=800'
+  },
+  {
+    id: 'parafuso-sextavado-m12',
+    name: 'Parafuso Sextavado M12',
+    description: 'Parafuso sextavado aço carbono classe 8.8, zincado.',
+    category: 'Fixadores',
+    subcategory_name: 'Parafusos de cabeça sextavada',
+    brand: 'YMR',
+    model: 'HX-M12x40',
+    cod: 'YMR-0020',
+    availability: 'Em Estoque',
+    image: 'https://images.pexels.com/photos/1319791/pexels-photo-1319791.jpeg?auto=compress&cs=tinysrgb&w=800'
+  },
+  {
+    id: 'porca-sextavada-m12',
+    name: 'Porca Sextavada M12',
+    description: 'Porca sextavada M12 aço carbono, acabamento zincado.',
+    category: 'Fixadores',
+    subcategory_name: 'Parafusos e porcas',
+    brand: 'YMR',
+    model: 'HN-M12',
+    cod: 'YMR-0021',
+    availability: 'Em Estoque',
+    image: 'https://images.pexels.com/photos/3551205/pexels-photo-3551205.jpeg?auto=compress&cs=tinysrgb&w=800'
+  },
+  {
+    id: 'arruela-pressao-m12',
+    name: 'Arruela de Pressão M12',
+    description: 'Arruela de pressão para travamento de fixações M12.',
+    category: 'Fixadores',
+    subcategory_name: 'fastners',
+    brand: 'YMR',
+    model: 'WS-M12',
+    cod: 'YMR-0022',
+    availability: 'Em Estoque',
+    image: 'https://images.pexels.com/photos/709767/pexels-photo-709767.jpeg?auto=compress&cs=tinysrgb&w=800'
+  },
+  {
+    id: 'kit-absorvente-oleo-100l',
+    name: 'Kit Absorvente de Óleo 100L',
+    description: 'Kit para resposta a derramamentos de óleo, capacidade 100 litros.',
+    category: 'Almofadas absorventes de óleo',
+    subcategory_name: 'Produtos Hazmat',
+    brand: 'SpillTech',
+    model: 'SK-100',
+    cod: 'YMR-0023',
+    availability: 'Sob Encomenda',
+    image: 'https://images.pexels.com/photos/3735213/pexels-photo-3735213.jpeg?auto=compress&cs=tinysrgb&w=800'
+  },
+  {
+    id: 'rolo-absorvente-oleo',
+    name: 'Rolo Absorvente de Óleo',
+    description: 'Rolo absorvente para controle de derramamentos em oficinas e plantas.',
+    category: 'Almofadas absorventes de óleo',
+    subcategory_name: 'absorventes de óleo',
+    brand: 'SpillTech',
+    model: 'AR-60',
+    cod: 'YMR-0024',
+    availability: 'Em Estoque',
+    image: 'https://images.pexels.com/photos/3735216/pexels-photo-3735216.jpeg?auto=compress&cs=tinysrgb&w=800'
+  },
+  {
+    id: 'lum-exproof-led-100w',
+    name: 'Luminária Ex-Proof LED 100W',
+    description: 'Luminária LED à prova de explosão para áreas classificadas.',
+    category: 'Explosion Proof Lighting',
+    subcategory_name: 'Luminárias de explosão LED',
+    brand: 'WesterTech',
+    model: 'EX-LED-100',
+    cod: 'YMR-0025',
+    availability: 'Sob Encomenda',
+    image: 'https://images.pexels.com/photos/5483927/pexels-photo-5483927.jpeg?auto=compress&cs=tinysrgb&w=800'
+  },
+  {
+    id: 'lanterna-intrinsecamente-segura',
+    name: 'Lanterna Intrinsecamente Segura',
+    description: 'Lanterna portátil certificada para áreas classificadas.',
+    category: 'Explosion Proof Lighting',
+    subcategory_name: 'Luzes intrinsecamente seguras',
+    brand: 'Pelican',
+    model: '3315R',
+    cod: 'YMR-0026',
+    availability: 'Em Estoque',
+    image: 'https://images.pexels.com/photos/2628105/pexels-photo-2628105.jpeg?auto=compress&cs=tinysrgb&w=800'
+  },
+  {
+    id: 'tinta-spray-industrial',
+    name: 'Tinta Spray Industrial',
+    description: 'Tinta spray acrílica de alta cobertura para manutenção industrial.',
+    category: 'Equipamentos de Pintura',
+    subcategory_name: 'Tinta Spray',
+    brand: 'Rust-Oleum',
+    model: 'Industrial 2X',
+    cod: 'YMR-0027',
+    availability: 'Em Estoque',
+    image: 'https://images.pexels.com/photos/4021770/pexels-photo-4021770.jpeg?auto=compress&cs=tinysrgb&w=800'
+  },
+  {
+    id: 'pistola-pintura-hvlp',
+    name: 'Pistola de Pintura HVLP',
+    description: 'Pistola HVLP para acabamento fino com bico 1.4mm.',
+    category: 'Equipamentos de Pintura',
+    subcategory_name: 'Equipamentos de pintura',
+    brand: 'DeVilbiss',
+    model: 'FLG-5',
+    cod: 'YMR-0028',
+    availability: 'Sob Encomenda',
+    image: 'https://images.pexels.com/photos/5691589/pexels-photo-5691589.jpeg?auto=compress&cs=tinysrgb&w=800'
+  },
+  {
+    id: 'luz-navegacao-conves-led',
+    name: 'Luz de Navegação de Convés LED',
+    description: 'Luminária de convés em LED para embarcações, IP67.',
+    category: 'Equipamentos de navegação marítima',
+    subcategory_name: 'Luzes da ponte',
+    brand: 'MarineLight',
+    model: 'DL-LED',
+    cod: 'YMR-0029',
+    availability: 'Sob Encomenda',
+    image: 'https://images.pexels.com/photos/799091/pexels-photo-799091.jpeg?auto=compress&cs=tinysrgb&w=800'
+  },
+  {
+    id: 'reagente-ph-7',
+    name: 'Reagente Laboratorial pH 7.00',
+    description: 'Solução tampão pH 7.00 para calibração de instrumentos.',
+    category: 'Suplementos de Laboratório',
+    subcategory_name: 'Suplementos de Laboratório',
+    brand: 'Hanna',
+    model: 'HI70007',
+    cod: 'YMR-0030',
+    availability: 'Em Estoque',
+    image: 'https://images.pexels.com/photos/2280549/pexels-photo-2280549.jpeg?auto=compress&cs=tinysrgb&w=800'
   }
 ];
+
+

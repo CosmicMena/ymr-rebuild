@@ -12,6 +12,7 @@ import Contact from './pages/Contact';
 import Service from './pages/Services';
 import UserProfile from './pages/UserProfile';
 import ProductPage from './pages/ProductPage';
+import CartPage from './pages/cartPage';
 
 
 function App() {
@@ -29,8 +30,8 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route path="/services" element={<Service />} />
             <Route path="/userprofile" element={<UserProfile />} />
-            <Route path="/userprofile" element={<UserProfile />} />
-            <Route path="/product" element={<ProductPage />} />
+            <Route path="/product/:id" element={<ProductPage />} />
+            <Route path="/cart" element={<CartPage />} />
           </Routes>
         </main>
         <QuickContact />

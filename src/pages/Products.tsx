@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Search, Filter } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
-import { products } from '../data/products';
-import { featuredCategories } from '../data/featuredCategories'
-import { subcategories } from '../data/subcategories'
+import { Product } from '../types';
+import { apiFetch } from '../services/api';
+import { useLocation } from 'react-router-dom';
 
 
 import { productSlides } from "../data/productSlides";
@@ -18,22 +18,115 @@ const Products = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('All');
   const [selectedSubcategory, setSelectedSubcategory] = useState('');
+  const [categories, setCategories] = useState<{ id: string; name: string }[]>([]);
+  const [subcats, setSubcats] = useState<any[]>([]);
+  const [isLoadingMeta, setIsLoadingMeta] = useState(false);
+  const [errorMeta, setErrorMeta] = useState<string | null>(null);
+  const location = useLocation();
 
-  // ===== DADOS DAS CATEGORIAS =====
-  // Array contendo todas as categorias disponíveis para filtro
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const cat = params.get('category');
+    if (cat) {
+      setSelectedCategory(cat);
+      setSelectedSubcategory('');
+    }
+  }, [location.search]);
 
-  // ===== LÓGICA DE FILTRAGEM =====
-  // Filtra os produtos com base no termo de busca e categoria selecionada
-  const filteredProducts = products.filter(product => {
-    const matchesSearch = product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                          product.description.toLowerCase().includes(searchTerm.toLowerCase());
+  // ===== BUSCAR CATEGORIAS E SUBCATEGORIAS (API) =====
+  useEffect(() => {
+    async function loadMeta() {
+      setIsLoadingMeta(true);
+      setErrorMeta(null);
+      try {
+        // Subcategorias (endpoint público com paginação) — sem Authorization
+        const subRes = await apiFetch('/subcategories?isActive=true&limit=100', { noAuth: true });
+        const subPayload = subRes?.data || subRes; // SuccessResponseDto -> { data, pagination }
+        const subArray = subPayload?.data || [];
+        setSubcats(subArray);
+
+        // Derivar categorias a partir das subcategorias (sem 401)
+        const uniqueCats = new Map<string, string>();
+        subArray.forEach((s: any) => {
+          const catId = s.category?.id || s.categoryId;
+          const catName = s.category?.name;
+          if (catId && catName && !uniqueCats.has(catName)) {
+            uniqueCats.set(catName, catId);
+          }
+        });
+        setCategories(Array.from(uniqueCats.keys()).map((name) => ({ id: uniqueCats.get(name) as string, name })));
+      } catch (e: any) {
+        setErrorMeta(e.message || 'Falha ao carregar categorias');
+      } finally {
+        setIsLoadingMeta(false);
+      }
+    }
+    loadMeta();
+  }, []);
+
+  // ===== BUSCA DE PRODUTOS VIA API =====
+  const [items, setItems] = useState<Product[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    async function load() {
+      setIsLoading(true);
+      setError(null);
+      try {
+        const url = new URL('/products', 'http://local'); // base dummy para URL API
+        // filtros
+        if (searchTerm) url.searchParams.set('search', searchTerm);
+        // mapear nomes para IDs para filtrar no servidor
+        const selectedCatObj = categories.find((c) => c.name === selectedCategory);
+        if (selectedCatObj && selectedCategory !== 'All') {
+          url.searchParams.set('categoryId', selectedCatObj.id);
+        }
+        const selectedSubObj = subcats.find((s: any) => s.name === selectedSubcategory);
+        if (selectedSubObj) {
+          url.searchParams.set('subcategoryId', selectedSubObj.id);
+        }
+        // Deixe a API aplicar paginação padrão; não enviar page/limit
+
+        const data = await apiFetch(url.pathname + '?' + url.searchParams.toString());
+        const list: any[] = data?.data || [];
+        // Mapear do formato da API para o tipo Product usado pelo UI
+        const mapped: Product[] = list.map((p: any) => ({
+          id: p.id || p._id || String(p.code || p.name),
+          name: p.name,
+          description: p.description || '',
+          category: p.subcategory?.category?.name || p.category?.name || 'Categoria',
+          subcategory_name: p.subcategory?.name,
+          brand: p.brand?.name,
+          model: p.model,
+          cod: p.code,
+          availability: p.isActive ? 'Em Estoque' : 'Indisponível',
+          image: p.images?.[0] || p.thumbnail || 'https://via.placeholder.com/300x300?text=Produto',
+          images: p.images || (p.thumbnail ? [p.thumbnail] : undefined),
+          features: p.features,
+          price: p.price,
+        }));
+        setItems(mapped);
+      } catch (e: any) {
+        setError(e.message || 'Falha ao carregar produtos');
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    load();
+  }, [searchTerm, selectedCategory, selectedSubcategory]);
+
+  // ===== LÓGICA DE FILTRAGEM (client-side) =====
+  const filteredProducts: Product[] = items.filter(product => {
+    const matchesSearch = !searchTerm || product.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                          (product.description || '').toLowerCase().includes(searchTerm.toLowerCase());
     const matchesCategory = selectedCategory === 'All' || product.category === selectedCategory;
-    const matchesSubcategory = !selectedSubcategory || product.subcategory_name === selectedSubcategory;
+    const matchesSubcategory = !selectedSubcategory || product.subcategory_name === selectedSubcategory || product.subcategory_name === (selectedSubcategory as any);
     return matchesSearch && matchesCategory && matchesSubcategory;
   });
 
-  const filteredSubcategories = subcategories.filter(subcategory => {
-    const matchesCategory = selectedCategory !== 'All' && subcategory.category === selectedCategory;
+  const filteredSubcategories = subcats.filter((subcategory: any) => {
+    const matchesCategory = selectedCategory !== 'All' && (subcategory.category?.name === selectedCategory);
     return matchesCategory;
   });
 
@@ -78,28 +171,32 @@ const Products = () => {
                 }}
               >
                 <option key="0" value="All">Selecionar categoria</option>
-                {featuredCategories.map(category => (
+                {categories.map(category => (
                   <option key={category.id} value={category.name}>{category.name}</option>
                 ))}
               </select>
             </div>
           </div>
           {/* Lista de Subcategorias */}
-          {filteredSubcategories.length === 0 ? (<></>) : (
+          {isLoadingMeta ? (
+            <div className="mt-4 text-sm text-gray-500">Carregando categorias...</div>
+          ) : errorMeta ? (
+            <div className="mt-4 text-sm text-red-600">{errorMeta}</div>
+          ) : filteredSubcategories.length === 0 ? (<></>) : (
               <>
                 {/* ==== CARD DE SUBCATEGORIAS ==== */}
                 <div className="flex flex-wrap w-full gap-2 mt-4">
                   {filteredSubcategories.map((subcategory, index) => (
                     <button
                       key={index}
-                      onClick={() => setSelectedSubcategory(subcategory.subcategory_name)}
+                      onClick={() => setSelectedSubcategory(subcategory.name)}
                       className={`px-4 py-2 rounded 
-                        ${selectedSubcategory === subcategory.subcategory_name 
+                        ${selectedSubcategory === subcategory.name 
                           ? 'bg-blue-500 text-white' 
                           : 'bg-gray-200 text-gray-700'} 
                         transition-colors duration-200`}
                     >
-                      {subcategory.subcategory_name}
+                      {subcategory.name}
                     </button>
                   ))}
                 </div>
@@ -122,7 +219,15 @@ const Products = () => {
           <div className="w-full px-4 flex flex-col lg:flex-row gap-8">
             {/* Conteúdo Principal */}
             <div className="flex-1 min-w-0 lg:max-w-[1000px]">
-              {filteredProducts.length === 0 ? (
+              {isLoading ? (
+                <div className="text-center py-16">
+                  <p className="text-xl text-gray-600">Carregando produtos...</p>
+                </div>
+              ) : error ? (
+                <div className="text-center py-16">
+                  <p className="text-xl text-red-600">{error}</p>
+                </div>
+              ) : filteredProducts.length === 0 ? (
                 <div className="text-center py-16">
                   <p className="text-xl text-gray-600">
                     No products found matching your criteria.
@@ -132,11 +237,11 @@ const Products = () => {
                 <div className="grid grid-cols-[repeat(auto-fill,_minmax(10rem,_12rem))] gap-[20px]">
                   {filteredProducts.map((product, index) => (
                     <div
-                      key={product.name}
+                      key={product.id}
                       className="animate-fade-in-up"
                       style={{ animationDelay: `${index * 0.05}s` }}
                     >
-                      <ProductCard {...product} />
+                      <ProductCard id={product.id} name={product.name} image={product.image} category={product.category} />
                     </div>
                   ))}
                 </div>
