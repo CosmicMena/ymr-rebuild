@@ -18,9 +18,10 @@ type UserHeaderProps = {
   };
   activeTab: string;
   setActiveTab: (tabId: string) => void;
+  onAvatarClick?: () => void;
 };
 
-export default function UserHeader({ userData, activeTab, setActiveTab }: UserHeaderProps) {
+export default function UserHeader({ userData, activeTab, setActiveTab, onAvatarClick }: UserHeaderProps) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isHidden, setIsHidden] = useState(false);
   const [headerOffsetPx, setHeaderOffsetPx] = useState<number>(112);
@@ -136,7 +137,11 @@ export default function UserHeader({ userData, activeTab, setActiveTab }: UserHe
                     className={`rounded-full border-4 border-white/30 shadow-xl object-cover transition-[width,height] duration-500 ease-in-out ${isScrolled ? "w-12 h-12 md:w-12 md:h-12" : "w-20 h-20 md:w-16 md:h-16"}`}
                   />
                   {!isScrolled && (
-                    <button className={`absolute -bottom-2 -right-2 bg-blue-600 hover:bg-blue-700 text-white p-2.5 rounded-full shadow-lg transition-all duration-300 hover:scale-110 ${isScrolled ? "opacity-0 pointer-events-none" : "opacity-100"}`}>
+                    <button 
+                      onClick={onAvatarClick}
+                      className={`absolute -bottom-2 -right-2 bg-blue-600 hover:bg-blue-700 text-white p-2.5 rounded-full shadow-lg transition-all duration-300 hover:scale-110 ${isScrolled ? "opacity-0 pointer-events-none" : "opacity-100"}`}
+                      title="Alterar foto de perfil"
+                    >
                       <Camera className="h-4 w-4" />
                     </button>
                   )}

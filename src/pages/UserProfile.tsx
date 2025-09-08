@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { 
   User, ShoppingBag, MessageCircle, 
   Mail, Calendar, Clock,
   Edit3, Save, Download, Filter,
   Package, Star,
-  BarChart3, TrendingUp, Target, Award, Shield, UserCheck
+  BarChart3, TrendingUp, Target, Award, Shield, UserCheck,
+  Camera, X
 } from 'lucide-react';
 
 import UserHeader from '../components/UserHeader';
@@ -17,6 +18,9 @@ const UserProfile = () => {
     push: true,
     marketing: false
   });
+  const [showAvatarModal, setShowAvatarModal] = useState(false);
+  const [isUploading, setIsUploading] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   
   const [activeTab, setActiveTab] = useState('profile');
@@ -34,6 +38,52 @@ const UserProfile = () => {
     position: 'Engenheiro de Projetos',
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'
   });
+
+  // ===== FUNÇÕES DE UPLOAD DE AVATAR =====
+  const handleAvatarClick = () => {
+    setShowAvatarModal(true);
+  };
+
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Validar tipo de arquivo
+      if (!file.type.startsWith('image/')) {
+        alert('Por favor, selecione apenas arquivos de imagem.');
+        return;
+      }
+
+      // Validar tamanho (máximo 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        alert('A imagem deve ter no máximo 5MB.');
+        return;
+      }
+
+      // Criar URL temporária para preview
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const result = e.target?.result as string;
+        setUserData(prev => ({ ...prev, avatar: result }));
+        setIsUploading(true);
+        
+        // Simular upload (aqui você faria a chamada real para a API)
+        setTimeout(() => {
+          setIsUploading(false);
+          setShowAvatarModal(false);
+          alert('Foto de perfil atualizada com sucesso!');
+        }, 2000);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  const handleRemoveAvatar = () => {
+    setUserData(prev => ({ 
+      ...prev, 
+      avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face' 
+    }));
+    setShowAvatarModal(false);
+  };
 
   // ===== DADOS DE ATIVIDADE =====
   const activityStats = [
@@ -154,7 +204,8 @@ const UserProfile = () => {
       <UserHeader 
         userData={userData} 
         activeTab={activeTab} 
-        setActiveTab={setActiveTab} 
+        setActiveTab={setActiveTab}
+        onAvatarClick={handleAvatarClick}
       />
 
       {/* ===== CONTEÚDO PRINCIPAL ===== */}
@@ -385,47 +436,86 @@ const UserProfile = () => {
                 </div>
               </div>
 
-              <div className="overflow-x-auto -mx-4 md:mx-0">
-                <table className="w-full text-sm md:text-base min-w-[640px] md:min-w-0">
-                  <thead>
-                    <tr className="border-b border-gray-200">
-                      <th className="text-left py-3 px-4 font-semibold text-gray-900">ID</th>
-                      <th className="text-left py-3 px-4 font-semibold text-gray-900">Serviço</th>
-                      <th className="text-left py-3 px-4 font-semibold text-gray-900">Data</th>
-                      <th className="text-left py-3 px-4 font-semibold text-gray-900">Status</th>
-                      <th className="text-left py-3 px-4 font-semibold text-gray-900">Valor</th>
-                      <th className="text-left py-3 px-4 font-semibold text-gray-900">Ações</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {orderHistory.map((order) => (
-                      <tr key={order.id} className="border-b border-gray-100 hover:bg-gray-50">
-                        <td className="py-4 px-4 font-mono text-sm text-gray-600">{order.id}</td>
-                        <td className="py-4 px-4 font-medium text-gray-900">{order.service}</td>
-                        <td className="py-4 px-4 text-gray-600">
-                          {new Date(order.date).toLocaleDateString('pt-BR')}
-                        </td>
-                        <td className="py-4 px-4">
-                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${order.statusColor}`}>
-                            {order.status}
-                          </span>
-                        </td>
-                        <td className="py-4 px-4 font-semibold text-gray-900">{order.value}</td>
-                        <td className="py-4 px-4">
-                          <div className="flex items-center gap-2">
-                            <button className="text-blue-600 hover:text-blue-800 text-sm">
-                              Ver Detalhes
-                            </button>
-                            <button className="text-green-600 hover:text-green-800 text-sm">
-                              Baixar
-                            </button>
-                          </div>
-                        </td>
+              <section className="w-full">
+                {/* Tabela para Desktop */}
+                <div className="hidden md:block overflow-x-auto -mx-4 md:mx-0">
+                  <table className="w-full text-sm md:text-base min-w-[640px] md:min-w-0">
+                    <thead>
+                      <tr className="border-b border-gray-200">
+                        <th className="text-left py-3 px-4 font-semibold text-gray-900">ID</th>
+                        <th className="text-left py-3 px-4 font-semibold text-gray-900">Serviço</th>
+                        <th className="text-left py-3 px-4 font-semibold text-gray-900">Data</th>
+                        <th className="text-left py-3 px-4 font-semibold text-gray-900">Status</th>
+                        <th className="text-left py-3 px-4 font-semibold text-gray-900">Valor</th>
+                        <th className="text-left py-3 px-4 font-semibold text-gray-900">Ações</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                    </thead>
+                    <tbody>
+                      {orderHistory.map((order) => (
+                        <tr key={order.id} className="border-b border-gray-100 hover:bg-gray-50">
+                          <td className="py-4 px-4 font-mono text-sm text-gray-600">{order.id}</td>
+                          <td className="py-4 px-4 font-medium text-gray-900">{order.service}</td>
+                          <td className="py-4 px-4 text-gray-600">
+                            {new Date(order.date).toLocaleDateString('pt-BR')}
+                          </td>
+                          <td className="py-4 px-4">
+                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${order.statusColor}`}>
+                              {order.status}
+                            </span>
+                          </td>
+                          <td className="py-4 px-4 font-semibold text-gray-900">{order.value}</td>
+                          <td className="py-4 px-4">
+                            <div className="flex items-center gap-2">
+                              <button className="text-blue-600 hover:text-blue-800 text-sm">
+                                Ver Detalhes
+                              </button>
+                              <button className="text-green-600 hover:text-green-800 text-sm">
+                                Baixar
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Cards para Mobile */}
+                <div className="md:hidden space-y-3">
+                  {orderHistory.map((order) => (
+                    <article key={order.id} className="p-4 border rounded-lg shadow-sm bg-white">
+                      <div className="flex justify-between items-start mb-3">
+                        <div className="font-mono text-sm text-gray-600">{order.id}</div>
+                        <span className={`px-2 py-1 rounded-full text-xs font-medium ${order.statusColor}`}>
+                          {order.status}
+                        </span>
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <div>
+                          <h3 className="font-semibold text-gray-900 text-sm">{order.service}</h3>
+                        </div>
+                        
+                        <div className="flex justify-between items-center text-sm">
+                          <span className="text-gray-600">
+                            {new Date(order.date).toLocaleDateString('pt-BR')}
+                          </span>
+                          <span className="font-semibold text-gray-900">{order.value}</span>
+                        </div>
+                        
+                        <div className="flex items-center gap-3 pt-2 border-t border-gray-100">
+                          <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                            Ver Detalhes
+                          </button>
+                          <button className="text-green-600 hover:text-green-800 text-sm font-medium">
+                            Baixar
+                          </button>
+                        </div>
+                      </div>
+                    </article>
+                  ))}
+                </div>
+              </section>
             </div>
           </div>
         )}
@@ -725,9 +815,82 @@ const UserProfile = () => {
         </div>
       </div>
 
-      {/* ===== MODAL DE CONFIRMAÇÃO (exemplo) ===== */}
-      {/* Este modal poderia ser usado para confirmações de ações importantes */}
-      
+      {/* ===== MODAL DE UPLOAD DE AVATAR ===== */}
+      {showAvatarModal && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full">
+            <div className="p-6">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-bold text-gray-800">Alterar Foto de Perfil</h2>
+                <button
+                  onClick={() => setShowAvatarModal(false)}
+                  className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+                >
+                  <X className="h-5 w-5 text-gray-500" />
+                </button>
+              </div>
+
+              {/* Preview da imagem atual */}
+              <div className="text-center mb-6">
+                <div className="relative inline-block">
+                  <img
+                    src={userData.avatar}
+                    alt="Avatar atual"
+                    className="w-24 h-24 rounded-full object-cover border-4 border-gray-200"
+                  />
+                  {isUploading && (
+                    <div className="absolute inset-0 bg-black bg-opacity-50 rounded-full flex items-center justify-center">
+                      <div className="animate-spin rounded-full h-6 w-6 border-b-2 border-white"></div>
+                    </div>
+                  )}
+                </div>
+                <p className="text-sm text-gray-500 mt-2">Foto atual</p>
+              </div>
+
+              {/* Opções de upload */}
+              <div className="space-y-4">
+                <input
+                  ref={fileInputRef}
+                  type="file"
+                  accept="image/*"
+                  onChange={handleFileSelect}
+                  className="hidden"
+                />
+                
+                <button
+                  onClick={() => fileInputRef.current?.click()}
+                  disabled={isUploading}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white rounded-lg transition-colors"
+                >
+                  <Camera className="h-5 w-5" />
+                  {isUploading ? 'Enviando...' : 'Escolher Nova Foto'}
+                </button>
+
+                <button
+                  onClick={handleRemoveAvatar}
+                  disabled={isUploading}
+                  className="w-full flex items-center justify-center gap-2 px-4 py-3 bg-gray-100 hover:bg-gray-200 disabled:bg-gray-50 text-gray-700 rounded-lg transition-colors"
+                >
+                  <X className="h-5 w-5" />
+                  Usar Foto Padrão
+                </button>
+              </div>
+
+              {/* Informações sobre o upload */}
+              <div className="mt-6 p-4 bg-blue-50 rounded-lg">
+                <h3 className="text-sm font-medium text-blue-800 mb-2">Requisitos da foto:</h3>
+                <ul className="text-xs text-blue-700 space-y-1">
+                  <li>• Formatos aceitos: JPG, PNG, GIF</li>
+                  <li>• Tamanho máximo: 5MB</li>
+                  <li>• Resolução recomendada: 400x400px ou superior</li>
+                  <li>• A foto será redimensionada automaticamente</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* ===== CSS ADICIONAL PARA ANIMAÇÕES ===== */}
       <style>{`
         .animate-fade-in-up {
