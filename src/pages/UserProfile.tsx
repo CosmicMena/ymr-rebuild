@@ -1,17 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { 
   User, ShoppingBag, MessageCircle, 
   Mail, Calendar, Clock,
   Edit3, Save, Download, Filter,
   Package, Star,
-  BarChart3, TrendingUp, Target, Award, Shield
+  BarChart3, TrendingUp, Target, Award, Shield, UserCheck
 } from 'lucide-react';
 
 import UserHeader from '../components/UserHeader';
 
 const UserProfile = () => {
   const [isEditing, setIsEditing] = useState(false);
-  const [showPassword, setShowPassword] = useState(false);
   const [notifications, setNotifications] = useState({
     email: true,
     sms: false,
@@ -142,10 +141,10 @@ const UserProfile = () => {
     console.log('Dados salvos:', userData);
   };
 
-  const handleNotificationChange = (type) => {
+  const handleNotificationChange = (type: string) => {
     setNotifications(prev => ({
       ...prev,
-      [type]: !prev[type]
+      [type]: !prev[type as keyof typeof prev]
     }));
   };
 
@@ -159,23 +158,37 @@ const UserProfile = () => {
       />
 
       {/* ===== CONTEÚDO PRINCIPAL ===== */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         
         {/* ===== TAB PERFIL ===== */}
         {activeTab === 'profile' && (
-          <div className="space-y-6">
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">Informações Pessoais</h2>
+          <div className="space-y-8">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center space-x-2 bg-blue-100 rounded-full px-4 py-2 mb-4">
+                <UserCheck className="h-5 w-5 text-blue-600" />
+                <span className="text-sm font-medium text-blue-800">Informações Pessoais</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Dados do Perfil</h2>
+              <p className="text-gray-600">Gerencie suas informações pessoais e profissionais</p>
+            </div>
+            
+            <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+              <div className="flex items-center justify-between mb-8">
+                <div className="flex items-center space-x-3">
+                  <div className="bg-blue-100 p-3 rounded-xl">
+                    <UserCheck className="h-6 w-6 text-blue-600" />
+                  </div>
+                  <h3 className="text-2xl font-bold text-gray-900">Detalhes Pessoais</h3>
+                </div>
                 <button
                   onClick={() => isEditing ? handleSave() : setIsEditing(true)}
-                  className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-colors ${
+                  className={`flex items-center gap-2 px-6 py-3 rounded-xl font-semibold transition-all duration-300 transform hover:scale-105 shadow-lg ${
                     isEditing 
-                      ? 'bg-green-600 hover:bg-green-700 text-white' 
-                      : 'bg-red-600 hover:bg-red-700 text-white'
+                      ? 'bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white' 
+                      : 'bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white'
                   }`}
                 >
-                  {isEditing ? <Save className="h-4 w-4" /> : <Edit3 className="h-4 w-4" />}
+                  {isEditing ? <Save className="h-5 w-5" /> : <Edit3 className="h-5 w-5" />}
                   {isEditing ? 'Salvar' : 'Editar'}
                 </button>
               </div>
@@ -188,10 +201,10 @@ const UserProfile = () => {
                       type="text"
                       value={userData.name}
                       onChange={(e) => setUserData({...userData, name: e.target.value})}
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                      className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300"
                     />
                   ) : (
-                    <div className="p-3 bg-gray-50 rounded-lg text-gray-900">{userData.name}</div>
+                    <div className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl text-gray-900 border border-gray-200">{userData.name}</div>
                   )}
                 </div>
 
@@ -202,10 +215,10 @@ const UserProfile = () => {
                       type="email"
                       value={userData.email}
                       onChange={(e) => setUserData({...userData, email: e.target.value})}
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                      className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300"
                     />
                   ) : (
-                    <div className="p-3 bg-gray-50 rounded-lg text-gray-900">{userData.email}</div>
+                    <div className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl text-gray-900 border border-gray-200">{userData.email}</div>
                   )}
                 </div>
 
@@ -216,10 +229,10 @@ const UserProfile = () => {
                       type="tel"
                       value={userData.phone}
                       onChange={(e) => setUserData({...userData, phone: e.target.value})}
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                      className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300"
                     />
                   ) : (
-                    <div className="p-3 bg-gray-50 rounded-lg text-gray-900">{userData.phone}</div>
+                    <div className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl text-gray-900 border border-gray-200">{userData.phone}</div>
                   )}
                 </div>
 
@@ -230,10 +243,10 @@ const UserProfile = () => {
                       type="date"
                       value={userData.birthDate}
                       onChange={(e) => setUserData({...userData, birthDate: e.target.value})}
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                      className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300"
                     />
                   ) : (
-                    <div className="p-3 bg-gray-50 rounded-lg text-gray-900">
+                    <div className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl text-gray-900 border border-gray-200">
                       {new Date(userData.birthDate).toLocaleDateString('pt-BR')}
                     </div>
                   )}
@@ -246,10 +259,10 @@ const UserProfile = () => {
                       type="text"
                       value={userData.company}
                       onChange={(e) => setUserData({...userData, company: e.target.value})}
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                      className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300"
                     />
                   ) : (
-                    <div className="p-3 bg-gray-50 rounded-lg text-gray-900">{userData.company}</div>
+                    <div className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl text-gray-900 border border-gray-200">{userData.company}</div>
                   )}
                 </div>
 
@@ -260,10 +273,10 @@ const UserProfile = () => {
                       type="text"
                       value={userData.position}
                       onChange={(e) => setUserData({...userData, position: e.target.value})}
-                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent"
+                      className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300"
                     />
                   ) : (
-                    <div className="p-3 bg-gray-50 rounded-lg text-gray-900">{userData.position}</div>
+                    <div className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl text-gray-900 border border-gray-200">{userData.position}</div>
                   )}
                 </div>
               </div>
@@ -272,12 +285,12 @@ const UserProfile = () => {
             {/* ===== ESTATÍSTICAS RÁPIDAS ===== */}
             <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
               {activityStats.map((stat) => (
-                <div key={stat.label} className="bg-white rounded-xl shadow-sm p-6 text-center">
-                  <div className={`${stat.color} w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4`}>
-                    <stat.icon className="h-6 w-6 text-white" />
+                <div key={stat.label} className="bg-white rounded-2xl shadow-lg p-6 text-center border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
+                  <div className={`${stat.color} w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                    <stat.icon className="h-8 w-8 text-white" />
                   </div>
-                  <div className="text-2xl font-bold text-gray-900 mb-1">{stat.value}</div>
-                  <div className="text-sm text-gray-600">{stat.label}</div>
+                  <div className="text-3xl font-bold text-gray-900 mb-2">{stat.value}</div>
+                  <div className="text-sm text-gray-600 font-medium">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -286,41 +299,59 @@ const UserProfile = () => {
 
         {/* ===== TAB ATIVIDADES ===== */}
         {activeTab === 'activity' && (
-          <div className="space-y-6">
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Atividades Recentes</h2>
+          <div className="space-y-8">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center space-x-2 bg-green-100 rounded-full px-4 py-2 mb-4">
+                <BarChart3 className="h-5 w-5 text-green-600" />
+                <span className="text-sm font-medium text-green-800">Atividades Recentes</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Minha Atividade</h2>
+              <p className="text-gray-600">Acompanhe suas ações e interações recentes</p>
+            </div>
+            
+            <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">Atividades Recentes</h3>
               <div className="space-y-4">
                 {recentActivities.map((activity, index) => (
-                  <div key={index} className="flex items-center gap-4 p-4 bg-gray-50 rounded-lg">
-                    <div className={`p-2 rounded-full bg-white shadow-sm ${activity.color}`}>
+                  <div key={index} className="flex items-center gap-4 p-6 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200 hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
+                    <div className={`p-3 rounded-full bg-white shadow-sm group-hover:scale-110 transition-transform duration-300 ${activity.color}`}>
                       <activity.icon className="h-5 w-5" />
                     </div>
                     <div className="flex-1">
-                      <p className="font-medium text-gray-900">{activity.action}</p>
+                      <p className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">{activity.action}</p>
                       <p className="text-sm text-gray-500">{activity.time}</p>
+                    </div>
+                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                      <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
 
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <h3 className="text-xl font-bold text-gray-900 mb-6">Resumo de Atividades</h3>
+            <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">Resumo de Atividades</h3>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="text-center p-4 bg-blue-50 rounded-lg">
-                  <TrendingUp className="h-8 w-8 text-blue-600 mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-blue-600">+15%</div>
-                  <div className="text-sm text-gray-600">Atividade este mês</div>
+                <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl border border-blue-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
+                  <div className="bg-blue-100 p-3 rounded-full w-16 h-16 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <TrendingUp className="h-8 w-8 text-blue-600 mx-auto" />
+                  </div>
+                  <div className="text-3xl font-bold text-blue-600 mb-2">+15%</div>
+                  <div className="text-sm text-gray-600 font-medium">Atividade este mês</div>
                 </div>
-                <div className="text-center p-4 bg-green-50 rounded-lg">
-                  <Target className="h-8 w-8 text-green-600 mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-green-600">92%</div>
-                  <div className="text-sm text-gray-600">Taxa de satisfação</div>
+                <div className="text-center p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl border border-green-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
+                  <div className="bg-green-100 p-3 rounded-full w-16 h-16 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <Target className="h-8 w-8 text-green-600 mx-auto" />
+                  </div>
+                  <div className="text-3xl font-bold text-green-600 mb-2">92%</div>
+                  <div className="text-sm text-gray-600 font-medium">Taxa de satisfação</div>
                 </div>
-                <div className="text-center p-4 bg-purple-50 rounded-lg">
-                  <Award className="h-8 w-8 text-purple-600 mx-auto mb-2" />
-                  <div className="text-2xl font-bold text-purple-600">Gold</div>
-                  <div className="text-sm text-gray-600">Status de cliente</div>
+                <div className="text-center p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl border border-purple-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
+                  <div className="bg-purple-100 p-3 rounded-full w-16 h-16 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <Award className="h-8 w-8 text-purple-600 mx-auto" />
+                  </div>
+                  <div className="text-3xl font-bold text-purple-600 mb-2">Gold</div>
+                  <div className="text-sm text-gray-600 font-medium">Status de cliente</div>
                 </div>
               </div>
             </div>
@@ -329,10 +360,19 @@ const UserProfile = () => {
 
         {/* ===== TAB PEDIDOS ===== */}
         {activeTab === 'orders' && (
-          <div className="space-y-6">
-            <div className="bg-white rounded-xl shadow-sm p-6">
+          <div className="space-y-8">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center space-x-2 bg-purple-100 rounded-full px-4 py-2 mb-4">
+                <ShoppingBag className="h-5 w-5 text-purple-600" />
+                <span className="text-sm font-medium text-purple-800">Histórico de Pedidos</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Meus Pedidos</h2>
+              <p className="text-gray-600">Acompanhe o status e histórico dos seus pedidos</p>
+            </div>
+            
+            <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
               <div className="flex items-center justify-between mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">Histórico de Pedidos</h2>
+                <h3 className="text-2xl font-bold text-gray-900">Histórico de Pedidos</h3>
                 <div className="flex items-center gap-2">
                   <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors">
                     <Filter className="h-4 w-4" />
@@ -392,26 +432,42 @@ const UserProfile = () => {
 
         {/* ===== TAB MENSAGENS ===== */}
         {activeTab === 'messages' && (
-          <div className="space-y-6">
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Mensagens Recentes</h2>
+          <div className="space-y-8">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center space-x-2 bg-orange-100 rounded-full px-4 py-2 mb-4">
+                <MessageCircle className="h-5 w-5 text-orange-600" />
+                <span className="text-sm font-medium text-orange-800">Mensagens Recentes</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Minhas Mensagens</h2>
+              <p className="text-gray-600">Gerencie suas comunicações e notificações</p>
+            </div>
+            
+            <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">Mensagens Recentes</h3>
               <div className="space-y-4">
                 {recentMessages.map((message, index) => (
-                  <div key={index} className={`p-4 rounded-lg border-l-4 ${
-                    message.unread ? 'border-red-500 bg-red-50' : 'border-gray-300 bg-gray-50'
+                  <div key={index} className={`p-6 rounded-xl border-l-4 hover:shadow-md transition-all duration-300 hover:-translate-y-1 group ${
+                    message.unread ? 'border-red-500 bg-gradient-to-r from-red-50 to-red-100' : 'border-gray-300 bg-gradient-to-r from-gray-50 to-gray-100'
                   }`}>
                     <div className="flex items-start justify-between">
-                      <div>
-                        <div className="flex items-center gap-2 mb-1">
-                          <span className="font-semibold text-gray-900">{message.from}</span>
-                          {message.unread && (
-                            <span className="w-2 h-2 bg-red-500 rounded-full"></span>
-                          )}
+                      <div className="flex-1">
+                        <div className="flex items-center gap-3 mb-2">
+                          <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                            message.unread ? 'bg-red-200' : 'bg-gray-200'
+                          }`}>
+                            <MessageCircle className={`h-5 w-5 ${message.unread ? 'text-red-600' : 'text-gray-600'}`} />
+                          </div>
+                          <div>
+                            <span className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">{message.from}</span>
+                            {message.unread && (
+                              <span className="ml-2 w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+                            )}
+                          </div>
                         </div>
-                        <p className="text-gray-700 mb-2">{message.subject}</p>
+                        <p className="text-gray-700 mb-2 font-medium">{message.subject}</p>
                         <p className="text-sm text-gray-500">{message.time}</p>
                       </div>
-                      <button className="text-blue-600 hover:text-blue-800 text-sm font-medium">
+                      <button className="opacity-0 group-hover:opacity-100 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300">
                         Abrir
                       </button>
                     </div>
@@ -424,10 +480,19 @@ const UserProfile = () => {
 
         {/* ===== TAB CONFIGURAÇÕES ===== */}
         {activeTab === 'settings' && (
-          <div className="space-y-6">
+          <div className="space-y-8">
+            <div className="text-center mb-8">
+              <div className="inline-flex items-center space-x-2 bg-gray-100 rounded-full px-4 py-2 mb-4">
+                <Shield className="h-5 w-5 text-gray-600" />
+                <span className="text-sm font-medium text-gray-800">Configurações</span>
+              </div>
+              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">Configurações da Conta</h2>
+              <p className="text-gray-600">Personalize suas preferências e configurações de segurança</p>
+            </div>
+            
             {/* NOTIFICAÇÕES */}
-            <div className="bg-white rounded-xl shadow-sm p-6">
-              <h2 className="text-2xl font-bold text-gray-900 mb-6">Preferências de Notificação</h2>
+            <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
+              <h3 className="text-2xl font-bold text-gray-900 mb-6">Preferências de Notificação</h3>
               <div className="space-y-4">
                 {Object.entries(notifications).map(([key, value]) => (
                   <div key={key} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
@@ -540,7 +605,7 @@ const UserProfile = () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Idioma</label>
-                  <select className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                  <select className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300">
                     <option value="pt">Português</option>
                     <option value="en">English</option>
                     <option value="fr">Français</option>
@@ -549,7 +614,7 @@ const UserProfile = () => {
                 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Fuso Horário</label>
-                  <select className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                  <select className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300">
                     <option value="africa/luanda">África/Luanda (WAT)</option>
                     <option value="europe/lisbon">Europa/Lisboa (WET)</option>
                     <option value="america/sao_paulo">América/São Paulo (BRT)</option>
@@ -558,7 +623,7 @@ const UserProfile = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Moeda</label>
-                  <select className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                  <select className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300">
                     <option value="aoa">Kwanza Angolano (Kz)</option>
                     <option value="usd">Dólar Americano ($)</option>
                     <option value="eur">Euro (€)</option>
@@ -567,7 +632,7 @@ const UserProfile = () => {
 
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Tema</label>
-                  <select className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent">
+                  <select className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300">
                     <option value="light">Claro</option>
                     <option value="dark">Escuro</option>
                     <option value="auto">Automático</option>
@@ -633,7 +698,7 @@ const UserProfile = () => {
       </div>
 
       {/* ===== FOOTER COM AÇÕES RÁPIDAS ===== */}
-      <div className="bg-white border-t border-gray-200 sticky bottom-0 z-10">
+      <div className="bg-white border-t border-gray-200 z-10">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-4">
@@ -664,7 +729,7 @@ const UserProfile = () => {
       {/* Este modal poderia ser usado para confirmações de ações importantes */}
       
       {/* ===== CSS ADICIONAL PARA ANIMAÇÕES ===== */}
-      <style jsx>{`
+      <style>{`
         .animate-fade-in-up {
           animation: fadeInUp 0.6s ease-out;
         }

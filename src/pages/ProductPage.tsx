@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import type { Product } from '../types';
 import { apiFetch } from '../services/api';
+import { useCart } from '../context/CartContext';
 import { 
   ShoppingCart, Heart, Share2, Shield,
   ChevronLeft, ChevronRight, Download, FileText, Truck, Phone,
@@ -16,6 +17,7 @@ const ProductPage = () => {
   const [isFavorite, setIsFavorite] = useState(false);
   const { id } = useParams();
   const navigate = useNavigate();
+  const { addToCart: addToCartContext } = useCart();
 
   const [product, setProduct] = useState<Product | null>(null);
 
@@ -57,9 +59,8 @@ const ProductPage = () => {
 
   function addToCart() {
     if (!product) return;
-    const stored = localStorage.getItem('cartItems');
-    const list: any[] = stored ? JSON.parse(stored) : [];
-    const cartItem = {
+    
+    addToCartContext({
       id: product.id,
       name: product.name,
       category: product.category,
@@ -70,14 +71,8 @@ const ProductPage = () => {
       image: product.image,
       description: product.description,
       features: product.features || [],
-      rfqId: null,
-      status: null,
-      addedDate: new Date().toISOString().split('T')[0]
-    };
-    // Evitar duplicatas simples pelo id
-    const exists = list.some((it) => it.id === cartItem.id);
-    const next = exists ? list : [...list, cartItem];
-    localStorage.setItem('cartItems', JSON.stringify(next));
+    });
+    
     navigate('/cart');
   }
 

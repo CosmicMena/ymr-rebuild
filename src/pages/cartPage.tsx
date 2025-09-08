@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FileText, Eye, ExternalLink, Package, AlertCircle, Plus, CheckSquare, Square, Clock, CheckCircle, XCircle, ChevronDown, ChevronRight, Trash2 } from 'lucide-react';
+import { FileText, Eye, ExternalLink, Package, AlertCircle, Plus, CheckSquare, Square, Clock, CheckCircle, XCircle, ChevronDown, ChevronRight, Trash2, ShoppingCart, Award } from 'lucide-react';
 
 // ===== TIPOS =====
 type CartItem = {
@@ -261,15 +261,53 @@ const CartPage = () => {
   return (
     <div className="min-h-screen page-content">
       {/* ===== SEÇÃO HERO ===== */}
-      <section className="bg-gradient-to-r from-red-600 to-red-700 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="flex items-center justify-center gap-3 mb-4">
-            <FileText className="h-12 w-12" />
-            <h1 className="text-4xl md:text-5xl font-bold">Request for Quotation</h1>
+      <section className="relative bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white py-24 overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }} />
+        </div>
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+              <ShoppingCart className="h-5 w-5" />
+              <span className="text-sm font-medium">Request for Quotation</span>
+            </div>
+            
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+              Solicitação de Orçamento
+            </h1>
+            <p className="text-xl text-gray-300 max-w-4xl mx-auto mb-8">
+              Gerencie suas solicitações de orçamento de produtos e processo de aquisição de forma eficiente.
+            </p>
+            
+            {/* Quick Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
+                <div className="flex items-center justify-center space-x-2 mb-2">
+                  <Package className="h-6 w-6 text-blue-400" />
+                  <span className="text-2xl font-bold">{cartItems.length}</span>
+                </div>
+                <p className="text-sm text-gray-300">Produtos no Carrinho</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
+                <div className="flex items-center justify-center space-x-2 mb-2">
+                  <FileText className="h-6 w-6 text-yellow-400" />
+                  <span className="text-2xl font-bold">{rfqList.length}</span>
+                </div>
+                <p className="text-sm text-gray-300">RFQs Ativas</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
+                <div className="flex items-center justify-center space-x-2 mb-2">
+                  <Award className="h-6 w-6 text-green-400" />
+                  <span className="text-2xl font-bold">98%</span>
+                </div>
+                <p className="text-sm text-gray-300">Taxa de Aprovação</p>
+              </div>
+            </div>
           </div>
-          <p className="text-xl text-red-100 max-w-2xl mx-auto">
-            Manage your product quotation requests and procurement process.
-          </p>
         </div>
       </section>
 
@@ -347,18 +385,18 @@ const CartPage = () => {
                 const rfq = rfqList.find(r => r.id === rfqId);
                 
                 return (
-                  <div key={rfqId} className="bg-white rounded-lg shadow-md p-6">
+                  <div key={rfqId} className="bg-white rounded-2xl shadow-lg p-6 border border-gray-100 hover:shadow-xl transition-all duration-300">
                     <div className="flex items-center justify-between mb-4">
                       <div className="flex items-center gap-2">
                         <button
                           onClick={() => toggleRfqCollapse(rfqId)}
-                          className="p-2 rounded hover:bg-gray-100"
+                          className="p-2 rounded-xl hover:bg-blue-50 transition-colors duration-200"
                           aria-label="Colapsar/Expandir RFQ"
                         >
                           {collapsedRfqIds[rfqId] ? (
-                            <ChevronRight className="h-5 w-5" />
+                            <ChevronRight className="h-5 w-5 text-blue-600" />
                           ) : (
-                            <ChevronDown className="h-5 w-5" />
+                            <ChevronDown className="h-5 w-5 text-blue-600" />
                           )}
                         </button>
                         <h3 className="text-xl font-bold text-gray-800">
@@ -396,7 +434,7 @@ const CartPage = () => {
 
             {/* ===== VISUALIZADOR DE DETALHES ===== */}
             <div className="lg:col-span-1">
-              <div className="bg-white rounded-lg shadow-md p-6 sticky top-8">
+              <div className="bg-white rounded-2xl shadow-xl p-6 sticky top-8 border border-gray-100">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6">
                   {selectedRfqId ? 'Resumo da RFQ' : 'Detalhes do Produto'}
                 </h2>
@@ -450,10 +488,10 @@ const CartPage = () => {
 
     return (
       <div
-        className={`bg-white rounded-lg shadow-sm border-2 p-4 transition-all duration-200 cursor-pointer hover:shadow-md ${
+        className={`bg-white rounded-xl shadow-lg border-2 p-4 transition-all duration-300 cursor-pointer hover:shadow-xl hover:-translate-y-1 ${
           selectedProduct?.id === item.id 
-            ? 'border-red-500 ring-2 ring-red-200' 
-            : 'border-gray-200 hover:border-red-300'
+            ? 'border-blue-500 ring-2 ring-blue-200' 
+            : 'border-gray-200 hover:border-blue-300'
         }`}
         onClick={() => onViewDetails(item)}
       >

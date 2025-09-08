@@ -1,16 +1,15 @@
-import React from 'react';
-import { Download, FileText, Eye, CheckCircle } from 'lucide-react';
+import { Download, FileText, Eye, CheckCircle, BookOpen, Award, Users } from 'lucide-react';
 
 const Catalog = () => {
   // ===== DADOS DAS CARACTERÍSTICAS DO CATÁLOGO =====
   // Array contendo as características incluídas no catálogo
   const catalogFeatures = [
-    'Complete product specifications',
-    'Technical certifications',
-    'Installation guidelines',
-    'Maintenance instructions',
-    'Safety information',
-    'Pricing and availability'
+    'Especificações completas dos produtos',
+    'Certificações técnicas',
+    'Diretrizes de instalação',
+    'Instruções de manutenção',
+    'Informações de segurança',
+    'Preços e disponibilidade'
   ];
 
   // ===== FUNÇÃO DE DOWNLOAD DO CATÁLOGO =====
@@ -24,37 +23,83 @@ const Catalog = () => {
     <div className="min-h-screen page-content">
       {/* ===== SEÇÃO HERO - CABEÇALHO PRINCIPAL ===== */}
       {/* Seção principal com título e descrição da página do catálogo */}
-      <section className="bg-gradient-to-r from-blue-600 to-blue-700 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Product Catalog</h1>
-          <p className="text-xl text-blue-100 max-w-2xl mx-auto">
-            Access our comprehensive product catalog with detailed specifications, certifications, and technical sheets.
-          </p>
+      <section className="relative bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white py-24 overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }} />
+        </div>
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center">
+            <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+              <BookOpen className="h-5 w-5" />
+              <span className="text-sm font-medium">Product Catalog</span>
+            </div>
+            
+            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
+              Catálogo de Produtos
+            </h1>
+            <p className="text-xl text-gray-300 max-w-4xl mx-auto mb-8">
+              Acesse nosso catálogo abrangente de produtos com especificações detalhadas, certificações e fichas técnicas completas.
+            </p>
+            
+            {/* Quick Stats */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
+                <div className="flex items-center justify-center space-x-2 mb-2">
+                  <FileText className="h-6 w-6 text-blue-400" />
+                  <span className="text-2xl font-bold">156</span>
+                </div>
+                <p className="text-sm text-gray-300">Páginas</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
+                <div className="flex items-center justify-center space-x-2 mb-2">
+                  <Award className="h-6 w-6 text-yellow-400" />
+                  <span className="text-2xl font-bold">500+</span>
+                </div>
+                <p className="text-sm text-gray-300">Produtos</p>
+              </div>
+              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
+                <div className="flex items-center justify-center space-x-2 mb-2">
+                  <Users className="h-6 w-6 text-green-400" />
+                  <span className="text-2xl font-bold">24/7</span>
+                </div>
+                <p className="text-sm text-gray-300">Suporte</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* ===== SEÇÃO CONTEÚDO PRINCIPAL ===== */}
       {/* Seção que apresenta o catálogo com informações detalhadas e preview */}
-      <section className="section-padding bg-white">
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <div className="inline-flex items-center space-x-2 bg-blue-100 rounded-full px-4 py-2 mb-6">
+              <FileText className="h-5 w-5 text-blue-600" />
+              <span className="text-sm font-medium text-blue-800">Catálogo Completo</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Catálogo de Soluções Industriais Completas
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Nosso catálogo abrangente contém informações detalhadas sobre todos os nossos produtos industriais, 
+              incluindo especificações técnicas, certificações e diretrizes de aplicação.
+            </p>
+          </div>
+          
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             {/* Conteúdo Informativo */}
             <div>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
-                Complete Industrial Solutions Catalog
-              </h2>
-              <p className="text-lg text-gray-600 mb-8 leading-relaxed">
-                Our comprehensive catalog contains detailed information about all our industrial products, 
-                including technical specifications, certifications, and application guidelines. Perfect for 
-                project planning and procurement decisions.
-              </p>
-              
               <div className="mb-8">
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">What's Included:</h3>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                  {catalogFeatures.map((feature, index) => (
+                <h3 className="text-2xl font-semibold text-gray-900 mb-6">O que está incluído:</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  {catalogFeatures.map((feature) => (
                     <div key={feature} className="flex items-center">
-                      <CheckCircle className="h-5 w-5 text-green-500 mr-3 flex-shrink-0" />
+                      <CheckCircle className="h-5 w-5 text-blue-600 mr-3 flex-shrink-0" />
                       <span className="text-gray-700">{feature}</span>
                     </div>
                   ))}
@@ -64,61 +109,67 @@ const Catalog = () => {
               <div className="flex flex-col sm:flex-row gap-4">
                 <button 
                   onClick={downloadCatalog}
-                  className="btn-primary text-lg px-8 py-4"
+                  className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center space-x-2"
                 >
                   <Download className="h-5 w-5" />
-                  Download PDF Catalog
+                  <span>Baixar Catálogo PDF</span>
                 </button>
-                <button className="btn-secondary text-lg px-8 py-4">
+                <button className="border-2 border-blue-600 text-blue-600 hover:bg-blue-600 hover:text-white px-8 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2">
                   <Eye className="h-5 w-5" />
-                  Preview Online
+                  <span>Visualizar Online</span>
                 </button>
               </div>
             </div>
             
             {/* Preview do Catálogo */}
             <div className="relative">
-              <div className="bg-gradient-to-br from-red-50 to-blue-50 rounded-xl p-8 shadow-lg">
-                <div className="bg-white rounded-lg shadow-md p-6 mb-4">
+              <div className="bg-white rounded-2xl p-8 shadow-xl border border-gray-100 hover:shadow-2xl transition-shadow duration-300">
+                <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl p-6 mb-6">
                   <div className="flex items-center mb-4">
-                    <FileText className="h-8 w-8 text-red-600 mr-3" />
+                    <div className="bg-blue-600 p-3 rounded-xl mr-4">
+                      <FileText className="h-8 w-8 text-white" />
+                    </div>
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900">YMR Industrial Catalog 2024</h3>
-                      <p className="text-gray-600">Complete Product Guide</p>
+                      <h3 className="text-xl font-bold text-gray-900">Catálogo YMR Industrial 2024</h3>
+                      <p className="text-blue-700 font-medium">Guia Completo de Produtos</p>
                     </div>
                   </div>
-                  <div className="space-y-2 text-sm text-gray-600">
-                    <div className="flex justify-between">
-                      <span>File Size:</span>
-                      <span>12.5 MB</span>
+                  <div className="grid grid-cols-2 gap-4 text-sm">
+                    <div className="bg-white/80 backdrop-blur-sm rounded-lg p-3">
+                      <span className="text-gray-600">Tamanho:</span>
+                      <div className="font-semibold text-gray-900">12.5 MB</div>
                     </div>
-                    <div className="flex justify-between">
-                      <span>Pages:</span>
-                      <span>156 pages</span>
+                    <div className="bg-white/80 backdrop-blur-sm rounded-lg p-3">
+                      <span className="text-gray-600">Páginas:</span>
+                      <div className="font-semibold text-gray-900">156 páginas</div>
                     </div>
-                    <div className="flex justify-between">
-                      <span>Format:</span>
-                      <span>PDF</span>
+                    <div className="bg-white/80 backdrop-blur-sm rounded-lg p-3">
+                      <span className="text-gray-600">Formato:</span>
+                      <div className="font-semibold text-gray-900">PDF</div>
                     </div>
-                    <div className="flex justify-between">
-                      <span>Last Updated:</span>
-                      <span>December 2024</span>
+                    <div className="bg-white/80 backdrop-blur-sm rounded-lg p-3">
+                      <span className="text-gray-600">Atualizado:</span>
+                      <div className="font-semibold text-gray-900">Dez 2024</div>
                     </div>
                   </div>
                 </div>
                 
                 {/* Páginas simuladas do catálogo */}
                 <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white rounded shadow-sm p-4 h-32 flex items-center justify-center text-gray-400">
+                  <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4 h-32 flex items-center justify-center hover:shadow-md transition-shadow duration-300">
                     <div className="text-center">
-                      <div className="w-8 h-8 bg-gray-200 rounded mx-auto mb-2"></div>
-                      <div className="text-xs">Ladders Section</div>
+                      <div className="w-10 h-10 bg-blue-600 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                        <CheckCircle className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="text-sm font-medium text-gray-700">Seção Escadas</div>
                     </div>
                   </div>
-                  <div className="bg-white rounded shadow-sm p-4 h-32 flex items-center justify-center text-gray-400">
+                  <div className="bg-gradient-to-br from-gray-50 to-gray-100 rounded-xl p-4 h-32 flex items-center justify-center hover:shadow-md transition-shadow duration-300">
                     <div className="text-center">
-                      <div className="w-8 h-8 bg-gray-200 rounded mx-auto mb-2"></div>
-                      <div className="text-xs">Safety Equipment</div>
+                      <div className="w-10 h-10 bg-green-600 rounded-lg mx-auto mb-2 flex items-center justify-center">
+                        <Award className="h-6 w-6 text-white" />
+                      </div>
+                      <div className="text-sm font-medium text-gray-700">Equipamentos</div>
                     </div>
                   </div>
                 </div>
@@ -130,50 +181,54 @@ const Catalog = () => {
 
       {/* ===== SEÇÃO VANTAGENS DO CATÁLOGO ===== */}
       {/* Seção que destaca os benefícios de baixar o catálogo */}
-      <section className="section-padding bg-gray-50">
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Download Our Catalog?
+            <div className="inline-flex items-center space-x-2 bg-green-100 rounded-full px-4 py-2 mb-6">
+              <CheckCircle className="h-5 w-5 text-green-600" />
+              <span className="text-sm font-medium text-green-800">Vantagens</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+              Por que Baixar Nosso Catálogo?
             </h2>
-            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
-              Everything you need to make informed decisions about industrial equipment and solutions.
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
+              Tudo o que você precisa para tomar decisões informadas sobre equipamentos e soluções industriais.
             </p>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="text-center">
-              <div className="bg-white rounded-xl p-8 shadow-md card-hover">
-                <div className="bg-blue-50 p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center">
-                  <FileText className="h-8 w-8 text-blue-600" />
+            <div className="text-center group">
+              <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                <div className="bg-blue-50 p-4 rounded-2xl w-20 h-20 mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <FileText className="h-10 w-10 text-blue-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Detailed Specifications</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Especificações Detalhadas</h3>
                 <p className="text-gray-600">
-                  Complete technical specifications, dimensions, and performance data for all products.
+                  Especificações técnicas completas, dimensões e dados de desempenho para todos os produtos.
                 </p>
               </div>
             </div>
             
-            <div className="text-center">
-              <div className="bg-white rounded-xl p-8 shadow-md card-hover">
-                <div className="bg-green-50 p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center">
-                  <CheckCircle className="h-8 w-8 text-green-600" />
+            <div className="text-center group">
+              <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                <div className="bg-green-50 p-4 rounded-2xl w-20 h-20 mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <CheckCircle className="h-10 w-10 text-green-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Certified Quality</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Qualidade Certificada</h3>
                 <p className="text-gray-600">
-                  All products include certification information and quality assurance documentation.
+                  Todos os produtos incluem informações de certificação e documentação de garantia de qualidade.
                 </p>
               </div>
             </div>
             
-            <div className="text-center">
-              <div className="bg-white rounded-xl p-8 shadow-md card-hover">
-                <div className="bg-red-50 p-4 rounded-full w-16 h-16 mx-auto mb-6 flex items-center justify-center">
-                  <Download className="h-8 w-8 text-red-600" />
+            <div className="text-center group">
+              <div className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-2">
+                <div className="bg-purple-50 p-4 rounded-2xl w-20 h-20 mx-auto mb-6 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                  <Download className="h-10 w-10 text-purple-600" />
                 </div>
-                <h3 className="text-xl font-semibold text-gray-900 mb-4">Easy Access</h3>
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">Acesso Fácil</h3>
                 <p className="text-gray-600">
-                  Download once and access offline anytime. Perfect for site visits and presentations.
+                  Baixe uma vez e acesse offline a qualquer momento. Perfeito para visitas ao local e apresentações.
                 </p>
               </div>
             </div>
@@ -183,28 +238,37 @@ const Catalog = () => {
 
       {/* ===== SEÇÃO CALL-TO-ACTION ===== */}
       {/* Seção final que incentiva o contato para orçamentos personalizados */}
-      <section className="section-padding bg-red-600">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
-            Need a Custom Quote?
-          </h2>
-          <p className="text-xl text-red-100 mb-8 max-w-2xl mx-auto">
-            Have specific requirements or need a customized solution? Contact our team for personalized assistance.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <button 
-              onClick={downloadCatalog}
-              className="bg-white text-red-600 px-8 py-4 rounded-lg font-semibold hover:bg-gray-100 transition-colors duration-200 flex items-center justify-center gap-2"
-            >
-              <Download className="h-5 w-5" />
-              Get the Catalog First
-            </button>
-            <a 
-              href="/contact" 
-              className="border-2 border-white text-white px-8 py-4 rounded-lg font-semibold hover:bg-white hover:text-red-600 transition-colors duration-200"
-            >
-              Contact Our Team
-            </a>
+      <section className="py-20 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 relative overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }} />
+        </div>
+        
+        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-12 border border-white/20">
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+              Precisa de um Orçamento Personalizado?
+            </h2>
+            <p className="text-xl text-gray-200 mb-10 max-w-3xl mx-auto leading-relaxed">
+              Tem requisitos específicos ou precisa de uma solução personalizada? Entre em contato com nossa equipe para assistência especializada.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-6 justify-center">
+              <button 
+                onClick={downloadCatalog}
+                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-10 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center space-x-2"
+              >
+                <Download className="h-5 w-5" />
+                <span>Baixar Catálogo Primeiro</span>
+              </button>
+              <a 
+                href="/contact" 
+                className="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-10 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2"
+              >
+                <Eye className="h-5 w-5" />
+                <span>Falar com Nossa Equipe</span>
+              </a>
+            </div>
           </div>
         </div>
       </section>

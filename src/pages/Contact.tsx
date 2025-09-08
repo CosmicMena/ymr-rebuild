@@ -1,6 +1,10 @@
 import React, { useState } from 'react';
 import { contactInfo } from '../data/contactInfo';
-import { MapPin, Send, MessageCircle } from 'lucide-react';
+import { 
+  MapPin, Send, MessageCircle, Phone, Mail, Clock, 
+  CheckCircle, AlertCircle, User, Building,
+  ChevronDown, ChevronUp, Star, Award, Users
+} from 'lucide-react';
 
 const Contact = () => {
   // ===== ESTADO DO FORMULÁRIO =====
@@ -9,8 +13,14 @@ const Contact = () => {
     fullName: '',
     email: '',
     phone: '',
+    company: '',
+    subject: '',
     message: ''
   });
+
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
+  const [expandedFaq, setExpandedFaq] = useState<number | null>(null);
 
   // ===== FUNÇÕES DE MANIPULAÇÃO DO FORMULÁRIO =====
   // Função para atualizar os campos do formulário conforme o usuário digita
@@ -23,16 +33,33 @@ const Contact = () => {
   };
 
   // Função para processar o envio do formulário
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real application, this would send the form data to a server
-    alert('Thank you for your message! Our team will get back to you shortly.');
-    setFormData({
-      fullName: '',
-      email: '',
-      phone: '',
-      message: ''
-    });
+    setIsSubmitting(true);
+    setSubmitStatus('idle');
+    
+    try {
+      // Simular envio para API
+      await new Promise(resolve => setTimeout(resolve, 2000));
+      
+      setSubmitStatus('success');
+      setFormData({
+        fullName: '',
+        email: '',
+        phone: '',
+        company: '',
+        subject: '',
+        message: ''
+      });
+    } catch (error) {
+      setSubmitStatus('error');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const toggleFaq = (index: number) => {
+    setExpandedFaq(expandedFaq === index ? null : index);
   };
 
   // ===== DADOS DE INFORMAÇÕES DE CONTATO =====
@@ -41,83 +68,183 @@ const Contact = () => {
   return (
     <div className="min-h-screen page-content">
       {/* ===== SEÇÃO HERO - CABEÇALHO PRINCIPAL ===== */}
-      {/* Seção principal com título e descrição da página de contato */}
-      <section className="bg-gradient-to-r from-gray-900 to-gray-800 text-white py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold mb-4">Let's Talk Business</h1>
-          <p className="text-xl text-gray-300 max-w-2xl mx-auto">
-            Send us a message or request a quote. Our team will get back to you shortly.
+      <section className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-24 overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 opacity-5">
+          <div className="absolute inset-0" style={{
+            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
+          }} />
+        </div>
+        
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
+            <MessageCircle className="h-5 w-5" />
+            <span className="text-sm font-medium">Get in Touch</span>
+          </div>
+          
+          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
+            Let's Talk Business
+          </h1>
+          <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+            Ready to discuss your industrial equipment needs? Our expert team is here to help you find the perfect solutions.
           </p>
+          
+          {/* Quick Stats */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+              <div className="flex items-center justify-center space-x-2 mb-2">
+                <Users className="h-6 w-6 text-blue-400" />
+                <span className="text-2xl font-bold">500+</span>
+              </div>
+              <p className="text-sm text-gray-300">Happy Clients</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+              <div className="flex items-center justify-center space-x-2 mb-2">
+                <Award className="h-6 w-6 text-yellow-400" />
+                <span className="text-2xl font-bold">10+</span>
+              </div>
+              <p className="text-sm text-gray-300">Years Experience</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+              <div className="flex items-center justify-center space-x-2 mb-2">
+                <Clock className="h-6 w-6 text-green-400" />
+                <span className="text-2xl font-bold">24h</span>
+              </div>
+              <p className="text-sm text-gray-300">Response Time</p>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* ===== SEÇÃO FORMULÁRIO E INFORMAÇÕES DE CONTATO ===== */}
-      {/* Seção principal que contém o formulário de contato e informações da empresa */}
-      <section className="section-padding bg-gray-50">
+      <section className="py-20 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Formulário de Contato */}
-            <div className="bg-white rounded-xl shadow-lg p-8">
+            <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
               <div className="mb-8">
                 <div className="flex items-center mb-4">
-                  <MessageCircle className="h-8 w-8 text-red-600 mr-3" />
-                  <h2 className="text-3xl font-bold text-gray-900">Send us a Message</h2>
+                  <div className="p-3 bg-blue-100 rounded-xl mr-4">
+                    <MessageCircle className="h-8 w-8 text-blue-600" />
+                  </div>
+                  <div>
+                    <h2 className="text-3xl font-bold text-gray-900">Send us a Message</h2>
+                    <p className="text-gray-600 mt-1">We'll respond within 24 hours</p>
+                  </div>
                 </div>
-                <p className="text-gray-600">
-                  Fill out the form below and we'll get back to you as soon as possible.
-                </p>
               </div>
 
+              {/* Status Messages */}
+              {submitStatus === 'success' && (
+                <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg flex items-center space-x-3">
+                  <CheckCircle className="h-5 w-5 text-green-600" />
+                  <p className="text-green-800 font-medium">Message sent successfully! We'll get back to you soon.</p>
+                </div>
+              )}
+
+              {submitStatus === 'error' && (
+                <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg flex items-center space-x-3">
+                  <AlertCircle className="h-5 w-5 text-red-600" />
+                  <p className="text-red-800 font-medium">Failed to send message. Please try again.</p>
+                </div>
+              )}
+
               <form onSubmit={handleSubmit} className="space-y-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="fullName" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Full Name *
+                    </label>
+                    <div className="relative">
+                      <User className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                      <input
+                        type="text"
+                        id="fullName"
+                        name="fullName"
+                        required
+                        value={formData.fullName}
+                        onChange={handleInputChange}
+                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                        placeholder="Enter your full name"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label htmlFor="email" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Email Address *
+                    </label>
+                    <div className="relative">
+                      <Mail className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                      <input
+                        type="email"
+                        id="email"
+                        name="email"
+                        required
+                        value={formData.email}
+                        onChange={handleInputChange}
+                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                        placeholder="Enter your email"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label htmlFor="phone" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Phone Number
+                    </label>
+                    <div className="relative">
+                      <Phone className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                      <input
+                        type="tel"
+                        id="phone"
+                        name="phone"
+                        value={formData.phone}
+                        onChange={handleInputChange}
+                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                        placeholder="Enter your phone"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <label htmlFor="company" className="block text-sm font-semibold text-gray-700 mb-2">
+                      Company
+                    </label>
+                    <div className="relative">
+                      <Building className="absolute left-3 top-1/2 transform -translate-y-1/2 h-5 w-5 text-gray-400" />
+                      <input
+                        type="text"
+                        id="company"
+                        name="company"
+                        value={formData.company}
+                        onChange={handleInputChange}
+                        className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                        placeholder="Enter your company"
+                      />
+                    </div>
+                  </div>
+                </div>
+
                 <div>
-                  <label htmlFor="fullName" className="block text-sm font-medium text-gray-700 mb-2">
-                    Full Name *
+                  <label htmlFor="subject" className="block text-sm font-semibold text-gray-700 mb-2">
+                    Subject
                   </label>
                   <input
                     type="text"
-                    id="fullName"
-                    name="fullName"
-                    required
-                    value={formData.fullName}
+                    id="subject"
+                    name="subject"
+                    value={formData.subject}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-colors"
-                    placeholder="Enter your full name"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200"
+                    placeholder="What's this about?"
                   />
                 </div>
 
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    required
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-colors"
-                    placeholder="Enter your email address"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="phone" className="block text-sm font-medium text-gray-700 mb-2">
-                    Phone Number
-                  </label>
-                  <input
-                    type="tel"
-                    id="phone"
-                    name="phone"
-                    value={formData.phone}
-                    onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-colors"
-                    placeholder="Enter your phone number"
-                  />
-                </div>
-
-                <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700 mb-2">
+                  <label htmlFor="message" className="block text-sm font-semibold text-gray-700 mb-2">
                     Message *
                   </label>
                   <textarea
@@ -127,17 +254,27 @@ const Contact = () => {
                     rows={6}
                     value={formData.message}
                     onChange={handleInputChange}
-                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-red-500 focus:border-transparent transition-colors resize-none"
+                    className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 resize-none"
                     placeholder="Tell us about your project or requirements..."
                   />
                 </div>
 
                 <button
                   type="submit"
-                  className="w-full btn-primary text-lg py-4"
+                  disabled={isSubmitting}
+                  className="w-full bg-gradient-to-r from-blue-600 to-blue-700 text-white py-4 px-6 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
                 >
-                  <Send className="h-5 w-5" />
-                  Send Message
+                  {isSubmitting ? (
+                    <>
+                      <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent"></div>
+                      <span>Sending...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Send className="h-5 w-5" />
+                      <span>Send Message</span>
+                    </>
+                  )}
                 </button>
               </form>
             </div>
@@ -152,43 +289,49 @@ const Contact = () => {
               </div>
 
               <div className="space-y-6">
-                {contactInfo.map((info, index) => (
+                {contactInfo.map((info) => (
                   <div 
                     key={info.title}
-                    className="bg-white rounded-xl p-6 shadow-md card-hover animate-fade-in-up"
-                    style={{ animationDelay: `${index * 0.1}s` }}
+                    className="bg-white rounded-xl p-6 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1"
                   >
                     <div className="flex items-start">
-                      <div className="bg-red-50 p-3 rounded-lg mr-4">
-                        <info.icon className="h-6 w-6 text-red-600" />
+                      <div className="bg-blue-50 p-3 rounded-xl mr-4">
+                        <info.icon className="h-6 w-6 text-blue-600" />
                       </div>
-                      <div>
-                        <h3 className="text-lg font-semibold text-gray-900 mb-1">{info.title}</h3>
-                        <p className="text-gray-900 font-medium mb-1">
-                          {/* {info.details} */}
-                          {
-                            Array.isArray(info.details) ? (
-                              info.details.map((phone, i) => <p key={i}>{phone}</p>)
-                            ) : (
-                              <p>{info.details}</p>
-                            )
-                          }
-
-                        </p>
+                      <div className="flex-1">
+                        <h3 className="text-lg font-semibold text-gray-900 mb-2">{info.title}</h3>
+                        <div className="text-gray-700 font-medium mb-2">
+                          {Array.isArray(info.details) ? (
+                            info.details.map((detail, i) => (
+                              <p key={i} className="mb-1">{detail}</p>
+                            ))
+                          ) : (
+                            <p>{info.details}</p>
+                          )}
+                        </div>
                         <p className="text-gray-600 text-sm">{info.description}</p>
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
+            </div>
+          </div>
 
-              {/* Placeholder do Mapa */}
-              <div className="mt-8 bg-gray-200 rounded-xl h-64 flex items-center justify-center">
-                <div className="text-center text-gray-500">
-                  <MapPin className="h-12 w-12 mx-auto mb-2" />
-                  <p>Interactive Map</p>
-                  <p className="text-sm">Rua Principal nº 123, Luanda, Angola</p>
+          {/* Mapa Interativo - Agora abaixo dos dois cards */}
+          <div className="mt-16">
+            <div className="bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl h-80 flex items-center justify-center relative overflow-hidden shadow-lg">
+              <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 to-purple-500/10"></div>
+              <div className="relative text-center text-gray-600 z-10">
+                <div className="bg-white/80 backdrop-blur-sm rounded-full p-6 inline-block mb-4">
+                  <MapPin className="h-12 w-12 text-blue-600 mx-auto" />
                 </div>
+                <h3 className="text-xl font-semibold text-gray-800 mb-2">Visit Our Office</h3>
+                <p className="text-gray-600 mb-1">Rua Principal nº 123</p>
+                <p className="text-gray-600">Luanda, Angola</p>
+                <button className="mt-4 bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition-colors duration-200">
+                  Get Directions
+                </button>
               </div>
             </div>
           </div>
@@ -196,40 +339,65 @@ const Contact = () => {
       </section>
 
       {/* ===== SEÇÃO PERGUNTAS FREQUENTES ===== */}
-      {/* Seção que exibe perguntas e respostas comuns para ajudar os usuários */}
-      <section className="section-padding bg-white">
+      <section className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+            <div className="inline-flex items-center space-x-2 bg-blue-100 rounded-full px-4 py-2 mb-6">
+              <Star className="h-5 w-5 text-blue-600" />
+              <span className="text-sm font-medium text-blue-800">FAQ</span>
+            </div>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
               Frequently Asked Questions
             </h2>
-            <p className="text-lg text-gray-600">
+            <p className="text-xl text-gray-600 max-w-2xl mx-auto">
               Quick answers to common questions about our products and services.
             </p>
           </div>
 
-          <div className="space-y-6">
+          <div className="space-y-4">
             {[
               {
                 question: "What types of industrial products do you offer?",
-                answer: "We offer a comprehensive range including ladders, construction machinery, cement tools, lubricants & sealants, safety gear, and industrial accessories."
+                answer: "We offer a comprehensive range including ladders, construction machinery, cement tools, lubricants & sealants, safety gear, and industrial accessories. Our catalog features over 10,000 products from leading manufacturers worldwide."
               },
               {
                 question: "Do you provide delivery services?",
-                answer: "Yes, we provide fast and reliable delivery services across Angola. Contact us for specific delivery options and timelines."
+                answer: "Yes, we provide fast and reliable delivery services across Angola. We offer same-day delivery in Luanda and 2-3 day delivery to other provinces. Contact us for specific delivery options and timelines."
               },
               {
                 question: "Are your products certified?",
-                answer: "All our products meet international quality standards and come with proper certifications and quality guarantees."
+                answer: "All our products meet international quality standards and come with proper certifications and quality guarantees. We work only with certified manufacturers and provide full documentation for all equipment."
               },
               {
                 question: "Do you offer bulk pricing for large orders?",
-                answer: "Yes, we offer competitive pricing for bulk orders and long-term contracts. Contact us for a customized quote."
+                answer: "Yes, we offer competitive pricing for bulk orders and long-term contracts. Our team can provide customized quotes based on your specific requirements and volume. Contact us for a personalized pricing proposal."
+              },
+              {
+                question: "What is your return policy?",
+                answer: "We offer a 30-day return policy for unused items in original packaging. Custom orders and special equipment may have different return terms. Please contact our customer service for specific return policies."
+              },
+              {
+                question: "Do you provide technical support?",
+                answer: "Yes, our technical team provides comprehensive support including installation guidance, maintenance tips, and troubleshooting. We also offer training sessions for complex equipment."
               }
             ].map((faq, index) => (
-              <div key={index} className="bg-gray-50 rounded-lg p-6">
-                <h3 className="text-lg font-semibold text-gray-900 mb-2">{faq.question}</h3>
-                <p className="text-gray-600">{faq.answer}</p>
+              <div key={index} className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200">
+                <button
+                  onClick={() => toggleFaq(index)}
+                  className="w-full px-6 py-6 text-left flex items-center justify-between focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-inset rounded-xl"
+                >
+                  <h3 className="text-lg font-semibold text-gray-900 pr-4">{faq.question}</h3>
+                  {expandedFaq === index ? (
+                    <ChevronUp className="h-5 w-5 text-blue-600 flex-shrink-0" />
+                  ) : (
+                    <ChevronDown className="h-5 w-5 text-gray-400 flex-shrink-0" />
+                  )}
+                </button>
+                {expandedFaq === index && (
+                  <div className="px-6 pb-6">
+                    <p className="text-gray-600 leading-relaxed">{faq.answer}</p>
+                  </div>
+                )}
               </div>
             ))}
           </div>
