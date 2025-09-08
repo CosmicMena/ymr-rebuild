@@ -9,6 +9,7 @@ import {
 import { getFeaturedPost, getRegularPosts, type BlogPost } from '../data/blogPosts';
 import { aboutStats } from '../data/aboutData';
 import { companyValues } from '../data/companyValues';
+import { aboutHero, missionSection, visionSection, valuesSection, statsSection, testimonialSection, blogSection } from '../data/aboutContent';
 
 const About = () => {
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
@@ -50,15 +51,14 @@ const About = () => {
           <div className="text-center">
             <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
               <Building2 className="h-5 w-5" />
-              <span className="text-sm font-medium">About Us</span>
+              <span className="text-sm font-medium">{aboutHero.badge}</span>
             </div>
             
             <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-              About YMR Industrial
+              {aboutHero.title}
             </h1>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
-              Your trusted partner in delivering industrial-grade products that improve safety, 
-              performance, and durability across Angola.
+              {aboutHero.description}
             </p>
             
             {/* Quick Stats */}
@@ -95,14 +95,12 @@ const About = () => {
                     <Target className="h-8 w-8 text-blue-600" />
                   </div>
                   <div>
-                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Our Mission</h2>
-                    <p className="text-gray-600 dark:text-gray-300 mt-1">What drives us forward</p>
+                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white">{missionSection.title}</h2>
+                    <p className="text-gray-600 dark:text-gray-300 mt-1">{missionSection.subtitle}</p>
                   </div>
                 </div>
                 <p className="text-lg text-gray-600 leading-relaxed">
-                  To deliver industrial-grade products that improve safety, performance, and durability. 
-                  We are committed to providing our clients with reliable solutions that meet the highest 
-                  quality standards while ensuring exceptional service and support.
+                  {missionSection.description}
                 </p>
               </div>
               
@@ -112,14 +110,12 @@ const About = () => {
                     <Eye className="h-8 w-8 text-green-600" />
                   </div>
                   <div>
-                  <h2 className="text-3xl font-bold text-gray-900">Our Vision</h2>
-                    <p className="text-gray-600 mt-1">Where we're heading</p>
+                  <h2 className="text-3xl font-bold text-gray-900">{visionSection.title}</h2>
+                    <p className="text-gray-600 mt-1">{visionSection.subtitle}</p>
                   </div>
                 </div>
                 <p className="text-lg text-gray-600 leading-relaxed">
-                  To become Angola's leading provider of industrial solutions, recognized for our commitment 
-                  to quality, innovation, and customer satisfaction. We envision a future where every 
-                  industrial project is powered by reliable, sustainable solutions.
+                  {visionSection.description}
                 </p>
               </div>
             </div>
@@ -148,11 +144,11 @@ const About = () => {
           <div className="text-center mb-16">
             <div className="inline-flex items-center space-x-2 bg-blue-100 rounded-full px-4 py-2 mb-6">
               <Heart className="h-5 w-5 text-blue-600" />
-              <span className="text-sm font-medium text-blue-800">Our Values</span>
+              <span className="text-sm font-medium text-blue-800">{valuesSection.badge}</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Our Values</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">{valuesSection.title}</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              The principles that guide everything we do and shape our relationships with clients and partners.
+              {valuesSection.description}
             </p>
           </div>
           
@@ -179,11 +175,11 @@ const About = () => {
           <div className="text-center mb-16">
             <div className="inline-flex items-center space-x-2 bg-white/20 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
               <TrendingUp className="h-5 w-5 text-white" />
-              <span className="text-sm font-medium text-white">Our Track Record</span>
+              <span className="text-sm font-medium text-white">{statsSection.badge}</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">Our Track Record</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">{statsSection.title}</h2>
             <p className="text-xl text-blue-100 max-w-3xl mx-auto">
-              Numbers that reflect our commitment to excellence and client satisfaction.
+              {statsSection.description}
             </p>
           </div>
           
@@ -225,8 +221,7 @@ const About = () => {
               </div>
             </div>
           <blockquote className="text-2xl md:text-3xl font-medium text-gray-900 mb-8 leading-relaxed">
-            "Over 10 years supplying professionals with what they need to build, repair and maintain. 
-            YMR Industrial has been our trusted partner for reliable industrial solutions."
+            "{testimonialSection.quote}"
           </blockquote>
           <div className="flex items-center justify-center">
             <img 
@@ -235,8 +230,8 @@ const About = () => {
                 className="w-16 h-16 rounded-full mr-4 border-4 border-white shadow-lg"
             />
             <div className="text-left">
-              <div className="font-semibold text-gray-900">Construction Professional</div>
-              <div className="text-gray-600">Long-term Client</div>
+              <div className="font-semibold text-gray-900">{testimonialSection.authorName}</div>
+              <div className="text-gray-600">{testimonialSection.authorRole}</div>
             </div>
           </div>
           </div>
@@ -249,11 +244,11 @@ const About = () => {
           <div className="text-center mb-16">
             <div className="inline-flex items-center space-x-2 bg-blue-100 rounded-full px-4 py-2 mb-6">
               <BookOpen className="h-5 w-5 text-blue-600" />
-              <span className="text-sm font-medium text-blue-800">Latest Insights</span>
+              <span className="text-sm font-medium text-blue-800">{blogSection.badge}</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">Industry Insights & News</h2>
+            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">{blogSection.title}</h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Stay updated with the latest trends, innovations, and best practices in the industrial sector.
+              {blogSection.description}
             </p>
           </div>
 
@@ -270,7 +265,7 @@ const About = () => {
                     />
                     <div className="absolute top-4 left-4">
                       <span className="bg-blue-600 text-white px-3 py-1 rounded-full text-sm font-medium">
-                        Featured
+                        {blogSection.featuredLabel}
                       </span>
                     </div>
                   </div>
@@ -303,7 +298,7 @@ const About = () => {
                         onClick={() => openModal(featuredPost)}
                         className="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 transition-colors duration-200 flex items-center space-x-2"
                       >
-                        <span>Read More</span>
+                        <span>{blogSection.readMore}</span>
                         <ArrowRight className="h-4 w-4" />
                       </button>
                     </div>
@@ -357,7 +352,7 @@ const About = () => {
                     onClick={() => openModal(post)}
                     className="w-full bg-blue-600 text-white px-4 py-3 rounded-xl hover:bg-blue-700 transition-colors duration-200 flex items-center justify-center space-x-2 font-medium"
                   >
-                    <span>Read More</span>
+                    <span>{blogSection.readMore}</span>
                     <ArrowRight className="h-4 w-4" />
                   </button>
                 </div>
@@ -372,7 +367,7 @@ const About = () => {
                 onClick={() => setShowAllPosts(!showAllPosts)}
                 className="bg-gradient-to-r from-blue-600 to-blue-700 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:from-blue-700 hover:to-blue-800 transition-all duration-200 flex items-center space-x-2 mx-auto"
               >
-                <span>{showAllPosts ? 'Show Less' : 'View All Posts'}</span>
+                <span>{showAllPosts ? blogSection.showLess : blogSection.viewAllPosts}</span>
                 <ArrowRight className={`h-5 w-5 transition-transform duration-200 ${showAllPosts ? 'rotate-180' : ''}`} />
               </button>
             </div>
@@ -443,14 +438,14 @@ const About = () => {
                   />
                   <div>
                     <div className="font-semibold text-gray-900">{selectedPost.author}</div>
-                    <div className="text-gray-500 text-sm">YMR Industrial Team</div>
+                    <div className="text-gray-500 text-sm">{blogSection.team}</div>
                   </div>
                 </div>
                 <button
                   onClick={closeModal}
                   className="bg-blue-600 text-white px-6 py-3 rounded-xl hover:bg-blue-700 transition-colors duration-200"
                 >
-                  Close
+                  {blogSection.close}
                 </button>
               </div>
             </div>
