@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { contactInfo } from '../data/contactInfo';
+import { contactFaqs, contactQuickStats } from '../data/contactData';
 import { 
   MapPin, Send, MessageCircle, Phone, Mail, Clock, 
   CheckCircle, AlertCircle, User, Building,
@@ -66,7 +67,7 @@ const Contact = () => {
   // Array contendo as informações de contato da empresa
 
   return (
-    <div className="min-h-screen page-content">
+    <div className="min-h-screen page-content bg-white dark:bg-gray-900">
       {/* ===== SEÇÃO HERO - CABEÇALHO PRINCIPAL ===== */}
       <section className="relative bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white py-24 overflow-hidden">
         {/* Background Pattern */}
@@ -91,37 +92,25 @@ const Contact = () => {
           
           {/* Quick Stats */}
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
-              <div className="flex items-center justify-center space-x-2 mb-2">
-                <Users className="h-6 w-6 text-blue-400" />
-                <span className="text-2xl font-bold">500+</span>
+            {contactQuickStats.map((stat, index) => (
+              <div key={index} className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
+                <div className="flex items-center justify-center space-x-2 mb-2">
+                  <stat.icon className={`h-6 w-6 ${stat.color}`} />
+                  <span className="text-2xl font-bold">{stat.value}</span>
+                </div>
+                <p className="text-sm text-gray-300">{stat.label}</p>
               </div>
-              <p className="text-sm text-gray-300">Happy Clients</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
-              <div className="flex items-center justify-center space-x-2 mb-2">
-                <Award className="h-6 w-6 text-yellow-400" />
-                <span className="text-2xl font-bold">10+</span>
-              </div>
-              <p className="text-sm text-gray-300">Years Experience</p>
-            </div>
-            <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20">
-              <div className="flex items-center justify-center space-x-2 mb-2">
-                <Clock className="h-6 w-6 text-green-400" />
-                <span className="text-2xl font-bold">24h</span>
-              </div>
-              <p className="text-sm text-gray-300">Response Time</p>
-            </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ===== SEÇÃO FORMULÁRIO E INFORMAÇÕES DE CONTATO ===== */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
             {/* Formulário de Contato */}
-            <div className="bg-white rounded-2xl shadow-xl p-8 border border-gray-100">
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl p-8 border border-gray-100 dark:border-gray-700">
               <div className="mb-8">
                 <div className="flex items-center mb-4">
                   <div className="p-3 bg-blue-100 rounded-xl mr-4">
@@ -339,7 +328,7 @@ const Contact = () => {
       </section>
 
       {/* ===== SEÇÃO PERGUNTAS FREQUENTES ===== */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="inline-flex items-center space-x-2 bg-blue-100 rounded-full px-4 py-2 mb-6">
@@ -355,32 +344,7 @@ const Contact = () => {
           </div>
 
           <div className="space-y-4">
-            {[
-              {
-                question: "What types of industrial products do you offer?",
-                answer: "We offer a comprehensive range including ladders, construction machinery, cement tools, lubricants & sealants, safety gear, and industrial accessories. Our catalog features over 10,000 products from leading manufacturers worldwide."
-              },
-              {
-                question: "Do you provide delivery services?",
-                answer: "Yes, we provide fast and reliable delivery services across Angola. We offer same-day delivery in Luanda and 2-3 day delivery to other provinces. Contact us for specific delivery options and timelines."
-              },
-              {
-                question: "Are your products certified?",
-                answer: "All our products meet international quality standards and come with proper certifications and quality guarantees. We work only with certified manufacturers and provide full documentation for all equipment."
-              },
-              {
-                question: "Do you offer bulk pricing for large orders?",
-                answer: "Yes, we offer competitive pricing for bulk orders and long-term contracts. Our team can provide customized quotes based on your specific requirements and volume. Contact us for a personalized pricing proposal."
-              },
-              {
-                question: "What is your return policy?",
-                answer: "We offer a 30-day return policy for unused items in original packaging. Custom orders and special equipment may have different return terms. Please contact our customer service for specific return policies."
-              },
-              {
-                question: "Do you provide technical support?",
-                answer: "Yes, our technical team provides comprehensive support including installation guidance, maintenance tips, and troubleshooting. We also offer training sessions for complex equipment."
-              }
-            ].map((faq, index) => (
+            {contactFaqs.map((faq, index) => (
               <div key={index} className="bg-white border border-gray-200 rounded-xl shadow-sm hover:shadow-md transition-all duration-200">
                 <button
                   onClick={() => toggleFaq(index)}

@@ -1,231 +1,27 @@
 import { useState } from 'react';
 import PartnersCarousel from '../components/PartnersCarousel';
 import { 
-  Target, Eye, Heart, Users, Award, Clock, 
+  Target, Eye, Heart, 
   ArrowRight, Star, TrendingUp,
   Calendar,
-  Building2, Shield, BookOpen, X
+  Building2, BookOpen, X
 } from 'lucide-react';
-
-interface BlogPost {
-  id: number;
-  title: string;
-  excerpt: string;
-  author: string;
-  date: string;
-  readTime: string;
-  category: string;
-  image: string;
-  featured: boolean;
-  content: string;
-}
+import { getFeaturedPost, getRegularPosts, type BlogPost } from '../data/blogPosts';
+import { aboutStats } from '../data/aboutData';
+import { companyValues } from '../data/companyValues';
 
 const About = () => {
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [showAllPosts, setShowAllPosts] = useState(false);
 
-  // ===== DADOS DOS VALORES DA EMPRESA =====
-  const values = [
-    {
-      icon: Award,
-      title: 'Quality First',
-      description: 'We never compromise on quality. Every product we offer meets the highest industrial standards.',
-      color: 'from-blue-500 to-blue-600'
-    },
-    {
-      icon: Users,
-      title: 'Client-Centered Service',
-      description: 'Our clients are at the heart of everything we do. We provide personalized solutions and support.',
-      color: 'from-green-500 to-green-600'
-    },
-    {
-      icon: Heart,
-      title: 'Sustainability',
-      description: 'We are committed to sustainable practices and environmentally responsible solutions.',
-      color: 'from-purple-500 to-purple-600'
-    },
-    {
-      icon: Shield,
-      title: 'Safety & Reliability',
-      description: 'Every product is tested and certified to ensure maximum safety and reliability in industrial environments.',
-      color: 'from-orange-500 to-orange-600'
-    }
-  ];
-
-  // ===== DADOS DAS ESTATÍSTICAS =====
-  const stats = [
-    { number: '10+', label: 'Years of Experience', icon: Clock },
-    { number: '500+', label: 'Satisfied Clients', icon: Users },
-    { number: '1000+', label: 'Products Available', icon: Building2 },
-    { number: '24/7', label: 'Customer Support', icon: Shield }
-  ];
+  // ===== DADOS IMPORTADOS DE companyValues.ts =====
 
   // ===== DADOS DOS BLOGS =====
-  const blogPosts = [
-    {
-      id: 1,
-      title: 'The Future of Industrial Safety Equipment',
-      excerpt: 'Exploring the latest innovations in safety gear and how they\'re revolutionizing workplace protection.',
-      author: 'Maria Santos',
-      date: '2024-01-15',
-      readTime: '5 min read',
-      category: 'Safety',
-      image: 'https://images.pexels.com/photos/2599244/pexels-photo-2599244.jpeg?auto=compress&cs=tinysrgb&w=800',
-      featured: true,
-      content: `
-        <p>The industrial safety equipment sector is experiencing unprecedented innovation, driven by technological advances and a growing emphasis on worker protection. In this comprehensive analysis, we explore the cutting-edge developments that are reshaping workplace safety across Angola and beyond.</p>
-        
-        <h3>Smart Safety Gear Integration</h3>
-        <p>Modern safety equipment now incorporates IoT sensors and connectivity features that provide real-time monitoring of worker conditions. Smart helmets can detect falls, monitor vital signs, and automatically alert emergency services when needed.</p>
-        
-        <h3>Advanced Materials and Design</h3>
-        <p>New composite materials are making safety equipment lighter, more durable, and more comfortable. These innovations ensure that workers can maintain peak performance while staying protected throughout their shifts.</p>
-        
-        <h3>Predictive Safety Analytics</h3>
-        <p>AI-powered systems can now predict potential safety incidents before they occur, allowing companies to take proactive measures and prevent accidents before they happen.</p>
-        
-        <h3>Environmental Adaptability</h3>
-        <p>Safety equipment is becoming more adaptable to various environmental conditions, from extreme temperatures to hazardous chemical exposure, ensuring comprehensive protection in all industrial settings.</p>
-        
-        <p>These innovations represent just the beginning of a new era in industrial safety, where technology and protection work hand in hand to create safer, more efficient workplaces.</p>
-      `
-    },
-    {
-      id: 2,
-      title: 'Sustainable Manufacturing: A New Era',
-      excerpt: 'How industrial companies are adopting eco-friendly practices without compromising efficiency.',
-      author: 'João Silva',
-      date: '2024-01-10',
-      readTime: '7 min read',
-      category: 'Sustainability',
-      image: 'https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&w=800',
-      featured: false,
-      content: `
-        <p>Sustainable manufacturing is no longer just a trend—it's a necessity for companies looking to thrive in the modern industrial landscape. This comprehensive guide explores how Angolan manufacturers are leading the way in eco-friendly practices.</p>
-        
-        <h3>Energy Efficiency Revolution</h3>
-        <p>Modern manufacturing facilities are implementing smart energy management systems that reduce consumption by up to 40% while maintaining production efficiency. Solar panels, wind turbines, and energy storage systems are becoming standard features.</p>
-        
-        <h3>Waste Reduction Strategies</h3>
-        <p>Zero-waste manufacturing processes are being adopted across various industries, with companies achieving 95% waste diversion from landfills through innovative recycling and reuse programs.</p>
-        
-        <h3>Circular Economy Implementation</h3>
-        <p>Companies are redesigning their production processes to create closed-loop systems where materials are continuously reused, reducing the need for virgin resources and minimizing environmental impact.</p>
-        
-        <h3>Green Supply Chain Management</h3>
-        <p>Supply chains are being optimized for sustainability, with companies working closely with suppliers to ensure environmentally responsible practices throughout the entire production process.</p>
-        
-        <p>The future of manufacturing lies in sustainable practices that protect our environment while driving economic growth and innovation.</p>
-      `
-    },
-    {
-      id: 3,
-      title: 'Advanced Tools for Modern Construction',
-      excerpt: 'Discover the cutting-edge tools that are transforming construction projects across Angola.',
-      author: 'Ana Costa',
-      date: '2024-01-05',
-      readTime: '6 min read',
-      category: 'Tools',
-      image: 'https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&w=800',
-      featured: false,
-      content: `
-        <p>The construction industry in Angola is experiencing a technological revolution, with advanced tools and equipment transforming how projects are planned, executed, and completed. This detailed overview examines the latest innovations.</p>
-        
-        <h3>Digital Construction Tools</h3>
-        <p>3D modeling software and augmented reality applications are enabling more precise planning and execution of construction projects, reducing errors and improving efficiency by up to 30%.</p>
-        
-        <h3>Automated Equipment</h3>
-        <p>Self-driving construction vehicles and robotic systems are taking over repetitive tasks, allowing human workers to focus on complex problem-solving and quality control.</p>
-        
-        <h3>Smart Materials</h3>
-        <p>Self-healing concrete, smart glass, and adaptive materials are revolutionizing building construction, creating structures that can respond to environmental changes and maintain themselves.</p>
-        
-        <h3>Precision Measurement Tools</h3>
-        <p>Laser-guided systems and GPS-enabled equipment ensure millimeter-perfect accuracy in construction projects, reducing waste and improving quality standards.</p>
-        
-        <p>These advanced tools are not just improving efficiency—they're redefining what's possible in construction and infrastructure development.</p>
-      `
-    },
-    {
-      id: 4,
-      title: 'Maintenance Best Practices for Industrial Equipment',
-      excerpt: 'Essential tips to extend the life of your industrial machinery and reduce downtime.',
-      author: 'Carlos Mendes',
-      date: '2024-01-01',
-      readTime: '8 min read',
-      category: 'Maintenance',
-      image: 'https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&w=800',
-      featured: false,
-      content: `
-        <p>Proper maintenance is the cornerstone of industrial efficiency and equipment longevity. This comprehensive guide provides proven strategies for maintaining industrial equipment at peak performance.</p>
-        
-        <h3>Predictive Maintenance Strategies</h3>
-        <p>Implementing IoT sensors and AI analytics allows companies to predict equipment failures before they occur, reducing unplanned downtime by up to 50% and extending equipment life significantly.</p>
-        
-        <h3>Lubrication Management</h3>
-        <p>Proper lubrication is critical for equipment performance. Automated lubrication systems and high-quality lubricants can reduce friction, prevent wear, and extend equipment life by years.</p>
-        
-        <h3>Regular Inspection Protocols</h3>
-        <p>Systematic inspection schedules help identify potential issues early. Visual inspections, vibration analysis, and thermal imaging are essential tools for comprehensive equipment assessment.</p>
-        
-        <h3>Training and Documentation</h3>
-        <p>Well-trained maintenance teams and comprehensive documentation ensure consistent, high-quality maintenance practices that protect your investment and ensure operational continuity.</p>
-        
-        <h3>Spare Parts Management</h3>
-        <p>Strategic spare parts inventory management ensures quick response to equipment failures while optimizing inventory costs and storage requirements.</p>
-        
-        <p>Effective maintenance practices not only protect your equipment investment but also ensure consistent production quality and operational efficiency.</p>
-      `
-    },
-    {
-      id: 5,
-      title: 'Digital Transformation in Industrial Operations',
-      excerpt: 'How digital technologies are revolutionizing industrial operations and improving efficiency across Angola.',
-      author: 'Pedro Fernandes',
-      date: '2023-12-28',
-      readTime: '6 min read',
-      category: 'Technology',
-      image: 'https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&w=800',
-      featured: false,
-      content: `
-        <p>Digital transformation is reshaping the industrial landscape in Angola, bringing unprecedented opportunities for efficiency, innovation, and growth. This comprehensive analysis explores the key trends and technologies driving this transformation.</p>
-        
-        <h3>Industry 4.0 Implementation</h3>
-        <p>Smart factories are becoming a reality with interconnected systems, real-time data analytics, and autonomous decision-making capabilities that optimize production processes and reduce waste.</p>
-        
-        <h3>Cloud Computing Integration</h3>
-        <p>Industrial companies are leveraging cloud platforms to store, process, and analyze vast amounts of operational data, enabling better decision-making and predictive maintenance.</p>
-        
-        <p>The future of industrial operations lies in embracing digital technologies that enhance productivity while maintaining the highest standards of quality and safety.</p>
-      `
-    },
-    {
-      id: 6,
-      title: 'Workplace Safety Regulations Update 2024',
-      excerpt: 'Important updates to workplace safety regulations that every industrial company should know.',
-      author: 'Isabel Rodrigues',
-      date: '2023-12-20',
-      readTime: '4 min read',
-      category: 'Regulations',
-      image: 'https://images.pexels.com/photos/2219024/pexels-photo-2219024.jpeg?auto=compress&cs=tinysrgb&w=800',
-      featured: false,
-      content: `
-        <p>New workplace safety regulations come into effect in 2024, bringing significant changes that industrial companies need to understand and implement. This guide covers the key updates and their implications.</p>
-        
-        <h3>Enhanced Safety Protocols</h3>
-        <p>New requirements for safety equipment certification, regular inspections, and employee training programs that ensure compliance with international standards.</p>
-        
-        <h3>Environmental Considerations</h3>
-        <p>Updated regulations now include environmental safety measures, requiring companies to implement sustainable practices and reduce their environmental footprint.</p>
-        
-        <p>Staying compliant with these new regulations is essential for maintaining operational continuity and protecting both workers and the environment.</p>
-      `
-    }
-  ];
 
-  const featuredPost = blogPosts.find(post => post.featured);
-  const regularPosts = blogPosts.filter(post => !post.featured);
+  // ===== DADOS DOS BLOGS =====
+  const featuredPost = getFeaturedPost();
+  const regularPosts = getRegularPosts();
   const displayedPosts = showAllPosts ? regularPosts : regularPosts.slice(0, 3);
 
   // ===== FUNÇÕES DO MODAL =====
@@ -240,7 +36,7 @@ const About = () => {
   };
 
   return (
-    <div className="min-h-screen page-content">
+    <div className="min-h-screen page-content bg-white dark:bg-gray-900">
       {/* ===== SEÇÃO HERO - CABEÇALHO PRINCIPAL ===== */}
       <section className="relative bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white py-24 overflow-hidden">
         {/* Background Pattern */}
@@ -289,7 +85,7 @@ const About = () => {
       </section>
 
       {/* ===== SEÇÃO MISSÃO E VISÃO ===== */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
             <div>
@@ -299,8 +95,8 @@ const About = () => {
                     <Target className="h-8 w-8 text-blue-600" />
                   </div>
                   <div>
-                  <h2 className="text-3xl font-bold text-gray-900">Our Mission</h2>
-                    <p className="text-gray-600 mt-1">What drives us forward</p>
+                  <h2 className="text-3xl font-bold text-gray-900 dark:text-white">Our Mission</h2>
+                    <p className="text-gray-600 dark:text-gray-300 mt-1">What drives us forward</p>
                   </div>
                 </div>
                 <p className="text-lg text-gray-600 leading-relaxed">
@@ -347,7 +143,7 @@ const About = () => {
       </section>
 
       {/* ===== SEÇÃO VALORES DA EMPRESA ===== */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="inline-flex items-center space-x-2 bg-blue-100 rounded-full px-4 py-2 mb-6">
@@ -361,7 +157,7 @@ const About = () => {
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {values.map((value) => (
+            {companyValues.map((value) => (
               <div 
                 key={value.title}
                 className="bg-white rounded-2xl p-8 shadow-lg border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-2 text-center group"
@@ -392,7 +188,7 @@ const About = () => {
           </div>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {stats.map((stat) => (
+            {aboutStats.map((stat) => (
               <div 
                 key={stat.label}
                 className="text-center bg-white/10 backdrop-blur-sm rounded-2xl p-8 border border-white/20 hover:bg-white/20 transition-all duration-300 hover:scale-105"
@@ -411,14 +207,14 @@ const About = () => {
       </section>
 
       {/* ===== SEÇÃO PARCEIROS ===== */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <PartnersCarousel />
         </div>
       </section>
 
       {/* ===== SEÇÃO DEPOIMENTO ===== */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-gray-900">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <div className="bg-gray-50 rounded-3xl p-12 shadow-lg">
             <div className="flex justify-center mb-8">
@@ -448,7 +244,7 @@ const About = () => {
       </section>
 
       {/* ===== SEÇÃO BLOG ===== */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="inline-flex items-center space-x-2 bg-blue-100 rounded-full px-4 py-2 mb-6">

@@ -1,16 +1,18 @@
 import { useState, useRef } from 'react';
 import { 
-  User, ShoppingBag, MessageCircle, 
-  Mail, Calendar, Clock,
+  ShoppingBag, MessageCircle, 
+  Mail, Clock,
   Edit3, Save, Download, Filter,
-  Package, Star,
   BarChart3, TrendingUp, Target, Award, Shield, UserCheck,
   Camera, X
 } from 'lucide-react';
 
 import UserHeader from '../components/UserHeader';
+import { useTheme } from '../context/ThemeContext';
+import { activityStats, orderHistory, recentActivities } from '../data/userProfileData';
 
 const UserProfile = () => {
+  const { theme, setTheme } = useTheme();
   const [isEditing, setIsEditing] = useState(false);
   const [notifications, setNotifications] = useState({
     email: true,
@@ -85,83 +87,9 @@ const UserProfile = () => {
     setShowAvatarModal(false);
   };
 
-  // ===== DADOS DE ATIVIDADE =====
-  const activityStats = [
-    { label: 'Pedidos Realizados', value: '24', icon: ShoppingBag, color: 'bg-blue-500' },
-    { label: 'Consultorias Solicitadas', value: '8', icon: MessageCircle, color: 'bg-green-500' },
-    { label: 'Equipamentos Alugados', value: '12', icon: Package, color: 'bg-purple-500' },
-    { label: 'Pontos de Fidelidade', value: '2,340', icon: Star, color: 'bg-yellow-500' }
-  ];
+  // ===== DADOS IMPORTADOS DE userProfileData.ts =====
 
-  // ===== HISTÓRICO DE PEDIDOS =====
-  const orderHistory = [
-    {
-      id: 'YMR-2024-001',
-      date: '2024-08-05',
-      service: 'Aluguer Gerador Industrial 500kW',
-      status: 'Concluído',
-      value: 'Kz 850,000',
-      statusColor: 'text-green-600 bg-green-100'
-    },
-    {
-      id: 'YMR-2024-002', 
-      date: '2024-07-28',
-      service: 'Consultoria Engenharia de Poços',
-      status: 'Em Andamento',
-      value: 'Kz 1,200,000',
-      statusColor: 'text-blue-600 bg-blue-100'
-    },
-    {
-      id: 'YMR-2024-003',
-      date: '2024-07-15',
-      service: 'Aluguer Compressor 350 Bar',
-      status: 'Entregue',
-      value: 'Kz 450,000',
-      statusColor: 'text-purple-600 bg-purple-100'
-    },
-    {
-      id: 'YMR-2024-004',
-      date: '2024-07-10',
-      service: 'Treinamento Técnico Offshore',
-      status: 'Concluído',
-      value: 'Kz 320,000',
-      statusColor: 'text-green-600 bg-green-100'
-    }
-  ];
 
-  // ===== ATIVIDADES RECENTES =====
-  const recentActivities = [
-    { 
-      action: 'Solicitou orçamento para gerador 750kW',
-      time: '2 horas atrás',
-      icon: ShoppingBag,
-      color: 'text-blue-600'
-    },
-    {
-      action: 'Atualizou informações de perfil',
-      time: '1 dia atrás', 
-      icon: User,
-      color: 'text-green-600'
-    },
-    {
-      action: 'Participou do webinar "Inovações em Perfuração"',
-      time: '3 dias atrás',
-      icon: Calendar,
-      color: 'text-purple-600'
-    },
-    {
-      action: 'Avaliou serviço de consultoria (5 estrelas)',
-      time: '5 dias atrás',
-      icon: Star,
-      color: 'text-yellow-600'
-    },
-    {
-      action: 'Baixou certificado de treinamento',
-      time: '1 semana atrás',
-      icon: Download,
-      color: 'text-indigo-600'
-    }
-  ];
 
   // ===== MENSAGENS RECENTES =====
   const recentMessages = [
@@ -721,8 +649,12 @@ const UserProfile = () => {
                 </div>
 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-2">Tema</label>
-                  <select className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300">
+                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tema</label>
+                  <select 
+                    value={theme}
+                    onChange={(e) => setTheme(e.target.value as 'light' | 'dark' | 'auto')}
+                    className="w-full p-4 border border-gray-300 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300 bg-white dark:bg-gray-700 text-gray-900 dark:text-gray-100"
+                  >
                     <option value="light">Claro</option>
                     <option value="dark">Escuro</option>
                     <option value="auto">Automático</option>

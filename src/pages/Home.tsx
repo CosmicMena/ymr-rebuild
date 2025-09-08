@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import HeroSlider from '../components/HeroSlider'; 
 //import AdSlider from '../components/AdSlider';
 import ProductMiniSlider from '../components/ProductMiniSlider';
@@ -13,8 +13,6 @@ import { ArrowRight, Download } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import { heroSlides } from '../data/heroSlides';
 //import { adSlides } from "../data/adSlides";
-import { productSlides } from "../data/productSlides";
-import { newsSlides } from "../data/newsSlides";
 import { apiFetch } from '../services/api';
 import { features } from "../data/features";
 import { gif } from "../data/gif";
@@ -73,7 +71,7 @@ const Home = () => {
   }, []);
 
   return (
-    <div className="min-h-screen page-content">
+    <div className="min-h-screen page-content bg-white dark:bg-gray-900">
       {/* ===== POPUP PROMOCIONAL ===== */}
       <PromoPopup open={open} onClose={close} />
 
@@ -81,20 +79,20 @@ const Home = () => {
       <HeroSlider slides={heroSlides as any} heightClass="h-[60vh] md:h-[70vh]" />
 
       {/* ===== SEÇÃO PRODUTOS E ASIDE ===== */}
-      <section className="py-10 bg-white">
+      <section className="py-10 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Layout Flex para Desktop e Stack para Mobile */}
           <div className="flex flex-col lg:flex-row gap-8">
             
             <div className="flex-1 min-w-0">
               {/* ===== SEÇÃO "POR QUE ESCOLHER A YMR" ===== */}
-              <section className="py-8 md:py-10 bg-gray-50">
+              <section className="py-8 md:py-10 bg-gray-50 dark:bg-gray-800">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                   <div className="text-center mb-6 md:mb-8">
-                    <h2 className="text-2xl md:text-4xl font-bold text-gray-900 mb-2">
+                    <h2 className="text-2xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
                       Why Choose YMR Industrial?
                     </h2>
-                    <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
+                    <p className="text-base md:text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
                       We combine quality products with exceptional service to support your industrial needs.
                     </p>
                   </div>
@@ -169,13 +167,13 @@ const Home = () => {
               <AsideNewsletter/>
               
               {/* 1. PRODUTOS EM SLIDE */}
-              <ProductMiniSlider slides={productSlides} />
+              <ProductMiniSlider useApi={true} limit={3} />
 
               {/* 1.2. BANNER ANIMADO COM GIF */}
               <AsideGif img={gif.img} title={gif.title}/>
 
               {/* 2. NOTÍCIAS SLIDE */}
-              <NewsCarousel slides={newsSlides} />
+              <NewsCarousel />
               
               {/* 6 SLIDER VERTICAL DE IMAGENS */}
               <AsideVerticalSlider images={[
@@ -192,13 +190,13 @@ const Home = () => {
       </section>
 
       {/* Bloco do Aside abaixo do conteúdo em Mobile/Tablet */}
-      <section className="py-8 bg-white lg:hidden">
+      <section className="py-8 bg-white dark:bg-gray-900 lg:hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="space-y-6">
             {/* Notícias, Newsletter e Produtos em Destaque */}
             <AsideNewsletter />
-            <ProductMiniSlider slides={productSlides} />
-            <NewsCarousel slides={newsSlides} />
+            <ProductMiniSlider useApi={true} limit={3} />
+            <NewsCarousel />
           </div>
         </div>
       </section>

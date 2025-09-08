@@ -24,10 +24,10 @@ export default function AdSlider({ slides, delay = 3000, height = "h-40" }: Prop
             <div className={`w-1/3 bg-gradient-to-br ${s.gradient ?? "from-blue-600 to-purple-600"} flex items-center justify-center`}>
               <img src={s.image} alt={s.title} className="object-contain max-h-full p-4" />
             </div>
-            <div className="flex-1 p-4">
-              <h4 className="font-bold text-lg">{s.title}</h4>
+            <div className="flex-1 p-4 text-gray-900 dark:text-gray-100">
+              <h4 className="font-bold text-lg text-gray-900 dark:text-white">{s.title}</h4>
               {s.discount && <span className="inline-block mt-2 text-sm bg-red-600 text-white px-2 py-1 rounded">{s.discount}</span>}
-              <p className="mt-3 text-sm text-gray-600">Lorem ipsum breve descrição se necessário.</p>
+              <p className="mt-3 text-sm text-gray-600 dark:text-gray-300">Lorem ipsum breve descrição se necessário.</p>
               <div className="mt-4">
                 <Link to={s.link ?? "/products"} className="inline-block bg-red-600 text-white px-3 py-2 rounded">
                   {s.cta ?? "Ver"}

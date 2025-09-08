@@ -1,100 +1,16 @@
 import { useState, useEffect } from 'react';
-import { Wrench, Zap, Database, CheckCircle, ArrowRight, ChevronLeft, ChevronRight, Target, Eye, Briefcase, Cog, GraduationCap } from 'lucide-react';
+import { Wrench, Database, CheckCircle, ArrowRight, ChevronLeft, ChevronRight, Target, Eye, Cog } from 'lucide-react';
+import { localServices, aboudServices, aboudStats } from '../data/servicesData';
 
 const Services = () => {
   const [currentSlide, setCurrentSlide] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
-  // ===== DADOS DOS SERVIÇOS LOCAIS COM IMAGENS =====
-  const localServices = [
-    {
-      icon: Database,
-      title: 'Tanques de Armazenamento de Óleos Pesados',
-      description: 'Aluguer de tanques especializados para armazenamento seguro de óleos pesados com diferentes capacidades e sistemas de monitoramento avançados.',
-      features: ['Capacidades de 50m³ a 500m³', 'Sistemas de segurança integrados', 'Monitoramento 24/7', 'Manutenção preventiva incluída', 'Certificação internacional'],
-      backgroundImage: 'https://ymrindustrial.com/assets/produtos/us.jpg',
-      specs: 'Ideal para refinarias, petroquímicas e distribuidoras'
-    },
-    {
-      icon: Zap,
-      title: 'Geradores Industriais Pesados',
-      description: 'Aluguer de geradores industriais de alta potência (100kW a 2000kW) para garantir energia contínua e confiável em seus projetos mais exigentes.',
-      features: ['Potência de 100kW a 2000kW', 'Consumo otimizado de combustível', 'Operação silenciosa', 'Suporte técnico 24/7', 'Instalação e configuração incluídas'],
-      backgroundImage: 'https://ymrindustrial.com/assets/produtos/gerador.jpg',
-      specs: 'Perfeito para construção, mineração e eventos industriais'
-    },
-    {
-      icon: Wrench,
-      title: 'Compressores Industriais Pesados',
-      description: 'Equipamentos de compressão industrial de última geração para aplicações em projetos de grande escala, com tecnologia avançada e eficiência superior.',
-      features: ['Pressão até 350 bar', 'Tecnologia de ponta alemã', 'Baixíssima manutenção', 'Eficiência energética superior', 'Controle remoto disponível'],
-      backgroundImage: 'https://ymrindustrial.com/assets/produtos/elgi.jpg',
-      specs: 'Essencial para petróleo, gás e indústria química'
-    }
-  ];
+  // ===== DADOS DOS SERVIÇOS LOCAIS =====
+  // Os dados agora vêm do arquivo servicesData.ts
 
   // ===== DADOS DETALHADOS DA ABOUD CONSULTORIA =====
-  const aboudServices = [
-    {
-      icon: Briefcase,
-      title: 'Representações Comerciais',
-      description: 'Representação exclusiva de marcas internacionais líderes em tecnologia para a indústria de petróleo e gás.',
-      image: 'https://mobilit.com.br/wp-content/uploads/2021/11/executivos-c-level.jpg',
-      services: [
-        'Completação e estimulação de poços',
-        'Acessórios de revestimento de alta qualidade',
-        'Análise e otimização de perfuração',
-        'Sensores de fundo de poço',
-        'Sistemas de elevação artificial (ESP, BCS)',
-        'Equipamentos de pescaria especializados',
-        'Medidores de vazão multifásicos',
-        'Bombas de jateamento de fundo'
-      ],
-      brands: ['Fishbones', 'Vulcan', 'Adaga', 'BBM', 'ABBON', 'Novomet']
-    },
-    {
-      icon: Cog,
-      title: 'Engenharia de Poço',
-      description: 'Soluções completas em engenharia de poços com profissionais PhD e décadas de experiência internacional.',
-      image: 'https://hidrocon.com/wp-content/uploads/2023/06/11122018_Hidrocon_%C2%A9tarsofigueira_0166-1.jpg',
-      services: [
-        'Perfuração direcional e horizontal',
-        'Dimensionamento de colunas de perfuração',
-        'Análise de estabilidade de poço',
-        'Controle e contenção de areia',
-        'Estimulação e fraturamento',
-        'Cimentação especializada',
-        'Intervenção em poços',
-        'Garantia de escoamento'
-      ],
-      specialties: ['Perfuração Offshore', 'Poços Multilaterais', 'Análise Geomecânica']
-    },
-    {
-      icon: GraduationCap,
-      title: 'Treinamento Técnico e Operacional',
-      description: 'Programas de capacitação técnica desenvolvidos por especialistas com experiência internacional comprovada.',
-      image: 'https://img.freepik.com/fotos-gratis/equipa-de-engenharia-profissional-que-utiliza-software-da-industria-40-numa-fabrica-inteligente_482257-126300.jpg?semt=ais_hybrid&w=740&q=80',
-      services: [
-        'Perfuração direcional avançada',
-        'Operações offshore complexas',
-        'Cimentação especializada',
-        'Intervenção e workover',
-        'Segurança operacional',
-        'Análise de dados de perfuração',
-        'Geomecânica aplicada',
-        'Estimulação de reservatórios'
-      ],
-      certifications: ['Certificação Internacional', 'Módulos Personalizados', 'Treinamento In-Company']
-    }
-  ];
-
-  // ===== ESTATÍSTICAS DA ABOUD =====
-  const aboudStats = [
-    { number: '25+', label: 'Anos de Experiência' },
-    { number: '10+', label: 'Marcas Representadas' },
-    { number: '200+', label: 'Projetos Executados' },
-    { number: '50+', label: 'Profissionais Treinados' }
-  ];
+  // Os dados agora vêm do arquivo servicesData.ts
 
   // ===== AUTO SLIDER LOGIC =====
   useEffect(() => {
@@ -122,7 +38,7 @@ const Services = () => {
   };
 
   return (
-    <div className="min-h-screen page-content">
+    <div className="min-h-screen page-content bg-white dark:bg-gray-900">
       {/* ===== SEÇÃO HERO ===== */}
       <section className="relative bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white py-24 overflow-hidden">
         {/* Background Pattern */}
@@ -176,7 +92,7 @@ const Services = () => {
       </section>
 
       {/* ===== SEÇÃO SLIDER DE SERVIÇOS LOCAIS ===== */}
-      <section className="py-20 bg-gray-50 overflow-hidden">
+      <section className="py-20 bg-gray-50 dark:bg-gray-800 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="inline-flex items-center space-x-2 bg-blue-100 rounded-full px-4 py-2 mb-6">
@@ -382,7 +298,7 @@ const Services = () => {
       </section>
 
       {/* ===== SEÇÃO PARCERIA ABOUD - INTRODUÇÃO ===== */}
-      <section className="py-20 bg-white">
+      <section className="py-20 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="inline-flex items-center space-x-2 bg-red-100 rounded-full px-4 py-2 mb-6">
@@ -514,7 +430,7 @@ const Services = () => {
       </section>
 
       {/* ===== SERVIÇOS DETALHADOS DA ABOUD ===== */}
-      <section className="py-20 bg-gray-50">
+      <section className="py-20 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <div className="inline-flex items-center space-x-2 bg-blue-100 rounded-full px-4 py-2 mb-6">

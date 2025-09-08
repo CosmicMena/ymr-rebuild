@@ -1,30 +1,8 @@
 import React, { useState } from 'react';
-import { FileText, Eye, ExternalLink, Package, AlertCircle, Plus, CheckSquare, Square, Clock, CheckCircle, XCircle, ChevronDown, ChevronRight, Trash2, ShoppingCart, Award, X } from 'lucide-react';
+import { Eye, ExternalLink, Package, AlertCircle, Plus, CheckSquare, Square, Clock, CheckCircle, XCircle, ChevronDown, ChevronRight, Trash2, ShoppingCart, X } from 'lucide-react';
+import { initialCartItems, initialRfqList, type CartItem, type Rfq } from '../data/cartData';
 
 // ===== TIPOS =====
-type CartItem = {
-  id: string;
-  name: string;
-  category: string;
-  brand: string;
-  model: string;
-  cod: string;
-  availability: string;
-  image: string;
-  description: string;
-  features: string[];
-  rfqId: string | null;
-  status: string | null;
-  addedDate: string;
-};
-
-type Rfq = {
-  id: string;
-  name: string;
-  date: string;
-  itemCount: number;
-};
-
 type StatusInfo = {
   color: string;
   icon: React.ComponentType<{ className?: string }>;
@@ -32,88 +10,7 @@ type StatusInfo = {
 
 const CartPage = () => {
   // ===== ESTADOS DO SISTEMA DE RFQ =====
-  const [cartItems, setCartItems] = useState<CartItem[]>([
-    {
-      id: 'GEN-750-KW-2024',
-      name: 'Gerador Industrial 750kW',
-      category: 'Geradores de Energia',
-      brand: 'YMR Power Solutions',
-      model: 'YMR-750i Pro',
-      cod: 'YMR-GEN-750-2024-001',
-      availability: 'Em Estoque',
-      image: 'https://images.unsplash.com/photo-1621905252507-b35492cc74b4?w=400&h=300&fit=crop',
-      description: 'Gerador industrial de alta performance com 750kW de potência, ideal para operações offshore e industriais de grande porte. Equipado com tecnologia avançada de controle automático.',
-      features: [
-        'Potência nominal: 750kW',
-        'Sistema de partida automática',
-        'Monitoramento remoto 24/7',
-        'Consumo otimizado de combustível'
-      ],
-      rfqId: 'RFQ-2024-001',
-      status: 'Em Espera',
-      addedDate: '2024-08-15'
-    },
-    {
-      id: 'COMP-500-HP-2024',
-      name: 'Compressor Industrial 500HP',
-      category: 'Compressores',
-      brand: 'YMR Compression',
-      model: 'YMR-500C Elite',
-      cod: 'YMR-COMP-500-2024-002',
-      availability: 'Sob Encomenda',
-      image: 'https://images.unsplash.com/photo-1581094794329-c8112a89af12?w=400&h=300&fit=crop',
-      description: 'Compressor de ar industrial de alta eficiência, projetado para operações contínuas em ambientes industriais exigentes.',
-      features: [
-        'Potência: 500HP',
-        'Pressão máxima: 250 PSI',
-        'Sistema de resfriamento automático',
-        'Controle digital avançado'
-      ],
-      rfqId: 'RFQ-2024-001',
-      status: 'Concluído',
-      addedDate: '2024-08-15'
-    },
-    {
-      id: 'PUMP-300-GPM-2024',
-      name: 'Bomba Centrífuga 300GPM',
-      category: 'Bombas',
-      brand: 'YMR Pumping',
-      model: 'YMR-300P Pro',
-      cod: 'YMR-PUMP-300-2024-003',
-      availability: 'Em Estoque',
-      image: 'https://images.unsplash.com/photo-1558618047-b2c1ff18c0c3?w=400&h=300&fit=crop',
-      description: 'Bomba centrífuga de alta performance para aplicações industriais, com capacidade de 300 galões por minuto.',
-      features: [
-        'Capacidade: 300 GPM',
-        'Altura manométrica: 150 ft',
-        'Material: Aço inoxidável',
-        'Vedação mecânica dupla'
-      ],
-      rfqId: 'RFQ-2024-002',
-      status: 'Em Espera',
-      addedDate: '2024-08-20'
-    },
-    {
-      id: 'VALVE-DN200-2024',
-      name: 'Válvula Borboleta DN200',
-      category: 'Válvulas',
-      brand: 'YMR Valves',
-      model: 'YMR-BF200',
-      cod: 'YMR-VALVE-200-2024-004',
-      availability: 'Em Estoque',
-      image: 'https://images.unsplash.com/photo-1615796153287-98eacf0abb13?w=400&h=300&fit=crop',
-      description: 'Válvula borboleta industrial DN200 com atuador pneumático, ideal para controle de fluxo em sistemas industriais.',
-      features: [
-        'Diâmetro: DN200 (8")',
-        'Pressão: PN16',
-        'Atuador pneumático incluído',
-        'Material: Ferro fundido'
-      ],
-      rfqId: null,
-      status: null,
-      addedDate: '2024-08-25'
-    }
-  ]);
+  const [cartItems, setCartItems] = useState<CartItem[]>(initialCartItems);
 
   // Carregar itens do localStorage se existirem
   React.useEffect(() => {
@@ -134,10 +31,7 @@ const CartPage = () => {
     } catch {}
   }, []);
 
-  const [rfqList, setRfqList] = useState<Rfq[]>([
-    { id: 'RFQ-2024-001', name: 'Projeto Plataforma Alpha', date: '2024-08-15', itemCount: 2 },
-    { id: 'RFQ-2024-002', name: 'Expansão Refinaria Beta', date: '2024-08-20', itemCount: 1 }
-  ]);
+  const [rfqList, setRfqList] = useState<Rfq[]>(initialRfqList);
 
   const [selectedItems, setSelectedItems] = useState<string[]>([]);
   const [selectedProduct, setSelectedProduct] = useState<CartItem | null>(null);
@@ -260,7 +154,7 @@ const CartPage = () => {
   };
 
   return (
-    <div className="min-h-screen page-content">
+    <div className="min-h-screen page-content bg-white dark:bg-gray-900">
       {/* ===== SEÇÃO HERO ===== */}
       <section className="relative bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white py-12 md:py-24 overflow-hidden">
         {/* Background Pattern */}

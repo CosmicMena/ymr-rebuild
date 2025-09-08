@@ -74,7 +74,7 @@ const Login = () => {
   }
 
   return (
-    <div className="min-h-screen relative bg-gradient-to-br from-gray-50 via-indigo-50 to-gray-100 pt-20 overflow-hidden">
+    <div className="min-h-screen relative bg-gradient-to-br from-gray-50 via-indigo-50 to-gray-100 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900 pt-20 overflow-hidden">
       <div
         className="pointer-events-none absolute inset-0 opacity-40"
         style={{

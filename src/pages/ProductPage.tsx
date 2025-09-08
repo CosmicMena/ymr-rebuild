@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import type { Product } from '../types';
 import { apiFetch } from '../services/api';
 import { useCart } from '../context/CartContext';
+import { productSpecifications } from '../data/productSpecifications';
 import { 
   ShoppingCart, Heart, Share2, Shield,
   ChevronLeft, ChevronRight, Download, FileText, Truck, Phone,
@@ -76,37 +77,7 @@ const ProductPage = () => {
     navigate('/cart');
   }
 
-  // ===== ESPECIFICAÇÕES TÉCNICAS =====
-  const specifications = [
-    { category: 'Potência', specs: [
-      { label: 'Potência Nominal', value: '750 kW' },
-      { label: 'Potência Máxima', value: '825 kW' },
-      { label: 'Tensão', value: '380V / 440V' },
-      { label: 'Frequência', value: '50/60 Hz' },
-      { label: 'Fator de Potência', value: '0.8' }
-    ]},
-    { category: 'Motor', specs: [
-      { label: 'Marca', value: 'Caterpillar' },
-      { label: 'Modelo', value: 'C32 ACERT' },
-      { label: 'Cilindros', value: '12' },
-      { label: 'Aspiração', value: 'Turboalimentado' },
-      { label: 'Combustível', value: 'Diesel' }
-    ]},
-    { category: 'Dimensões', specs: [
-      { label: 'Comprimento', value: '6.2 m' },
-      { label: 'Largura', value: '2.1 m' },
-      { label: 'Altura', value: '2.8 m' },
-      { label: 'Peso', value: '8.500 kg' },
-      { label: 'Tanque', value: '1.200 L' }
-    ]},
-    { category: 'Operação', specs: [
-      { label: 'Nível de Ruído', value: '75 dB(A)' },
-      { label: 'Consumo', value: '180 L/h' },
-      { label: 'Autonomia', value: '6.7 horas' },
-      { label: 'Temperatura Op.', value: '-20°C a +50°C' },
-      { label: 'Partida', value: 'Automática' }
-    ]}
-  ];
+  // ===== ESPECIFICAÇÕES TÉCNICAS IMPORTADAS =====
 
   // ===== DOCUMENTAÇÕES =====
   // documentos desativados por enquanto
@@ -123,9 +94,9 @@ const ProductPage = () => {
   };
 
   return (
-    <div className="page-content min-h-screen bg-gray-50">
+    <div className="page-content min-h-screen bg-gray-50 dark:bg-gray-900">
       {/* ===== BREADCRUMB ===== */}
-      <div className="bg-white border-b border-gray-200">
+      <div className="bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <nav className="flex items-center gap-2 text-sm text-gray-500">
             <Link to="/" className="hover:text-gray-700 transition-colors">Início</Link>
@@ -161,7 +132,7 @@ const ProductPage = () => {
           
           {/* ===== GALERIA DE IMAGENS ===== */}
           <div className="space-y-4">
-            <div className="relative bg-white rounded-xl shadow-sm overflow-hidden">
+            <div className="relative bg-white dark:bg-gray-800 rounded-xl shadow-sm overflow-hidden">
               <img 
                 src={gallery[selectedImage] || ''}
                 alt={product?.name || ''}
@@ -364,7 +335,7 @@ const ProductPage = () => {
                 <div>
                   <h2 className="text-2xl font-bold text-gray-900 mb-6">Especificações Técnicas</h2>
                   <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-                    {specifications.map((category, index) => (
+                    {productSpecifications.map((category, index) => (
                       <div key={index} className="bg-gray-50 rounded-lg p-6">
                         <h3 className="font-bold text-lg text-gray-900 mb-4">{category.category}</h3>
                         <div className="space-y-3">

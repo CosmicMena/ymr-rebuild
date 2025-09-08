@@ -104,7 +104,7 @@ export default function UserHeader({ userData, activeTab, setActiveTab, onAvatar
     <>
       {/* ===== HEADER DO PERFIL ===== */}
       <div
-        className={`bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white 
+        className={`bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 dark:from-gray-950 dark:via-gray-900 dark:to-gray-950 text-white 
   sticky z-10 relative overflow-hidden transform-gpu transition-all duration-500 ease-in-out ${isHidden ? '-translate-y-full opacity-0' : 'translate-y-0 opacity-100'}`}
         style={{ top: headerOffsetPx }}
       >

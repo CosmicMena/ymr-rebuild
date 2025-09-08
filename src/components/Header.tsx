@@ -311,7 +311,7 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50">
       {/* ===== PRIMEIRA NAVBAR - NAVEGAÇÃO PRINCIPAL ===== */}
       {/* Navbar superior com fundo azul escuro e navegação principal */}
-      <div className="bg-gray-900 text-white hidden md:block">
+      <div className="bg-gray-900 dark:bg-gray-950 text-white hidden md:block">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-12">
             {/* Primeira Div - Links de Navegação com sublinhado gradiente animado */}
@@ -425,7 +425,7 @@ const Header = () => {
 
       {/* ===== SEGUNDA NAVBAR - LOGO, BUSCA E PRODUTOS ===== */}
       {/* Navbar inferior com logo, caixa de busca e link para produtos */}
-      <div className={`bg-[#e6e6e6] shadow-md transition-all duration-300 ${
+      <div className={`bg-[#e6e6e6] dark:bg-gray-700 shadow-md transition-all duration-300 ${
         isScrolled ? 'shadow-lg' : ''
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -454,7 +454,7 @@ const Header = () => {
             {/* Segunda Div - Caixa de Busca Moderna com Dropdown */}
             <div className="hidden md:block flex-1 max-w-3xl mx-8">
               <div ref={searchRef} className="relative">
-                <form onSubmit={handleSearch} className="flex items-center h-12 bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
+                <form onSubmit={handleSearch} className="flex items-center h-12 bg-white dark:bg-gray-600 rounded-xl shadow-lg border border-gray-200 dark:border-gray-500 overflow-hidden">
                   <div className="relative flex-1 h-full min-w-0">
                     <div className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400">
                       {isSearching ? (

@@ -137,7 +137,7 @@ const Products = () => {
   });
 
   return (
-    <div className="min-h-screen page-content">
+    <div className="min-h-screen page-content bg-white dark:bg-gray-900">
       {/* ===== SEÇÃO HERO - CABEÇALHO PRINCIPAL ===== */}
       {/* Seção principal com título e descrição da página de produtos */}
       <section className="relative bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white py-16 md:py-24 overflow-hidden">
@@ -165,15 +165,15 @@ const Products = () => {
 
       {/* ===== SEÇÃO FILTROS ===== */}
       {/* Seção que contém os controles de busca e filtro por categoria */}
-      <section className="py-6 md:py-8 bg-gray-50 border-b">
+      <section className="py-6 md:py-8 bg-gray-50 dark:bg-gray-800 border-b dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
             <div className="inline-flex items-center space-x-2 bg-blue-100 rounded-full px-4 py-2 mb-4">
               <Search className="h-5 w-5 text-blue-600" />
               <span className="text-sm font-medium text-blue-800">Buscar e Filtrar</span>
             </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Encontre o Produto Ideal</h2>
-            <p className="text-gray-600">Use os filtros abaixo para encontrar exatamente o que precisa</p>
+            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">Encontre o Produto Ideal</h2>
+            <p className="text-gray-600 dark:text-gray-300">Use os filtros abaixo para encontrar exatamente o que precisa</p>
           </div>
           
           <div className="flex flex-col lg:flex-row gap-4 md:gap-6 items-center justify-center">
@@ -226,7 +226,7 @@ const Products = () => {
               <>
                 {/* ==== CARD DE SUBCATEGORIAS ==== */}
                 <div className="mt-6 md:mt-8">
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4 text-center">Subcategorias</h3>
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 dark:text-white mb-3 md:mb-4 text-center">Subcategorias</h3>
                   <div className="flex flex-wrap justify-center gap-1.5 md:gap-2">
                     {filteredSubcategories.map((subcategory, index) => (
                       <button
@@ -250,7 +250,7 @@ const Products = () => {
       
       {/* ===== SEÇÃO GRADE DE PRODUTOS ===== */}
       {/* Seção que exibe os produtos filtrados em formato de grid responsivo */}
-      <section className="py-8 md:py-12 bg-white">
+      <section className="py-8 md:py-12 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <div className="inline-flex items-center space-x-2 bg-green-100 rounded-full px-4 py-2 mb-4">
@@ -351,7 +351,7 @@ const Products = () => {
         </div>
       </section>
       {/* Produtos em Destaque abaixo (mobile/tablet) */}
-      <section className="lg:hidden py-6 bg-white">
+      <section className="lg:hidden py-6 bg-white dark:bg-gray-900">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 border border-blue-200">
             <h3 className="text-lg font-semibold text-blue-900 mb-4">Produtos em Destaque</h3>
@@ -361,9 +361,9 @@ const Products = () => {
       </section>
 
       {/* Quick Stats no rodapé */}
-      <section className="py-8 bg-gray-50">
+      <section className="py-8 bg-gray-50 dark:bg-gray-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100">
+          <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100 dark:border-gray-700">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl border border-blue-200 hover:shadow-lg transition-all duration-300">
                 <div className="flex items-center justify-center gap-2 mb-2">

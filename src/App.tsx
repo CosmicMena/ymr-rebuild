@@ -2,9 +2,11 @@ import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AuthProvider } from './context/AuthContext';
 import { CartProvider } from './context/CartContext';
+import { ThemeProvider } from './context/ThemeContext';
 import Header from './components/Header';
 import Footer from './components/Footer';
 import QuickContact from './components/QuickContact';
+import ScrollToTop from './components/ScrollToTop';
 import Home from './pages/Home';
 import Products from './pages/Products';
 import Categories from './pages/Categories';
@@ -39,29 +41,32 @@ function BottomChrome() {
 function App() {
   return (
     <Router>
-      <AuthProvider>
-        <CartProvider>
-          <div className="min-h-screen bg-white">
-          <TopChrome />
-          <main>
-            <Routes>
-              <Route path="/" element={<Home />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/categories" element={<Categories />} />
-              <Route path="/about" element={<About />} />
-              <Route path="/catalog" element={<Catalog />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/services" element={<Service />} />
-              <Route path="/userprofile" element={<RequireAuth><UserProfile /></RequireAuth>} />
-              <Route path="/product/:id" element={<ProductPage />} />
-              <Route path="/cart" element={<RequireAuth><CartPage /></RequireAuth>} />
-              <Route path="/login" element={<Login />} />
-            </Routes>
-          </main>
-          <BottomChrome />
-          </div>
-        </CartProvider>
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <CartProvider>
+            <div className="min-h-screen bg-white dark:bg-gray-900">
+            <ScrollToTop />
+            <TopChrome />
+            <main>
+              <Routes>
+                <Route path="/" element={<Home />} />
+                <Route path="/products" element={<Products />} />
+                <Route path="/categories" element={<Categories />} />
+                <Route path="/about" element={<About />} />
+                <Route path="/catalog" element={<Catalog />} />
+                <Route path="/contact" element={<Contact />} />
+                <Route path="/services" element={<Service />} />
+                <Route path="/userprofile" element={<RequireAuth><UserProfile /></RequireAuth>} />
+                <Route path="/product/:id" element={<ProductPage />} />
+                <Route path="/cart" element={<RequireAuth><CartPage /></RequireAuth>} />
+                <Route path="/login" element={<Login />} />
+              </Routes>
+            </main>
+            <BottomChrome />
+            </div>
+          </CartProvider>
+        </AuthProvider>
+      </ThemeProvider>
     </Router>
   );
 }

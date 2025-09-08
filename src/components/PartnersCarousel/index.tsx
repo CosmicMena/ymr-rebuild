@@ -41,14 +41,14 @@ const PartnersCarousel = () => {
     <div className="relative overflow-hidden">
       {/* Cabeçalho da Seção */}
       <div className="text-center mb-16">
-        <div className="inline-flex items-center space-x-2 bg-blue-100 rounded-full px-4 py-2 mb-6">
-          <Building2 className="h-5 w-5 text-blue-600" />
-          <span className="text-sm font-medium text-blue-800">Parceiros</span>
+        <div className="inline-flex items-center space-x-2 bg-blue-100 dark:bg-blue-900/30 rounded-full px-4 py-2 mb-6">
+          <Building2 className="h-5 w-5 text-blue-600 dark:text-blue-400" />
+          <span className="text-sm font-medium text-blue-800 dark:text-blue-200">Parceiros</span>
         </div>
-        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+        <h2 className="text-3xl md:text-4xl font-bold text-gray-900 dark:text-white mb-4">
           Nossos Parceiros de Confiança
         </h2>
-        <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+        <p className="text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
           Trabalhamos com as melhores marcas do mercado para oferecer produtos de alta qualidade e confiabilidade.
         </p>
       </div>
@@ -66,12 +66,12 @@ const PartnersCarousel = () => {
               key={`${partner.id}-${index}`}
               className="flex-shrink-0 group"
             >
-              <div className="w-56 h-32 bg-white rounded-2xl flex items-center justify-center border-2 border-gray-200 hover:border-blue-300 transition-all duration-300 hover:shadow-xl group-hover:scale-105 shadow-lg">
+              <div className="w-56 h-32 bg-white dark:bg-gray-800 rounded-2xl flex items-center justify-center border-2 border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-500 transition-all duration-300 hover:shadow-xl group-hover:scale-105 shadow-lg">
                 <div className="text-center p-4">
-                  <div className="text-lg font-bold text-gray-700 group-hover:text-blue-600 transition-colors duration-300 mb-2">
+                  <div className="text-lg font-bold text-gray-700 dark:text-gray-200 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors duration-300 mb-2">
                     {partner.name}
                   </div>
-                  <div className="text-sm text-gray-500 mb-2">
+                  <div className="text-sm text-gray-500 dark:text-gray-400 mb-2">
                     {partner.category}
                   </div>
                   {partner.website && (
@@ -79,7 +79,7 @@ const PartnersCarousel = () => {
                       href={partner.website}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="inline-flex items-center space-x-1 text-blue-600 hover:text-blue-700 text-xs font-medium transition-colors duration-200"
+                      className="inline-flex items-center space-x-1 text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 text-xs font-medium transition-colors duration-200"
                     >
                       <span>Visitar</span>
                       <ExternalLink className="h-3 w-3" />
@@ -93,8 +93,8 @@ const PartnersCarousel = () => {
       </div>
 
       {/* Overlay gradients para efeito de fade nas bordas */}
-      <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-gray-50 to-transparent pointer-events-none z-10"></div>
-      <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-gray-50 to-transparent pointer-events-none z-10"></div>
+      <div className="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-gray-50 dark:from-gray-800 to-transparent pointer-events-none z-10"></div>
+      <div className="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-gray-50 dark:from-gray-800 to-transparent pointer-events-none z-10"></div>
     </div>
   );
 };

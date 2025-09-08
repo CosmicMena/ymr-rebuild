@@ -35,7 +35,7 @@ const Footer = () => {
         </button>
       )}
 
-      <footer className="relative bg-gray-900 text-white overflow-hidden">
+      <footer className="relative bg-gray-900 dark:bg-gray-950 text-white overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-3">
           <div className="absolute inset-0" style={{
