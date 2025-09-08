@@ -158,7 +158,7 @@ const UserProfile = () => {
       />
 
       {/* ===== CONTEÚDO PRINCIPAL ===== */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 md:py-12">
         
         {/* ===== TAB PERFIL ===== */}
         {activeTab === 'profile' && (
@@ -172,8 +172,8 @@ const UserProfile = () => {
               <p className="text-gray-600">Gerencie suas informações pessoais e profissionais</p>
             </div>
             
-            <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
-              <div className="flex items-center justify-between mb-8">
+            <div className="bg-white rounded-2xl shadow-lg p-5 md:p-8 border border-gray-100">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 mb-8">
                 <div className="flex items-center space-x-3">
                   <div className="bg-blue-100 p-3 rounded-xl">
                     <UserCheck className="h-6 w-6 text-blue-600" />
@@ -193,7 +193,7 @@ const UserProfile = () => {
                 </button>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-2">Nome Completo</label>
                   {isEditing ? (
@@ -201,7 +201,7 @@ const UserProfile = () => {
                       type="text"
                       value={userData.name}
                       onChange={(e) => setUserData({...userData, name: e.target.value})}
-                      className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300"
+                      className="w-full p-3 md:p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300"
                     />
                   ) : (
                     <div className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl text-gray-900 border border-gray-200">{userData.name}</div>
@@ -215,7 +215,7 @@ const UserProfile = () => {
                       type="email"
                       value={userData.email}
                       onChange={(e) => setUserData({...userData, email: e.target.value})}
-                      className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300"
+                      className="w-full p-3 md:p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300"
                     />
                   ) : (
                     <div className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl text-gray-900 border border-gray-200">{userData.email}</div>
@@ -229,7 +229,7 @@ const UserProfile = () => {
                       type="tel"
                       value={userData.phone}
                       onChange={(e) => setUserData({...userData, phone: e.target.value})}
-                      className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300"
+                      className="w-full p-3 md:p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300"
                     />
                   ) : (
                     <div className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl text-gray-900 border border-gray-200">{userData.phone}</div>
@@ -243,7 +243,7 @@ const UserProfile = () => {
                       type="date"
                       value={userData.birthDate}
                       onChange={(e) => setUserData({...userData, birthDate: e.target.value})}
-                      className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300"
+                      className="w-full p-3 md:p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300"
                     />
                   ) : (
                     <div className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl text-gray-900 border border-gray-200">
@@ -259,7 +259,7 @@ const UserProfile = () => {
                       type="text"
                       value={userData.company}
                       onChange={(e) => setUserData({...userData, company: e.target.value})}
-                      className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300"
+                      className="w-full p-3 md:p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300"
                     />
                   ) : (
                     <div className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl text-gray-900 border border-gray-200">{userData.company}</div>
@@ -273,7 +273,7 @@ const UserProfile = () => {
                       type="text"
                       value={userData.position}
                       onChange={(e) => setUserData({...userData, position: e.target.value})}
-                      className="w-full p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300"
+                      className="w-full p-3 md:p-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm transition-all duration-300"
                     />
                   ) : (
                     <div className="p-4 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl text-gray-900 border border-gray-200">{userData.position}</div>
@@ -283,14 +283,14 @@ const UserProfile = () => {
             </div>
 
             {/* ===== ESTATÍSTICAS RÁPIDAS ===== */}
-            <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
               {activityStats.map((stat) => (
-                <div key={stat.label} className="bg-white rounded-2xl shadow-lg p-6 text-center border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
-                  <div className={`${stat.color} w-16 h-16 rounded-2xl flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300`}>
-                    <stat.icon className="h-8 w-8 text-white" />
+                <div key={stat.label} className="bg-white rounded-2xl shadow-lg p-4 md:p-6 text-center border border-gray-100 hover:shadow-xl transition-all duration-300 hover:-translate-y-1 group">
+                  <div className={`${stat.color} w-12 h-12 md:w-16 md:h-16 rounded-2xl flex items-center justify-center mx-auto mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300`}>
+                    <stat.icon className="h-6 w-6 md:h-8 md:w-8 text-white" />
                   </div>
-                  <div className="text-3xl font-bold text-gray-900 mb-2">{stat.value}</div>
-                  <div className="text-sm text-gray-600 font-medium">{stat.label}</div>
+                  <div className="text-2xl md:text-3xl font-bold text-gray-900 mb-1 md:mb-2">{stat.value}</div>
+                  <div className="text-xs md:text-sm text-gray-600 font-medium">{stat.label}</div>
                 </div>
               ))}
             </div>
@@ -309,19 +309,19 @@ const UserProfile = () => {
               <p className="text-gray-600">Acompanhe suas ações e interações recentes</p>
             </div>
             
-            <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Atividades Recentes</h3>
+            <div className="bg-white rounded-2xl shadow-lg p-5 md:p-8 border border-gray-100">
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6">Atividades Recentes</h3>
               <div className="space-y-4">
                 {recentActivities.map((activity, index) => (
-                  <div key={index} className="flex items-center gap-4 p-6 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200 hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
-                    <div className={`p-3 rounded-full bg-white shadow-sm group-hover:scale-110 transition-transform duration-300 ${activity.color}`}>
-                      <activity.icon className="h-5 w-5" />
+                  <div key={index} className="flex items-center gap-3 md:gap-4 p-4 md:p-6 bg-gradient-to-r from-gray-50 to-gray-100 rounded-xl border border-gray-200 hover:shadow-md transition-all duration-300 hover:-translate-y-1 group">
+                    <div className={`p-2.5 md:p-3 rounded-full bg-white shadow-sm group-hover:scale-110 transition-transform duration-300 ${activity.color}`}>
+                      <activity.icon className="h-4 w-4 md:h-5 md:w-5" />
                     </div>
                     <div className="flex-1">
-                      <p className="font-medium text-gray-900 group-hover:text-blue-600 transition-colors">{activity.action}</p>
-                      <p className="text-sm text-gray-500">{activity.time}</p>
+                      <p className="text-sm md:text-base font-medium text-gray-900 group-hover:text-blue-600 transition-colors">{activity.action}</p>
+                      <p className="text-xs md:text-sm text-gray-500">{activity.time}</p>
                     </div>
-                    <div className="opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                    <div className="hidden md:block opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                       <div className="w-2 h-2 bg-blue-500 rounded-full"></div>
                     </div>
                   </div>
@@ -329,29 +329,29 @@ const UserProfile = () => {
               </div>
             </div>
 
-            <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Resumo de Atividades</h3>
-              <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl border border-blue-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
-                  <div className="bg-blue-100 p-3 rounded-full w-16 h-16 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <TrendingUp className="h-8 w-8 text-blue-600 mx-auto" />
+            <div className="bg-white rounded-2xl shadow-lg p-5 md:p-8 border border-gray-100">
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6">Resumo de Atividades</h3>
+              <div className="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                <div className="text-center p-5 md:p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl border border-blue-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
+                  <div className="bg-blue-100 p-3 rounded-full w-14 h-14 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <TrendingUp className="h-6 w-6 md:h-8 md:w-8 text-blue-600 mx-auto" />
                   </div>
-                  <div className="text-3xl font-bold text-blue-600 mb-2">+15%</div>
-                  <div className="text-sm text-gray-600 font-medium">Atividade este mês</div>
+                  <div className="text-2xl md:text-3xl font-bold text-blue-600 mb-1 md:mb-2">+15%</div>
+                  <div className="text-xs md:text-sm text-gray-600 font-medium">Atividade este mês</div>
                 </div>
-                <div className="text-center p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl border border-green-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
-                  <div className="bg-green-100 p-3 rounded-full w-16 h-16 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <Target className="h-8 w-8 text-green-600 mx-auto" />
+                <div className="text-center p-5 md:p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl border border-green-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
+                  <div className="bg-green-100 p-3 rounded-full w-14 h-14 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <Target className="h-6 w-6 md:h-8 md:w-8 text-green-600 mx-auto" />
                   </div>
-                  <div className="text-3xl font-bold text-green-600 mb-2">92%</div>
-                  <div className="text-sm text-gray-600 font-medium">Taxa de satisfação</div>
+                  <div className="text-2xl md:text-3xl font-bold text-green-600 mb-1 md:mb-2">92%</div>
+                  <div className="text-xs md:text-sm text-gray-600 font-medium">Taxa de satisfação</div>
                 </div>
-                <div className="text-center p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl border border-purple-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
-                  <div className="bg-purple-100 p-3 rounded-full w-16 h-16 mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
-                    <Award className="h-8 w-8 text-purple-600 mx-auto" />
+                <div className="text-center p-5 md:p-6 bg-gradient-to-br from-purple-50 to-purple-100 rounded-xl border border-purple-200 hover:shadow-lg transition-all duration-300 hover:-translate-y-1 group">
+                  <div className="bg-purple-100 p-3 rounded-full w-14 h-14 md:w-16 md:h-16 mx-auto mb-3 md:mb-4 group-hover:scale-110 transition-transform duration-300">
+                    <Award className="h-6 w-6 md:h-8 md:w-8 text-purple-600 mx-auto" />
                   </div>
-                  <div className="text-3xl font-bold text-purple-600 mb-2">Gold</div>
-                  <div className="text-sm text-gray-600 font-medium">Status de cliente</div>
+                  <div className="text-2xl md:text-3xl font-bold text-purple-600 mb-1 md:mb-2">Gold</div>
+                  <div className="text-xs md:text-sm text-gray-600 font-medium">Status de cliente</div>
                 </div>
               </div>
             </div>
@@ -370,23 +370,23 @@ const UserProfile = () => {
               <p className="text-gray-600">Acompanhe o status e histórico dos seus pedidos</p>
             </div>
             
-            <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
-              <div className="flex items-center justify-between mb-6">
-                <h3 className="text-2xl font-bold text-gray-900">Histórico de Pedidos</h3>
+            <div className="bg-white rounded-2xl shadow-lg p-5 md:p-8 border border-gray-100">
+              <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 mb-6">
+                <h3 className="text-xl md:text-2xl font-bold text-gray-900">Histórico de Pedidos</h3>
                 <div className="flex items-center gap-2">
-                  <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors">
+                  <button className="flex items-center gap-2 px-3 py-2 md:px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors text-sm md:text-base">
                     <Filter className="h-4 w-4" />
                     Filtrar
                   </button>
-                  <button className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors">
+                  <button className="flex items-center gap-2 px-3 py-2 md:px-4 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors text-sm md:text-base">
                     <Download className="h-4 w-4" />
                     Exportar
                   </button>
                 </div>
               </div>
 
-              <div className="overflow-x-auto">
-                <table className="w-full">
+              <div className="overflow-x-auto -mx-4 md:mx-0">
+                <table className="w-full text-sm md:text-base min-w-[640px] md:min-w-0">
                   <thead>
                     <tr className="border-b border-gray-200">
                       <th className="text-left py-3 px-4 font-semibold text-gray-900">ID</th>
@@ -442,20 +442,20 @@ const UserProfile = () => {
               <p className="text-gray-600">Gerencie suas comunicações e notificações</p>
             </div>
             
-            <div className="bg-white rounded-2xl shadow-lg p-8 border border-gray-100">
-              <h3 className="text-2xl font-bold text-gray-900 mb-6">Mensagens Recentes</h3>
+            <div className="bg-white rounded-2xl shadow-lg p-5 md:p-8 border border-gray-100">
+              <h3 className="text-xl md:text-2xl font-bold text-gray-900 mb-4 md:mb-6">Mensagens Recentes</h3>
               <div className="space-y-4">
                 {recentMessages.map((message, index) => (
-                  <div key={index} className={`p-6 rounded-xl border-l-4 hover:shadow-md transition-all duration-300 hover:-translate-y-1 group ${
+                  <div key={index} className={`p-4 md:p-6 rounded-xl border-l-4 hover:shadow-md transition-all duration-300 hover:-translate-y-1 group ${
                     message.unread ? 'border-red-500 bg-gradient-to-r from-red-50 to-red-100' : 'border-gray-300 bg-gradient-to-r from-gray-50 to-gray-100'
                   }`}>
                     <div className="flex items-start justify-between">
                       <div className="flex-1">
                         <div className="flex items-center gap-3 mb-2">
-                          <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                          <div className={`w-9 h-9 md:w-10 md:h-10 rounded-full flex items-center justify-center ${
                             message.unread ? 'bg-red-200' : 'bg-gray-200'
                           }`}>
-                            <MessageCircle className={`h-5 w-5 ${message.unread ? 'text-red-600' : 'text-gray-600'}`} />
+                            <MessageCircle className={`h-4 w-4 md:h-5 md:w-5 ${message.unread ? 'text-red-600' : 'text-gray-600'}`} />
                           </div>
                           <div>
                             <span className="font-semibold text-gray-900 group-hover:text-blue-600 transition-colors">{message.from}</span>
@@ -465,9 +465,9 @@ const UserProfile = () => {
                           </div>
                         </div>
                         <p className="text-gray-700 mb-2 font-medium">{message.subject}</p>
-                        <p className="text-sm text-gray-500">{message.time}</p>
+                        <p className="text-xs md:text-sm text-gray-500">{message.time}</p>
                       </div>
-                      <button className="opacity-0 group-hover:opacity-100 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300">
+                      <button className="hidden md:block opacity-0 group-hover:opacity-100 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-all duration-300">
                         Abrir
                       </button>
                     </div>
@@ -699,24 +699,24 @@ const UserProfile = () => {
 
       {/* ===== FOOTER COM AÇÕES RÁPIDAS ===== */}
       <div className="bg-white border-t border-gray-200 z-10">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 md:py-4">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3">
             <div className="flex items-center gap-4">
-              <div className="flex items-center gap-2 text-sm text-gray-500">
+              <div className="flex items-center gap-2 text-xs md:text-sm text-gray-500">
                 <Clock className="h-4 w-4" />
                 Última atividade: há 2 horas
               </div>
-              <div className="flex items-center gap-2 text-sm text-green-600">
+              <div className="flex items-center gap-2 text-xs md:text-sm text-green-600">
                 <Shield className="h-4 w-4" />
                 Conta verificada
               </div>
             </div>
-            <div className="flex items-center gap-3">
-              <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors">
+            <div className="flex items-center gap-2 md:gap-3">
+              <button className="flex items-center gap-2 px-3 py-2 md:px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors text-sm">
                 <MessageCircle className="h-4 w-4" />
                 Suporte
               </button>
-              <button className="flex items-center gap-2 px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors">
+              <button className="flex items-center gap-2 px-3 py-2 md:px-4 bg-red-600 hover:bg-red-700 text-white rounded-lg transition-colors text-sm">
                 <ShoppingBag className="h-4 w-4" />
                 Novo Pedido
               </button>

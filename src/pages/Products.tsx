@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Search, Filter, Package, Grid3X3, Users, Award } from 'lucide-react';
+import { Search, Filter, Package, Grid3X3, Award } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import { Product } from '../types';
 import { apiFetch } from '../services/api';
@@ -140,7 +140,7 @@ const Products = () => {
     <div className="min-h-screen page-content">
       {/* ===== SEÇÃO HERO - CABEÇALHO PRINCIPAL ===== */}
       {/* Seção principal com título e descrição da página de produtos */}
-      <section className="relative bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white py-24 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white py-16 md:py-24 overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0" style={{
@@ -154,45 +154,18 @@ const Products = () => {
               <Package className="h-5 w-5" />
               <span className="text-sm font-medium">Our Products</span>
             </div>
-            
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-              Nossos Produtos
-            </h1>
             <p className="text-xl text-gray-300 max-w-4xl mx-auto mb-8">
               Descubra nossa gama abrangente de ferramentas industriais, equipamentos e soluções para suas necessidades.
             </p>
             
-            {/* Quick Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
-                <div className="flex items-center justify-center space-x-2 mb-2">
-                  <Package className="h-6 w-6 text-blue-400" />
-                  <span className="text-2xl font-bold">{filteredProducts.length}</span>
-                </div>
-                <p className="text-sm text-gray-300">Produtos Disponíveis</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
-                <div className="flex items-center justify-center space-x-2 mb-2">
-                  <Grid3X3 className="h-6 w-6 text-yellow-400" />
-                  <span className="text-2xl font-bold">{categories.length}</span>
-                </div>
-                <p className="text-sm text-gray-300">Categorias</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
-                <div className="flex items-center justify-center space-x-2 mb-2">
-                  <Award className="h-6 w-6 text-green-400" />
-                  <span className="text-2xl font-bold">98%</span>
-                </div>
-                <p className="text-sm text-gray-300">Disponibilidade</p>
-              </div>
-            </div>
+            
           </div>
         </div>
       </section>
 
       {/* ===== SEÇÃO FILTROS ===== */}
       {/* Seção que contém os controles de busca e filtro por categoria */}
-      <section className="py-8 bg-gray-50 border-b">
+      <section className="py-6 md:py-8 bg-gray-50 border-b">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-8">
             <div className="inline-flex items-center space-x-2 bg-blue-100 rounded-full px-4 py-2 mb-4">
@@ -203,25 +176,25 @@ const Products = () => {
             <p className="text-gray-600">Use os filtros abaixo para encontrar exatamente o que precisa</p>
           </div>
           
-          <div className="flex flex-col lg:flex-row gap-6 items-center justify-center">
+          <div className="flex flex-col lg:flex-row gap-4 md:gap-6 items-center justify-center">
             {/* Campo de Busca */}
-            <div className="relative flex-1 max-w-md">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
+            <div className="relative flex-1 max-w-md w-full">
+              <Search className="absolute left-3 md:left-4 top-1/2 transform -translate-y-1/2 text-gray-400 h-5 w-5" />
               <input
                 type="text"
                 placeholder="Buscar produtos..."
-                className="w-full pl-12 pr-4 py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
+                className="w-full pl-10 md:pl-12 pr-3 md:pr-4 py-3 md:py-4 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
             </div>
             {/* Filtro por Categoria */}
-            <div className="flex items-center gap-3">
-              <div className="bg-blue-50 p-3 rounded-xl">
+            <div className="flex items-center gap-2 md:gap-3 w-full md:w-auto">
+              <div className="bg-blue-50 p-2.5 md:p-3 rounded-xl">
                 <Filter className="h-5 w-5 text-blue-600" />
               </div>
               <select
-                className="border border-gray-300 rounded-xl px-6 py-4 focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm min-w-[200px]"
+                className="border border-gray-300 rounded-xl px-3 md:px-6 py-2.5 md:py-4 focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm text-sm md:text-base w-full md:w-auto min-w-0 md:min-w-[200px]"
                 value={selectedCategory}
                 onChange={(e) => {
                   setSelectedCategory(e.target.value);
@@ -252,16 +225,16 @@ const Products = () => {
           ) : filteredSubcategories.length === 0 ? (<></>) : (
               <>
                 {/* ==== CARD DE SUBCATEGORIAS ==== */}
-                <div className="mt-8">
-                  <h3 className="text-lg font-semibold text-gray-900 mb-4 text-center">Subcategorias</h3>
-                  <div className="flex flex-wrap justify-center gap-3">
+                <div className="mt-6 md:mt-8">
+                  <h3 className="text-base md:text-lg font-semibold text-gray-900 mb-3 md:mb-4 text-center">Subcategorias</h3>
+                  <div className="flex flex-wrap justify-center gap-1.5 md:gap-2">
                     {filteredSubcategories.map((subcategory, index) => (
                       <button
                         key={index}
-                        onClick={() => setSelectedSubcategory(subcategory.name)}
-                        className={`px-6 py-3 rounded-xl font-medium transition-all duration-300 transform hover:scale-105 ${
+                        onClick={() => setSelectedSubcategory(selectedSubcategory === subcategory.name ? '' : subcategory.name)}
+                        className={`px-2.5 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-medium transition-all duration-200 hover:scale-105 ${
                           selectedSubcategory === subcategory.name 
-                            ? 'bg-blue-600 text-white shadow-lg' 
+                            ? 'bg-blue-600 text-white shadow-md' 
                             : 'bg-white text-gray-700 border border-gray-300 hover:border-blue-300 hover:bg-blue-50'
                         }`}
                       >
@@ -277,26 +250,26 @@ const Products = () => {
       
       {/* ===== SEÇÃO GRADE DE PRODUTOS ===== */}
       {/* Seção que exibe os produtos filtrados em formato de grid responsivo */}
-      <section className="py-12 bg-white">
+      <section className="py-8 md:py-12 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
             <div className="inline-flex items-center space-x-2 bg-green-100 rounded-full px-4 py-2 mb-4">
               <Package className="h-5 w-5 text-green-600" />
               <span className="text-sm font-medium text-green-800">Resultados da Busca</span>
             </div>
-            <div className="bg-gray-50 rounded-2xl p-6 max-w-2xl mx-auto">
-              <p className="text-lg font-semibold text-gray-900">
+            <div className="bg-gray-50 rounded-2xl p-5 md:p-6 max-w-2xl mx-auto">
+              <p className="text-base md:text-lg font-semibold text-gray-900">
                 {filteredProducts.length} {filteredProducts.length === 1 ? 'produto encontrado' : 'produtos encontrados'}
               </p>
               {selectedCategory !== 'All' && (
-                <p className="text-gray-600 mt-1">na categoria <span className="font-medium text-blue-600">{selectedCategory}</span></p>
+                <p className="text-gray-600 mt-1 text-sm md:text-base">na categoria <span className="font-medium text-blue-600">{selectedCategory}</span></p>
               )}
               {searchTerm && (
-                <p className="text-gray-600 mt-1">correspondendo a <span className="font-medium text-blue-600">"{searchTerm}"</span></p>
+                <p className="text-gray-600 mt-1 text-sm md:text-base">correspondendo a <span className="font-medium text-blue-600">"{searchTerm}"</span></p>
               )}
             </div>
           </div>
-          <div className="w-full px-4 flex flex-col lg:flex-row gap-8">
+          <div className="w-full px-2 md:px-4 flex flex-col lg:flex-row gap-6 md:gap-8">
             {/* Conteúdo Principal */}
             <div className="flex-1 min-w-0 lg:max-w-[1000px]">
               {isLoading ? (
@@ -336,7 +309,7 @@ const Products = () => {
                   </div>
                 </div>
               ) : (
-                <div className="grid grid-cols-[repeat(auto-fill,_minmax(10rem,_12rem))] gap-[20px]">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-5">
                   {filteredProducts.map((product, index) => (
                     <div
                       key={product.id}
@@ -351,7 +324,7 @@ const Products = () => {
             </div>
 
             {/* Aside Publicitário */}
-            <aside className="min-w-[320px] max-w-xs lg:flex-shrink-0 space-y-8">
+            <aside className="hidden lg:block min-w-[320px] max-w-xs lg:flex-shrink-0 space-y-8">
               <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 border border-blue-200">
                 <h3 className="text-lg font-semibold text-blue-900 mb-4">Produtos em Destaque</h3>
                 <ProductMiniSlider slides={productSlides} />
@@ -375,6 +348,46 @@ const Products = () => {
             </aside>
           </div>
 
+        </div>
+      </section>
+      {/* Produtos em Destaque abaixo (mobile/tablet) */}
+      <section className="lg:hidden py-6 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-gradient-to-br from-blue-50 to-blue-100 rounded-2xl p-6 border border-blue-200">
+            <h3 className="text-lg font-semibold text-blue-900 mb-4">Produtos em Destaque</h3>
+            <ProductMiniSlider slides={productSlides} />
+          </div>
+        </div>
+      </section>
+
+      {/* Quick Stats no rodapé */}
+      <section className="py-8 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="bg-white rounded-2xl shadow-lg p-6 md:p-8 border border-gray-100">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+              <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-xl border border-blue-200 hover:shadow-lg transition-all duration-300">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Package className="h-6 w-6 text-blue-600" />
+                  <span className="text-2xl font-bold text-blue-700">{filteredProducts.length}</span>
+                </div>
+                <p className="text-sm text-blue-800 font-medium">Produtos Disponíveis</p>
+              </div>
+              <div className="text-center p-6 bg-gradient-to-br from-yellow-50 to-yellow-100 rounded-xl border border-yellow-200 hover:shadow-lg transition-all duration-300">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Grid3X3 className="h-6 w-6 text-yellow-600" />
+                  <span className="text-2xl font-bold text-yellow-700">{categories.length}</span>
+                </div>
+                <p className="text-sm text-yellow-800 font-medium">Categorias</p>
+              </div>
+              <div className="text-center p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-xl border border-green-200 hover:shadow-lg transition-all duration-300">
+                <div className="flex items-center justify-center gap-2 mb-2">
+                  <Award className="h-6 w-6 text-green-600" />
+                  <span className="text-2xl font-bold text-green-700">98%</span>
+                </div>
+                <p className="text-sm text-green-800 font-medium">Disponibilidade</p>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </div>

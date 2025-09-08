@@ -205,8 +205,8 @@ const Services = () => {
                       {/* SUBTLE OVERLAY */}
                       <div className="absolute inset-0 bg-black/20"></div>
                       
-                      {/* WHITE CARD OVERLAY */}
-                      <div className="absolute inset-0 flex items-center justify-end">
+                      {/* WHITE CARD OVERLAY (desktop e acima) */}
+                      <div className="hidden md:flex absolute inset-0 items-center justify-end">
                         <div className="mx-8 md:mx-16 max-w-lg">
                           <div className="bg-white rounded-2xl shadow-2xl p-6 md:p-8 backdrop-blur-sm bg-white/95 transform transition-all duration-500 hover:scale-105 text-center max-w-sm">
                             {/* ICON */}
@@ -279,6 +279,71 @@ const Services = () => {
                         </div>
                       </div>
                     </div>
+
+                    {/* CARD (mobile) abaixo da imagem */}
+                    <div className="md:hidden mt-4 px-4">
+                      <div className="bg-white rounded-2xl shadow-xl p-5 backdrop-blur-sm bg-white/95 text-center max-w-md mx-auto animate-fade-in-up">
+                        <div className="bg-blue-50 p-3 rounded-full w-14 h-14 mx-auto mb-4 flex items-center justify-center">
+                          <service.icon className="h-7 w-7 text-blue-600" />
+                        </div>
+                        <h3 className="text-lg font-semibold text-gray-900 mb-3">{service.title.split(' ').slice(0, 2).join(' ')}</h3>
+                        <p className="text-gray-600 mb-4 text-sm leading-relaxed">
+                          {service.title.includes('Tanques') && 'Aluguer de tanques especializados para armazenamento seguro de óleos pesados com diferentes capacidades.'}
+                          {service.title.includes('Geradores') && 'Aluguer de geradores industriais de alta potência para garantir energia contínua em seus projetos.'}
+                          {service.title.includes('Compressores') && 'Equipamentos de compressão industrial para diversas aplicações em projetos de grande escala.'}
+                        </p>
+                        <ul className="space-y-2 text-left">
+                          {service.title.includes('Tanques') && (
+                            <>
+                              <li className="flex items-center text-sm text-gray-600">
+                                <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                                Diferentes capacidades
+                              </li>
+                              <li className="flex items-center text-sm text-gray-600">
+                                <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                                Sistemas de segurança
+                              </li>
+                              <li className="flex items-center text-sm text-gray-600">
+                                <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                                Manutenção incluída
+                              </li>
+                            </>
+                          )}
+                          {service.title.includes('Geradores') && (
+                            <>
+                              <li className="flex items-center text-sm text-gray-600">
+                                <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                                Alta potência
+                              </li>
+                              <li className="flex items-center text-sm text-gray-600">
+                                <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                                Operação contínua
+                              </li>
+                              <li className="flex items-center text-sm text-gray-600">
+                                <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                                Suporte técnico 24/7
+                              </li>
+                            </>
+                          )}
+                          {service.title.includes('Compressores') && (
+                            <>
+                              <li className="flex items-center text-sm text-gray-600">
+                                <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                                Tecnologia avançada
+                              </li>
+                              <li className="flex items-center text-sm text-gray-600">
+                                <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                                Baixa manutenção
+                              </li>
+                              <li className="flex items-center text-sm text-gray-600">
+                                <span className="w-2 h-2 bg-blue-600 rounded-full mr-3"></span>
+                                Eficiência energética
+                              </li>
+                            </>
+                          )}
+                        </ul>
+                      </div>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -337,33 +402,60 @@ const Services = () => {
               </p>
             </div>
             
-            {/* VISUAL CONNECTION */}
-            <div className="flex items-center justify-center space-x-8 mb-12">
-              
-              <div className="text-center animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-                <img 
-                  src="./src/assets/logo/ymrlogo.png" 
-                  alt="YMR Industrial"
-                  className="w-24 h-24 rounded-full border-4 border-red-100 mb-4 mx-auto object-cover shadow-lg"
-                />
-                <p className="font-semibold text-gray-900">YMR Industrial</p>
-              </div>
+            {/* VISUAL CONNECTION - Interactive and Responsive */}
+            <div className="mb-12">
+              <div className="relative max-w-3xl mx-auto">
+                {/* Horizontal connector (md+) */}
+                <div className="hidden md:block absolute left-1/2 -translate-x-1/2 top-12 w-full max-w-[520px] h-[3px] flowing-line rounded-full" aria-hidden="true" />
 
-              <div className="flex items-center animate-fade-in-up" style={{ animationDelay: '0.2s' }}>
-                <ArrowRight className="h-8 w-8 text-red-600 mx-4" />
-                <div className="bg-red-600 text-white px-4 py-2 rounded-full font-semibold">
-                  PARCERIA
+                {/* Vertical connector (mobile) */}
+                <div className="md:hidden absolute left-1/2 -translate-x-1/2 top-20 h-20 w-[3px] flowing-line-vert rounded-full" aria-hidden="true" />
+
+                <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-6">
+                  {/* Left brand */}
+                  <div className="flex md:block items-center justify-center">
+                    <div className="group text-center animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+                      <div className="relative inline-block">
+                        <img 
+                          src="./src/assets/logo/ymrlogo.png" 
+                          alt="YMR Industrial"
+                          className="w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-blue-100 mx-auto object-cover shadow-lg group-hover:scale-105 transition-transform"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                        <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-white text-blue-700 text-[10px] px-2 py-0.5 rounded-full shadow md:hidden">YMR</span>
+                      </div>
+                      <p className="hidden md:block font-semibold text-gray-900 mt-3">YMR Industrial</p>
+                    </div>
+                  </div>
+
+                  {/* Middle badge with interactive pulsate */}
+                  <div className="flex items-center justify-center">
+                    <div className="relative">
+                      <div className="absolute inset-0 rounded-full bg-red-500/20 blur-md animate-pulse" aria-hidden="true"></div>
+                      <div className="relative bg-red-600 text-white px-4 py-2 rounded-full font-semibold shadow-lg select-none">
+                        PARCERIA
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Right brand */}
+                  <div className="flex md:block items-center justify-center">
+                    <div className="group text-center animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
+                      <div className="relative inline-block">
+                        <img 
+                          src="./src/assets/logo/aboudlogo.png" 
+                          alt="Aboud Consultoria"
+                          className="w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-blue-100 mx-auto object-cover shadow-lg group-hover:scale-105 transition-transform"
+                          loading="lazy"
+                          decoding="async"
+                        />
+                        <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-white text-blue-700 text-[10px] px-2 py-0.5 rounded-full shadow md:hidden">Aboud</span>
+                      </div>
+                      <p className="hidden md:block font-semibold text-gray-900 mt-3">Aboud Consultoria</p>
+                    </div>
+                  </div>
                 </div>
-                <ArrowRight className="h-8 w-8 text-red-600 mx-4" />
-              </div>
-              
-              <div className="text-center animate-fade-in-up" style={{ animationDelay: '0.4s' }}>
-                <img 
-                  src="./src/assets/logo/aboudlogo.png" 
-                  alt="Aboud Consultoria"
-                  className="w-24 h-24 rounded-full border-4 border-red-100 mb-4 mx-auto object-cover shadow-lg"
-                />
-                <p className="font-semibold text-gray-900">Aboud Consultoria</p>
               </div>
             </div>
           </div>

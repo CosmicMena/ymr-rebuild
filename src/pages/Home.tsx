@@ -78,7 +78,7 @@ const Home = () => {
       <PromoPopup open={open} onClose={close} />
 
       {/* ===== SEÇÃO HERO - SLIDER MODERNO ===== */}
-      <HeroSlider slides={heroSlides as any} />
+      <HeroSlider slides={heroSlides as any} heightClass="h-[60vh] md:h-[70vh]" />
 
       {/* ===== SEÇÃO PRODUTOS E ASIDE ===== */}
       <section className="py-10 bg-white">
@@ -88,25 +88,25 @@ const Home = () => {
             
             <div className="flex-1 min-w-0">
               {/* ===== SEÇÃO "POR QUE ESCOLHER A YMR" ===== */}
-              <section className="py-10 bg-gray-50">
+              <section className="py-8 md:py-10 bg-gray-50">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                  <div className="text-center mb-8">
-                    <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
+                  <div className="text-center mb-6 md:mb-8">
+                    <h2 className="text-2xl md:text-4xl font-bold text-gray-900 mb-2">
                       Why Choose YMR Industrial?
                     </h2>
-                    <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                    <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
                       We combine quality products with exceptional service to support your industrial needs.
                     </p>
                   </div>
                   
-                  <div className="grid justify-center grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] gap-[30px]">
+                  <div className="grid justify-center grid-cols-[repeat(auto-fit,_minmax(200px,_1fr))] gap-4 md:gap-[30px]">
                     {features.map((feature, index) => (
                       <div 
                         key={feature.title} 
                         className="text-center animate-fade-in-up h-full"
                         style={{ animationDelay: `${index * 0.1}s` }}
                       >
-                        <div className="bg-white rounded-xl p-6 shadow-md card-hover h-full flex flex-col">
+                        <div className="bg-white rounded-xl p-5 md:p-6 shadow-md card-hover h-full flex flex-col">
                           <div className="bg-red-50 p-4 rounded-lg w-16 h-16 mx-auto mb-4 flex items-center justify-center flex-shrink-0">
                             <feature.icon className="h-8 w-8 text-red-600" />
                           </div>
@@ -120,17 +120,17 @@ const Home = () => {
                 </div>
               </section>
               {/* ==== título ==== */}
-              <div className="text-left mb-16">
-                <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-10">
+              <div className="text-left mb-10 md:mb-16">
+                <h2 className="text-2xl md:text-4xl font-bold text-gray-900 mt-6 md:mt-10">
                   Categories
                 </h2>
-                <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+                <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
                 { /*Discover our most popular industrial solutions trusted by professionals.*/ }
                 </p>
               </div>
               {/* Produtos - Principal */}
               <div className="flex-1">
-                <div className="grid grid-cols-[repeat(auto-fit,_minmax(12rem,_1fr))] gap-[30px]">
+                <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-[30px]">
                   {isLoadingCats && (
                     <div className="text-gray-600">Carregando categorias...</div>
                   )}
@@ -153,8 +153,8 @@ const Home = () => {
                   ))}
                 </div>
 
-                <div className="text-center mt-12">
-                  <Link to="/products" className="btn-primary text-lg px-8 py-4">
+                <div className="text-center mt-8 md:mt-12">
+                  <Link to="/products" className="btn-primary text-base md:text-lg px-6 md:px-8 py-3 md:py-4">
                     View All Products
                     <ArrowRight className="h-5 w-5" />
                   </Link>
@@ -162,8 +162,8 @@ const Home = () => {
               </div>
             </div>
 
-            {/* Aside Publicitário */}
-            <aside className="min-w-[320px] max-w-xs lg:flex-shrink-0 space-y-6">
+            {/* Aside Publicitário - Desktop */}
+            <aside className="hidden lg:block min-w-[320px] max-w-xs lg:flex-shrink-0 space-y-6">
               
               {/* 5. NEWSLETTER SIGNUP */}
               <AsideNewsletter/>
@@ -187,6 +187,18 @@ const Home = () => {
               
               {/*<AdSlider slides={adSlides} />*/}
             </aside>
+          </div>
+        </div>
+      </section>
+
+      {/* Bloco do Aside abaixo do conteúdo em Mobile/Tablet */}
+      <section className="py-8 bg-white lg:hidden">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="space-y-6">
+            {/* Notícias, Newsletter e Produtos em Destaque */}
+            <AsideNewsletter />
+            <ProductMiniSlider slides={productSlides} />
+            <NewsCarousel slides={newsSlides} />
           </div>
         </div>
       </section>

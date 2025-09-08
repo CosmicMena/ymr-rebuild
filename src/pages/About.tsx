@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import PartnersCarousel from '../components/PartnersCarousel';
 import { 
   Target, Eye, Heart, Users, Award, Clock, 
   ArrowRight, Star, TrendingUp,
@@ -406,6 +407,13 @@ const About = () => {
               </div>
             ))}
           </div>
+        </div>
+      </section>
+
+      {/* ===== SEÇÃO PARCEIROS ===== */}
+      <section className="py-20 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <PartnersCarousel />
         </div>
       </section>
 

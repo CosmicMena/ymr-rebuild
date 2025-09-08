@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FileText, Eye, ExternalLink, Package, AlertCircle, Plus, CheckSquare, Square, Clock, CheckCircle, XCircle, ChevronDown, ChevronRight, Trash2, ShoppingCart, Award } from 'lucide-react';
+import { FileText, Eye, ExternalLink, Package, AlertCircle, Plus, CheckSquare, Square, Clock, CheckCircle, XCircle, ChevronDown, ChevronRight, Trash2, ShoppingCart, Award, X } from 'lucide-react';
 
 // ===== TIPOS =====
 type CartItem = {
@@ -143,6 +143,7 @@ const CartPage = () => {
   const [selectedProduct, setSelectedProduct] = useState<CartItem | null>(null);
   const [selectedRfqId, setSelectedRfqId] = useState<string | null>(null);
   const [showRfqModal, setShowRfqModal] = useState(false);
+  const [showProductModal, setShowProductModal] = useState(false);
   const [collapsedRfqIds, setCollapsedRfqIds] = useState<Record<string, boolean>>({});
 
   // ===== FUNÇÕES DE SELEÇÃO =====
@@ -261,7 +262,7 @@ const CartPage = () => {
   return (
     <div className="min-h-screen page-content">
       {/* ===== SEÇÃO HERO ===== */}
-      <section className="relative bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white py-24 overflow-hidden">
+      <section className="relative bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white py-12 md:py-24 overflow-hidden">
         {/* Background Pattern */}
         <div className="absolute inset-0 opacity-10">
           <div className="absolute inset-0" style={{
@@ -275,46 +276,17 @@ const CartPage = () => {
               <ShoppingCart className="h-5 w-5" />
               <span className="text-sm font-medium">Request for Quotation</span>
             </div>
-            
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-              Solicitação de Orçamento
-            </h1>
-            <p className="text-xl text-gray-300 max-w-4xl mx-auto mb-8">
+            <p className="text-lg md:text-xl text-gray-300 max-w-4xl mx-auto mb-6 md:mb-8 px-4">
               Gerencie suas solicitações de orçamento de produtos e processo de aquisição de forma eficiente.
             </p>
-            
-            {/* Quick Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
-                <div className="flex items-center justify-center space-x-2 mb-2">
-                  <Package className="h-6 w-6 text-blue-400" />
-                  <span className="text-2xl font-bold">{cartItems.length}</span>
-                </div>
-                <p className="text-sm text-gray-300">Produtos no Carrinho</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
-                <div className="flex items-center justify-center space-x-2 mb-2">
-                  <FileText className="h-6 w-6 text-yellow-400" />
-                  <span className="text-2xl font-bold">{rfqList.length}</span>
-                </div>
-                <p className="text-sm text-gray-300">RFQs Ativas</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
-                <div className="flex items-center justify-center space-x-2 mb-2">
-                  <Award className="h-6 w-6 text-green-400" />
-                  <span className="text-2xl font-bold">98%</span>
-                </div>
-                <p className="text-sm text-gray-300">Taxa de Aprovação</p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
 
       {/* ===== SEÇÃO RESUMO ===== */}
       <section className="bg-white border-b">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-          <div className="flex flex-col sm:flex-row justify-between items-center gap-4">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 md:py-6">
+          <div className="flex flex-col sm:flex-row justify-between items-center gap-3 md:gap-4">
             <div className="flex items-center gap-4">
               <Package className="h-6 w-6 text-gray-600" />
               <span className="text-lg font-semibold text-gray-800">
@@ -322,10 +294,10 @@ const CartPage = () => {
               </span>
             </div>
             {unassignedItems.length > 0 && (
-              <div className="flex gap-3">
+              <div className="flex flex-wrap gap-2 md:gap-3">
                 <button
                   onClick={selectAllItems}
-                  className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+                  className="px-3 md:px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors text-sm md:text-base"
                 >
                   Selecionar Todos
                 </button>
@@ -333,13 +305,13 @@ const CartPage = () => {
                   <>
                     <button
                       onClick={clearSelection}
-                      className="px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors"
+                      className="px-3 md:px-4 py-2 bg-gray-500 text-white rounded-lg hover:bg-gray-600 transition-colors text-sm md:text-base"
                     >
                       Limpar Seleção
                     </button>
                     <button
                       onClick={() => setShowRfqModal(true)}
-                      className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors"
+                      className="px-3 md:px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors text-sm md:text-base"
                     >
                       Criar RFQ ({selectedItems.length})
                     </button>
@@ -352,26 +324,26 @@ const CartPage = () => {
       </section>
 
       {/* ===== SEÇÃO PRINCIPAL ===== */}
-      <section className="py-8 bg-gray-50">
+      <section className="py-6 md:py-8 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8">
             {/* ===== LISTA DE PRODUTOS AGRUPADOS ===== */}
-            <div className="lg:col-span-2 space-y-6">
+            <div className="lg:col-span-2 space-y-4 md:space-y-6">
               {/* Produtos Não Atribuídos */}
               {unassignedItems.length > 0 && (
                 <div>
-                  <h3 className="text-xl font-bold text-gray-800 mb-4 flex items-center gap-2">
+                  <h3 className="text-lg md:text-xl font-bold text-gray-800 mb-3 md:mb-4 flex items-center gap-2">
                     <AlertCircle className="h-5 w-5 text-orange-500" />
                     Produtos Não Atribuídos ({unassignedItems.length})
                   </h3>
-                  <div className="space-y-3">
+                  <div className="space-y-2 md:space-y-3">
                     {unassignedItems.map((item) => (
                       <ProductCard 
                         key={item.id}
                         item={item}
                         isSelected={selectedItems.includes(item.id)}
                         onToggleSelect={toggleItemSelection}
-                        onViewDetails={setSelectedProduct}
+                        onViewDetails={(product) => { setSelectedProduct(product); setShowProductModal(true); }}
                         showSelection={true}
                       />
                     ))}
@@ -420,7 +392,7 @@ const CartPage = () => {
                           <ProductCard 
                             key={item.id}
                             item={item}
-                            onViewDetails={(p) => { setSelectedRfqId(null); setSelectedProduct(p); }}
+                            onViewDetails={(p) => { setSelectedRfqId(null); setSelectedProduct(p); setShowProductModal(true); }}
                             showSelection={false}
                             onRemoveFromRfq={() => removeFromRfq(item.id, rfqId)}
                           />
@@ -432,8 +404,8 @@ const CartPage = () => {
               })}
             </div>
 
-            {/* ===== VISUALIZADOR DE DETALHES ===== */}
-            <div className="lg:col-span-1">
+            {/* ===== VISUALIZADOR DE DETALHES (DESKTOP) ===== */}
+            <div className="hidden lg:block lg:col-span-1">
               <div className="bg-white rounded-2xl shadow-xl p-6 sticky top-8 border border-gray-100">
                 <h2 className="text-2xl font-bold text-gray-800 mb-6">
                   {selectedRfqId ? 'Resumo da RFQ' : 'Detalhes do Produto'}
@@ -458,6 +430,26 @@ const CartPage = () => {
           </div>
         </div>
       </section>
+
+      {/* ===== MODAL DE PRODUTO ===== */}
+      {showProductModal && selectedProduct && (
+        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="sticky top-0 bg-white border-b border-gray-200 p-4 flex items-center justify-between">
+              <h2 className="text-xl font-bold text-gray-800">Detalhes do Produto</h2>
+              <button
+                onClick={() => setShowProductModal(false)}
+                className="p-2 hover:bg-gray-100 rounded-lg transition-colors"
+              >
+                <X className="h-5 w-5 text-gray-500" />
+              </button>
+            </div>
+            <div className="p-6">
+              <ProductDetails product={selectedProduct} />
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* ===== MODAL DE RFQ ===== */}
       {showRfqModal && (
@@ -488,27 +480,27 @@ const CartPage = () => {
 
     return (
       <div
-        className={`bg-white rounded-xl shadow-lg border-2 p-4 transition-all duration-300 cursor-pointer hover:shadow-xl hover:-translate-y-1 ${
+        className={`bg-white rounded-xl shadow-lg border-2 p-3 md:p-4 transition-all duration-300 cursor-pointer hover:shadow-xl hover:-translate-y-1 ${
           selectedProduct?.id === item.id 
             ? 'border-blue-500 ring-2 ring-blue-200' 
             : 'border-gray-200 hover:border-blue-300'
         }`}
         onClick={() => onViewDetails(item)}
       >
-        <div className="flex items-start gap-4">
+        <div className="flex items-start gap-3 md:gap-4">
           {/* Checkbox de Seleção */}
           {showSelection && (
             <div 
-              className="mt-2 cursor-pointer"
+              className="mt-1 md:mt-2 cursor-pointer"
               onClick={(e) => {
                 e.stopPropagation();
                 onToggleSelect(item.id);
               }}
             >
               {isSelected ? (
-                <CheckSquare className="h-5 w-5 text-blue-600" />
+                <CheckSquare className="h-4 w-4 md:h-5 md:w-5 text-blue-600" />
               ) : (
-                <Square className="h-5 w-5 text-gray-400" />
+                <Square className="h-4 w-4 md:h-5 md:w-5 text-gray-400" />
               )}
             </div>
           )}
@@ -518,22 +510,22 @@ const CartPage = () => {
             <img
               src={item.image}
               alt={item.name}
-              className="w-16 h-16 object-cover rounded-lg"
+              className="w-12 h-12 md:w-16 md:h-16 object-cover rounded-lg"
             />
           </div>
 
           {/* Informações */}
           <div className="flex-1 min-w-0">
-            <h4 className="font-semibold text-gray-800 truncate">{item.name}</h4>
-            <p className="text-sm text-gray-600">{item.brand} • {item.model}</p>
+            <h4 className="font-semibold text-gray-800 truncate text-sm md:text-base">{item.name}</h4>
+            <p className="text-xs md:text-sm text-gray-600">{item.brand} • {item.model}</p>
             <p className="text-xs text-gray-500 mt-1">COD: {item.cod}</p>
             
-            <div className="flex items-center gap-2 mt-2">
-              <span className={`px-2 py-1 text-xs font-medium rounded-full ${getAvailabilityColor(item.availability)}`}>
+            <div className="flex items-center gap-1 md:gap-2 mt-2 flex-wrap">
+              <span className={`px-1.5 md:px-2 py-0.5 md:py-1 text-xs font-medium rounded-full ${getAvailabilityColor(item.availability)}`}>
                 {item.availability}
               </span>
               {item.status && (
-                <span className={`px-2 py-1 text-xs font-medium rounded-full flex items-center gap-1 ${statusInfo.color}`}>
+                <span className={`px-1.5 md:px-2 py-0.5 md:py-1 text-xs font-medium rounded-full flex items-center gap-1 ${statusInfo.color}`}>
                   <StatusIcon className="h-3 w-3" />
                   {item.status}
                 </span>
@@ -542,16 +534,16 @@ const CartPage = () => {
           </div>
 
           {/* Ações */}
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1 md:gap-2">
             <button
               onClick={(e) => {
                 e.stopPropagation();
                 onViewDetails(item);
               }}
-              className="p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors"
+              className="p-1.5 md:p-2 text-blue-600 hover:bg-blue-100 rounded-lg transition-colors"
               title="Ver Detalhes"
             >
-              <Eye className="h-4 w-4" />
+              <Eye className="h-3 w-3 md:h-4 md:w-4" />
             </button>
             {onRemoveFromRfq && (
               <button
@@ -559,10 +551,10 @@ const CartPage = () => {
                   e.stopPropagation();
                   onRemoveFromRfq();
                 }}
-                className="p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors"
+                className="p-1.5 md:p-2 text-red-600 hover:bg-red-100 rounded-lg transition-colors"
                 title="Remover da RFQ"
               >
-                <Trash2 className="h-4 w-4" />
+                <Trash2 className="h-3 w-3 md:h-4 md:w-4" />
               </button>
             )}
           </div>

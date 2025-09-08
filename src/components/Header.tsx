@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Search, User, ShoppingCart, X, ArrowRight } from 'lucide-react';
+import { Search, User, ShoppingCart, X, ArrowRight, Menu } from 'lucide-react';
 import { useAuth } from '../../src/context/AuthContext';
 import { useCart } from '../../src/context/CartContext';
 import { apiFetch } from '../services/api';
@@ -23,6 +23,13 @@ const Header = () => {
   const { cartCount } = useCart();
   const [currentLanguage, setCurrentLanguage] = useState('pt');
   const [isLanguageOpen, setIsLanguageOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isSearchExpanded, setIsSearchExpanded] = useState(false);
+  const [activeResultIndex, setActiveResultIndex] = useState<number>(-1);
+  const searchItemRefs = useRef<Array<HTMLDivElement | null>>([]);
+  const dropdownListRef = useRef<HTMLDivElement>(null);
+  const [cartBump, setCartBump] = useState(false);
+  const [isDrawerReady, setIsDrawerReady] = useState(false);
   
 
   useEffect(() => {
@@ -33,6 +40,37 @@ const Header = () => {
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // ===== FECHAMENTO COM ESC E BLOQUEIO DE SCROLL QUANDO MENU MOBILE ABERTO =====
+  useEffect(() => {
+    function handleKeyDown(e: KeyboardEvent) {
+      if (e.key === 'Escape') {
+        setIsLanguageOpen(false);
+        setIsMobileMenuOpen(false);
+        setShowSearchDropdown(false);
+        setIsSearchExpanded(false);
+      }
+    }
+    document.addEventListener('keydown', handleKeyDown);
+    return () => document.removeEventListener('keydown', handleKeyDown);
+  }, []);
+
+  useEffect(() => {
+    // Bloquear scroll do body quando o menu mobile está aberto
+    if (isMobileMenuOpen) {
+      const original = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = original;
+      };
+    }
+  }, [isMobileMenuOpen]);
+
+  // Fechar menu mobile ao mudar de rota
+  useEffect(() => {
+    setIsMobileMenuOpen(false);
+    setIsSearchExpanded(false);
+  }, [location.pathname]);
 
   // ===== CARREGAR CATEGORIAS DA API =====
   useEffect(() => {
@@ -163,6 +201,73 @@ const Header = () => {
     setIsLanguageOpen(false);
   }
 
+  // Função para alternar o menu mobile
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  // Função para fechar o menu mobile
+  const closeMobileMenu = () => {
+    setIsMobileMenuOpen(false);
+  };
+
+  // Função para expandir/contrair a busca no mobile
+  const toggleSearchExpanded = () => {
+    setIsSearchExpanded(!isSearchExpanded);
+  };
+
+  // Resetar seleção ativa quando termo ou dropdown mudarem
+  useEffect(() => {
+    setActiveResultIndex(-1);
+  }, [searchTerm, showSearchDropdown]);
+
+  // Efeito de microinteração no carrinho quando a contagem muda
+  useEffect(() => {
+    if (cartCount && cartCount > 0) {
+      setCartBump(true);
+      const t = setTimeout(() => setCartBump(false), 300);
+      return () => clearTimeout(t);
+    }
+  }, [cartCount]);
+
+  // Preparar animação do drawer ao abrir
+  useEffect(() => {
+    if (isMobileMenuOpen) {
+      setIsDrawerReady(false);
+      const id = requestAnimationFrame(() => setIsDrawerReady(true));
+      return () => cancelAnimationFrame(id);
+    } else {
+      setIsDrawerReady(false);
+    }
+  }, [isMobileMenuOpen]);
+
+  // Navegação por teclado nos resultados da busca
+  const handleSearchKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!showSearchDropdown) return;
+    const max = searchResults.length - 1;
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      const next = Math.min(activeResultIndex + 1, max);
+      setActiveResultIndex(next);
+      const el = searchItemRefs.current[next];
+      if (el) el.scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      const prev = Math.max(activeResultIndex - 1, 0);
+      setActiveResultIndex(prev);
+      const el = searchItemRefs.current[prev];
+      if (el) el.scrollIntoView({ block: 'nearest' });
+    } else if (e.key === 'Enter') {
+      if (activeResultIndex >= 0 && activeResultIndex <= max) {
+        const product = searchResults[activeResultIndex];
+        navigate(`/product/${product.id}`);
+        setShowSearchDropdown(false);
+      }
+    } else if (e.key === 'Escape') {
+      setShowSearchDropdown(false);
+    }
+  };
+
   // Função para lidar com a busca
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -206,7 +311,7 @@ const Header = () => {
     <header className="fixed top-0 left-0 right-0 z-50">
       {/* ===== PRIMEIRA NAVBAR - NAVEGAÇÃO PRINCIPAL ===== */}
       {/* Navbar superior com fundo azul escuro e navegação principal */}
-      <div className="bg-gray-900 text-white">
+      <div className="bg-gray-900 text-white hidden md:block">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-12">
             {/* Primeira Div - Links de Navegação com sublinhado gradiente animado */}
@@ -324,20 +429,30 @@ const Header = () => {
         isScrolled ? 'shadow-lg' : ''
       }`}>
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+          <div className="flex items-center justify-between h-14 md:h-16">
             {/* Primeira Div - Logo da Empresa */}
             <div className="flex items-center space-x-2">
+              {/* Botão Menu Mobile */}
+              <button
+                type="button"
+                onClick={toggleMobileMenu}
+                className="md:hidden p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-white/70 transition-colors"
+                aria-label="Abrir menu"
+                aria-expanded={isMobileMenuOpen}
+              >
+                <Menu className="h-6 w-6" />
+              </button>
               {/* <div className="bg-red-600 p-2 rounded-lg">
                 <Wrench className="h-6 w-6 text-white" />
               </div> */}
               <Link to="/" aria-label="Ir para a página inicial">
-                <img src="https://ymrindustrial.com/assets/ymrlogo.png" alt="YMR Industrial" className="h-8" />
+                <img src="https://ymrindustrial.com/assets/ymrlogo.png" alt="YMR Industrial" className="h-7 md:h-8" />
               </Link>
               {/* <span className="text-xl font-bold text-gray-900">YMR Industrial</span> */}
             </div>
 
             {/* Segunda Div - Caixa de Busca Moderna com Dropdown */}
-            <div className="flex-1 max-w-3xl mx-8">
+            <div className="hidden md:block flex-1 max-w-3xl mx-8">
               <div ref={searchRef} className="relative">
                 <form onSubmit={handleSearch} className="flex items-center h-12 bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
                   <div className="relative flex-1 h-full min-w-0">
@@ -354,6 +469,7 @@ const Header = () => {
                       value={searchTerm}
                       onChange={(e) => setSearchTerm(e.target.value)}
                       onFocus={() => searchTerm.length >= 2 && setShowSearchDropdown(true)}
+                      onKeyDown={handleSearchKeyDown}
                       className="w-full h-full pl-12 pr-12 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-0"
                     />
                     {searchTerm && (
@@ -407,11 +523,12 @@ const Header = () => {
                         <p className="text-gray-500 text-sm">Pesquise por categorias ou tente outros termos</p>
                       </div>
                     ) : searchResults.length > 0 ? (
-                      <div className="max-h-80 overflow-y-auto">
-                        {searchResults.map((product) => (
+                      <div ref={dropdownListRef} className="max-h-80 overflow-y-auto">
+                        {searchResults.map((product, idx) => (
                           <div
                             key={product.id}
-                            className="p-4 hover:bg-gray-50 border-b border-gray-100 last:border-b-0 cursor-pointer transition-colors"
+                            ref={(el) => (searchItemRefs.current[idx] = el)}
+                            className={`p-4 border-b border-gray-100 last:border-b-0 cursor-pointer transition-colors ${activeResultIndex === idx ? 'bg-blue-50' : 'hover:bg-gray-50'}`}
                             onClick={() => {
                               navigate(`/product/${product.id}`);
                               setShowSearchDropdown(false);
@@ -457,17 +574,27 @@ const Header = () => {
             </div>
 
             {/* Terceira Div - Link para Produtos e Carrinho */}
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-2 md:space-x-4">
+              {/* Botão Busca Mobile */}
+              <button
+                type="button"
+                onClick={toggleSearchExpanded}
+                className="md:hidden p-2 rounded-md text-gray-700 hover:text-blue-600 hover:bg-white/70 transition-colors"
+                aria-label="Abrir busca"
+                aria-expanded={isSearchExpanded}
+              >
+                <Search className="h-5 w-5" />
+              </button>
               <Link
                 to="/products"
-                className="text-lg font-regular text-gray-900 hover:text-red-600 transition-colors"
+                className="hidden md:inline text-lg font-regular text-gray-900 hover:text-red-600 transition-colors"
               >
                 Products
               </Link>
               {isAuthenticated ? (
                 <Link
                   to="/cart"
-                  className="relative p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-all duration-200 hover:scale-105 hover:shadow-lg group"
+                  className={`relative p-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-all duration-200 hover:scale-105 hover:shadow-lg group ${cartBump ? 'animate-[cart-bump_300ms_ease-out]' : ''}`}
                   aria-label="Ir para o carrinho"
                 >
                   <ShoppingCart className="h-4 w-4" />
@@ -489,6 +616,128 @@ const Header = () => {
               )}
             </div>
           </div>
+          {/* Barra de busca Mobile expandida */}
+          {isSearchExpanded && (
+            <div className="md:hidden pb-3">
+              <div ref={searchRef} className="relative mt-2">
+                <form onSubmit={handleSearch} className="flex items-center h-11 bg-white rounded-xl shadow border border-gray-200 overflow-hidden">
+                  <div className="relative flex-1 h-full min-w-0">
+                    <div className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400">
+                      {isSearching ? (
+                        <div className="animate-spin rounded-full h-4 w-4 border-2 border-blue-500 border-t-transparent" />
+                      ) : (
+                        <Search className="h-4 w-4" />
+                      )}
+                    </div>
+                    <input
+                      type="text"
+                      placeholder="Buscar produtos..."
+                      value={searchTerm}
+                      onChange={(e) => setSearchTerm(e.target.value)}
+                      onFocus={() => searchTerm.length >= 2 && setShowSearchDropdown(true)}
+                      onKeyDown={handleSearchKeyDown}
+                      className="w-full h-full pl-9 pr-10 text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-0 text-sm"
+                    />
+                    {searchTerm && (
+                      <button
+                        type="button"
+                        onClick={clearSearch}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors"
+                        aria-label="Limpar busca"
+                      >
+                        <X className="h-4 w-4" />
+                      </button>
+                    )}
+                  </div>
+                  <div className="h-8 w-px bg-gray-300" />
+                  <select
+                    value={selectedCategory}
+                    onChange={(e) => setSelectedCategory(e.target.value)}
+                    className="hidden sm:block h-full px-3 bg-white text-gray-700 focus:outline-none focus:ring-0 border-0 min-w-[120px] max-w-[140px] text-sm"
+                    disabled={isLoadingCategories}
+                  >
+                    <option value="All">Todas</option>
+                    {categories.map(category => (
+                      <option key={category.id} value={category.name} title={category.name}>
+                        {category.name.length > 15 ? category.name.substring(0, 15) + '...' : category.name}
+                      </option>
+                    ))}
+                  </select>
+                  <button
+                    type="submit"
+                    disabled={!searchTerm.trim() || searchResults.length === 0}
+                    className="h-full px-4 bg-gradient-to-r from-blue-600 to-blue-700 text-white hover:from-blue-700 hover:to-blue-800 transition-all duration-200 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed flex items-center gap-2"
+                    aria-label="Buscar"
+                  >
+                    <Search className="h-4 w-4" />
+                  </button>
+                </form>
+
+                {showSearchDropdown && (
+                  <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-xl shadow-2xl border border-gray-200 z-50 max-h-80 overflow-hidden">
+                    {isSearching ? (
+                      <div className="p-5 text-center">
+                        <div className="animate-spin rounded-full h-7 w-7 border-2 border-blue-500 border-t-transparent mx-auto mb-3" />
+                        <p className="text-gray-500 text-sm">Buscando produtos...</p>
+                      </div>
+                    ) : hasSearched && searchResults.length === 0 ? (
+                      <div className="p-6 text-center">
+                        <div className="text-gray-400 mb-3">
+                          <Search className="h-10 w-10 mx-auto" />
+                        </div>
+                        <h3 className="text-base font-semibold text-gray-700 mb-1">Pesquisa sem resultados</h3>
+                        <p className="text-gray-500 text-sm">Pesquise por categorias ou tente outros termos</p>
+                      </div>
+                    ) : searchResults.length > 0 ? (
+                      <div ref={dropdownListRef} className="max-h-72 overflow-y-auto">
+                        {searchResults.map((product, idx) => (
+                          <div
+                            key={product.id}
+                            ref={(el) => (searchItemRefs.current[idx] = el)}
+                            className={`p-4 border-b border-gray-100 last:border-b-0 cursor-pointer transition-colors ${activeResultIndex === idx ? 'bg-blue-50' : 'hover:bg-gray-50'}`}
+                            onClick={() => {
+                              navigate(`/product/${product.id}`);
+                              setShowSearchDropdown(false);
+                              setIsSearchExpanded(false);
+                            }}
+                          >
+                            <div className="flex items-center gap-3">
+                              <img
+                                src={product.image}
+                                alt={product.name}
+                                className="w-10 h-10 object-cover rounded-lg flex-shrink-0"
+                              />
+                              <div className="flex-1 min-w-0">
+                                <h4 className="font-medium text-gray-900 truncate text-sm">{product.name}</h4>
+                                <p className="text-xs text-gray-500 truncate">{product.description}</p>
+                                <div className="flex items-center gap-2 mt-1">
+                                  <span className="text-[10px] bg-blue-100 text-blue-700 px-2 py-0.5 rounded-full">
+                                    {product.category}
+                                  </span>
+                                  {product.brand && (
+                                    <span className="text-[10px] text-gray-400">{product.brand}</span>
+                                  )}
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                        <div className="p-3 border-t border-gray-100">
+                          <button
+                            onClick={handleViewMore}
+                            className="w-full flex items-center justify-center gap-2 py-2.5 px-3 bg-gradient-to-r from-blue-50 to-blue-100 text-blue-700 rounded-lg hover:from-blue-100 hover:to-blue-200 transition-all duration-200 font-medium text-sm"
+                          >
+                            <span>Ver mais resultados</span>
+                            <ArrowRight className="h-4 w-4" />
+                          </button>
+                        </div>
+                      </div>
+                    ) : null}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -498,6 +747,87 @@ const Header = () => {
           className="fixed inset-0 z-40" 
           onClick={() => setIsLanguageOpen(false)}
         />
+      )}
+
+      {/* Drawer Mobile */}
+      {isMobileMenuOpen && (
+        <div className="fixed inset-0 z-[70]">
+          <div className={`absolute inset-0 bg-black/40 transition-opacity duration-200 ${isDrawerReady ? 'opacity-100' : 'opacity-0'}`} onClick={closeMobileMenu} />
+          <div className={`absolute left-0 top-0 bottom-0 w-72 max-w-[80vw] bg-white shadow-2xl p-6 overflow-y-auto transform transition-transform duration-200 ${isDrawerReady ? 'translate-x-0' : '-translate-x-full'}`}>
+            <div className="flex items-center justify-between mb-6">
+              <span className="text-lg font-semibold text-gray-900">Menu</span>
+              <button
+                type="button"
+                onClick={closeMobileMenu}
+                className="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                aria-label="Fechar menu"
+              >
+                <X className="h-5 w-5" />
+              </button>
+            </div>
+            <nav className="space-y-1">
+              {primaryNavItems.map((item) => (
+                <Link
+                  key={item.to}
+                  to={item.to}
+                  onClick={closeMobileMenu}
+                  className="block px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-800 font-medium"
+                >
+                  {item.label}
+                </Link>
+              ))}
+              <Link
+                to="/catalog"
+                onClick={closeMobileMenu}
+                className="block px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-800 font-medium"
+              >
+                Catalog
+              </Link>
+              {!isAuthenticated ? (
+                <Link
+                  to="/login"
+                  onClick={closeMobileMenu}
+                  className="block px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-800 font-medium"
+                >
+                  Login
+                </Link>
+              ) : (
+                <Link
+                  to="/UserProfile"
+                  onClick={closeMobileMenu}
+                  className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-800 font-medium"
+                >
+                  <User className="h-4 w-4" />
+                  <span>{user?.name?.split(' ')[0] || 'Conta'}</span>
+                </Link>
+              )}
+            </nav>
+
+            {/* Idiomas */}
+            <div className="mt-6">
+              <div className="text-xs uppercase tracking-wide text-gray-500 mb-2">Idioma</div>
+              <div className="flex items-center gap-3">
+                {languages.map((language) => (
+                  <button
+                    key={language.code}
+                    onClick={() => selectLanguage(language.code)}
+                    className={`flex items-center gap-2 px-3 py-2 rounded-md border transition-colors ${currentLanguage === language.code ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:bg-gray-50'}`}
+                  >
+                    <span className="inline-block w-6 h-4 overflow-hidden rounded-sm">
+                      <img
+                        src={language.flagUrl}
+                        alt={language.alt}
+                        className="w-full h-auto object-cover"
+                        draggable={false}
+                      />
+                    </span>
+                    <span className="text-sm text-gray-700">{language.alt}</span>
+                  </button>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
       )}
     </header>
   );

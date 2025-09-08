@@ -54,11 +54,6 @@ const Footer = () => {
                   alt="YMR Industrial"
                   className="h-10"
                 />
-                <div className="flex items-center space-x-2">
-                  <span className="text-2xl font-bold text-white">
-                    YMR Industrial
-                  </span>
-                </div>
               </div>
 
               <p className="text-gray-300 mb-8 max-w-lg text-lg leading-relaxed">

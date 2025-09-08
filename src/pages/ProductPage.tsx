@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import type { Product } from '../types';
 import { apiFetch } from '../services/api';
 import { useCart } from '../context/CartContext';
@@ -128,13 +128,27 @@ const ProductPage = () => {
       <div className="bg-white border-b border-gray-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
           <nav className="flex items-center gap-2 text-sm text-gray-500">
-            <span>Início</span>
+            <Link to="/" className="hover:text-gray-700 transition-colors">Início</Link>
             <span>/</span>
-            <span>Equipamentos</span>
+            <Link to="/products" className="hover:text-gray-700 transition-colors">Produtos</Link>
+            {product?.category && (
+              <>
+                <span>/</span>
+                <Link to={`/products?category=${encodeURIComponent(product.category)}`} className="hover:text-gray-700 transition-colors">
+                  {product.category}
+                </Link>
+              </>
+            )}
+            {product?.subcategory_name && (
+              <>
+                <span>/</span>
+                <Link to={`/products?category=${encodeURIComponent(product.category)}&subcategory=${encodeURIComponent(product.subcategory_name)}`} className="hover:text-gray-700 transition-colors">
+                  {product.subcategory_name}
+                </Link>
+              </>
+            )}
             <span>/</span>
-            <span>Geradores</span>
-            <span>/</span>
-            <span className="text-gray-900 font-medium">{product?.name || ''}</span>
+            <span className="text-gray-900 font-medium truncate max-w-[40vw] sm:max-w-none">{product?.name || ''}</span>
           </nav>
         </div>
       </div>

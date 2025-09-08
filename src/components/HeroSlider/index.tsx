@@ -49,31 +49,32 @@ const HeroSlider: React.FC<Props> = ({ slides, delay = 5000, heightClass = "h-[7
               style={{ backgroundImage: `url(${s.image})` }}
               aria-hidden
             >
-              <div className="absolute inset-0 bg-black/50" />
+              {/* Overlay em gradiente para melhorar legibilidade sem esconder o fundo */}
+              <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent" />
             </div>
 
             {/* conteúdo */}
             <div className="relative z-10 flex items-center h-full">
               <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
-                <div className="max-w-3xl">
-                  <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 text-white">
+                <div className="max-w-3xl bg-black/20 backdrop-blur-[2px] md:bg-transparent md:backdrop-blur-0 rounded-xl p-4 md:p-0">
+                  <h1 className="text-3xl md:text-6xl lg:text-7xl font-bold mb-3 md:mb-4 text-white">
                     {s.title}
                   </h1>
                   {s.subtitle && (
-                    <h2 className="text-lg md:text-xl lg:text-2xl font-medium mb-4 text-white/90">
+                    <h2 className="hidden md:block text-base md:text-xl lg:text-2xl font-medium mb-3 md:mb-4 text-white/90">
                       {s.subtitle}
                     </h2>
                   )}
-                  <p className="text-base md:text-lg lg:text-xl text-gray-200 mb-8 leading-loose">
+                  <p className="text-sm md:text-lg lg:text-xl text-gray-200 mb-6 md:mb-8 leading-relaxed md:leading-loose">
                     {s.description}
                   </p>
 
-                  <div className="flex flex-col sm:flex-row gap-4">
+                  <div className="flex flex-col sm:flex-row gap-3 md:gap-4">
                     {s.buttons.map((b, idx) => (
                       <Link
                         key={idx}
                         to={b.link}
-                        className={`inline-flex items-center gap-2 px-4 py-3 rounded-lg font-medium transition transform hover:scale-105 ${
+                        className={`inline-flex items-center gap-2 px-4 py-2.5 md:py-3 rounded-lg font-medium transition transform hover:scale-[1.03] md:hover:scale-105 ${
                           b.variant === "primary"
                             ? "bg-red-600 hover:bg-red-700 text-white"
                             : "bg-transparent border-2 border-white text-white hover:bg-white hover:text-gray-900"
@@ -92,32 +93,44 @@ const HeroSlider: React.FC<Props> = ({ slides, delay = 5000, heightClass = "h-[7
       </div>
 
       {/* navegação */}
+      {/* Áreas de clique invisíveis no mobile; botões visíveis acima de sm */}
       <button
         aria-label="Anterior"
         onClick={prev}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/20 text-white"
+        className="sm:hidden absolute inset-y-0 left-0 w-1/2 z-10 cursor-pointer bg-transparent"
+      />
+      <button
+        aria-label="Próximo"
+        onClick={next}
+        className="sm:hidden absolute inset-y-0 right-0 w-1/2 z-10 cursor-pointer bg-transparent"
+      />
+
+      <button
+        aria-label="Anterior"
+        onClick={prev}
+        className="hidden sm:flex items-center justify-center absolute left-3 md:left-4 top-1/2 -translate-y-1/2 z-20 p-2.5 md:p-3 rounded-full bg-white/30 hover:bg-white/40 text-white transition"
       >
-        <ChevronLeft className="h-6 w-6" />
+        <ChevronLeft className="h-5 w-5 md:h-6 md:w-6" />
       </button>
 
       <button
         aria-label="Próximo"
         onClick={next}
-        className="absolute right-4 top-1/2 -translate-y-1/2 z-20 p-3 rounded-full bg-white/20 text-white"
+        className="hidden sm:flex items-center justify-center absolute right-3 md:right-4 top-1/2 -translate-y-1/2 z-20 p-2.5 md:p-3 rounded-full bg-white/30 hover:bg-white/40 text-white transition"
       >
-        <ChevronRight className="h-6 w-6" />
+        <ChevronRight className="h-5 w-5 md:h-6 md:w-6" />
       </button>
 
       {/* indicadores */}
-      <div className="absolute bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-3">
+      <div className="absolute bottom-4 md:bottom-6 left-1/2 -translate-x-1/2 z-20 flex gap-2 md:gap-3">
         {slides.map((_, i) => (
           <button
             key={i}
             aria-label={`Ir para slide ${i + 1}`}
             aria-current={i === current ? "true" : undefined}
             onClick={() => goTo(i)}
-            className={`w-3 h-3 rounded-full transition-all duration-200 ${
-              i === current ? "bg-red-500 scale-125" : "bg-white/50"
+            className={`w-2.5 h-2.5 md:w-3 md:h-3 rounded-full transition-all duration-200 ${
+              i === current ? "bg-red-500 scale-110 md:scale-125" : "bg-white/60"
             }`}
           />
         ))}
