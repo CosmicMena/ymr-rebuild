@@ -71,7 +71,7 @@ export default function ProductMiniSlider({
 
   return (<>
     <div className="bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
-      <div className="bg-gradient-to-r from-gray-900 to-gray-700 dark:from-gray-800 dark:to-gray-900 text-white p-4">
+      <div className="bg-[#e6e6e6] dark:from-gray-800 dark:to-gray-900 text-dark p-4">
         <h3 className="font-bold flex items-center gap-2">
           <TrendingUp className="h-5 w-5" />
           Produtos em Destaque

@@ -53,33 +53,9 @@ const About = () => {
               <Building2 className="h-5 w-5" />
               <span className="text-sm font-medium">{aboutHero.badge}</span>
             </div>
-            
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-              {aboutHero.title}
-            </h1>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto mb-8">
+            <p className="text-lg text-gray-300 max-w-3xl mx-auto mb-8">
               {aboutHero.description}
             </p>
-            
-            {/* Quick Stats */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <div className="text-2xl font-bold text-blue-300 mb-1">10+</div>
-                <div className="text-sm text-gray-300">Years Experience</div>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <div className="text-2xl font-bold text-green-300 mb-1">500+</div>
-                <div className="text-sm text-gray-300">Happy Clients</div>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <div className="text-2xl font-bold text-purple-300 mb-1">1000+</div>
-                <div className="text-sm text-gray-300">Products</div>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-4 border border-white/20">
-                <div className="text-2xl font-bold text-orange-300 mb-1">24/7</div>
-                <div className="text-sm text-gray-300">Support</div>
-              </div>
-            </div>
           </div>
         </div>
       </section>

@@ -97,7 +97,6 @@ export default function UserHeader({ userData, activeTab, setActiveTab, onAvatar
     { id: 'activity', label: 'Atividades', icon: Activity },
     { id: 'orders', label: 'Pedidos', icon: ShoppingBag },
     { id: 'messages', label: 'Mensagens', icon: MessageCircle },
-    { id: 'settings', label: 'Configurações', icon: Settings },
     { id: 'logout', label: 'Sair', icon: LogOut },
   ];
   return (

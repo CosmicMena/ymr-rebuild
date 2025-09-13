@@ -1,6 +1,6 @@
 // Utilitário de comunicação com a API
 
-const DEFAULT_BASE_URL = 'http://localhost:3000/api/v1';
+const DEFAULT_BASE_URL = 'http://192.168.100.21:3000/api/v1';
 
 export function getApiBaseUrl(): string {
 	const envBase = (import.meta as any)?.env?.VITE_API_BASE_URL as string | undefined;

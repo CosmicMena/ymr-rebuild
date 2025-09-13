@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Search, Filter, Package, Grid3X3, Award } from 'lucide-react';
+import { Search, Filter, Package, Grid3X3, Award, ChevronDown, ChevronUp } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import { Product } from '../types';
 import { apiFetch } from '../services/api';
@@ -22,6 +22,7 @@ const Products = () => {
   const [subcats, setSubcats] = useState<any[]>([]);
   const [isLoadingMeta, setIsLoadingMeta] = useState(false);
   const [errorMeta, setErrorMeta] = useState<string | null>(null);
+  const [isSubcategoriesExpanded, setIsSubcategoriesExpanded] = useState(true);
   const location = useLocation();
 
   useEffect(() => {
@@ -138,43 +139,11 @@ const Products = () => {
 
   return (
     <div className="min-h-screen page-content bg-white dark:bg-gray-900">
-      {/* ===== SEÇÃO HERO - CABEÇALHO PRINCIPAL ===== */}
-      {/* Seção principal com título e descrição da página de produtos */}
-      <section className="relative bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 text-white py-16 md:py-24 overflow-hidden">
-        {/* Background Pattern */}
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }} />
-        </div>
-        
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <div className="inline-flex items-center space-x-2 bg-white/10 backdrop-blur-sm rounded-full px-4 py-2 mb-6">
-              <Package className="h-5 w-5" />
-              <span className="text-sm font-medium">Our Products</span>
-            </div>
-            <p className="text-xl text-gray-300 max-w-4xl mx-auto mb-8">
-              Descubra nossa gama abrangente de ferramentas industriais, equipamentos e soluções para suas necessidades.
-            </p>
-            
-            
-          </div>
-        </div>
-      </section>
 
       {/* ===== SEÇÃO FILTROS ===== */}
       {/* Seção que contém os controles de busca e filtro por categoria */}
       <section className="py-6 md:py-8 bg-gray-50 dark:bg-gray-800 border-b dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-8">
-            <div className="inline-flex items-center space-x-2 bg-blue-100 rounded-full px-4 py-2 mb-4">
-              <Search className="h-5 w-5 text-blue-600" />
-              <span className="text-sm font-medium text-blue-800">Buscar e Filtrar</span>
-            </div>
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-900 dark:text-white mb-2">Encontre o Produto Ideal</h2>
-            <p className="text-gray-600 dark:text-gray-300">Use os filtros abaixo para encontrar exatamente o que precisa</p>
-          </div>
           
           <div className="flex flex-col lg:flex-row gap-4 md:gap-6 items-center justify-center">
             {/* Campo de Busca */}
@@ -226,21 +195,39 @@ const Products = () => {
               <>
                 {/* ==== CARD DE SUBCATEGORIAS ==== */}
                 <div className="mt-6 md:mt-8">
-                  <h3 className="text-base md:text-lg font-semibold text-gray-900 dark:text-white mb-3 md:mb-4 text-center">Subcategorias</h3>
-                  <div className="flex flex-wrap justify-center gap-1.5 md:gap-2">
-                    {filteredSubcategories.map((subcategory, index) => (
-                      <button
-                        key={index}
-                        onClick={() => setSelectedSubcategory(selectedSubcategory === subcategory.name ? '' : subcategory.name)}
-                        className={`px-2.5 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-medium transition-all duration-200 hover:scale-105 ${
-                          selectedSubcategory === subcategory.name 
-                            ? 'bg-blue-600 text-white shadow-md' 
-                            : 'bg-white text-gray-700 border border-gray-300 hover:border-blue-300 hover:bg-blue-50'
-                        }`}
-                      >
-                        {subcategory.name}
-                      </button>
-                    ))}
+                  <div className="flex items-center justify-between mb-3 md:mb-4">
+                    <h3 className="text-base md:text-lg font-semibold text-gray-900 dark:text-white">Subcategorias</h3>
+                    <button
+                      onClick={() => setIsSubcategoriesExpanded(!isSubcategoriesExpanded)}
+                      className="flex items-center space-x-1 px-3 py-1.5 text-sm text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors duration-200 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+                    >
+                      <span>{isSubcategoriesExpanded ? 'Minimizar' : 'Expandir'}</span>
+                      {isSubcategoriesExpanded ? (
+                        <ChevronUp className="h-4 w-4 transition-transform duration-200" />
+                      ) : (
+                        <ChevronDown className="h-4 w-4 transition-transform duration-200" />
+                      )}
+                    </button>
+                  </div>
+                  
+                  <div className={`overflow-hidden transition-all duration-300 ease-in-out ${
+                    isSubcategoriesExpanded ? 'max-h-96 opacity-100' : 'max-h-0 opacity-0'
+                  }`}>
+                    <div className="flex flex-wrap gap-1.5 md:gap-2">
+                      {filteredSubcategories.map((subcategory, index) => (
+                        <button
+                          key={index}
+                          onClick={() => setSelectedSubcategory(selectedSubcategory === subcategory.name ? '' : subcategory.name)}
+                          className={`px-2.5 md:px-4 py-1.5 md:py-2 rounded-lg text-xs md:text-sm font-medium transition-all duration-200 hover:scale-105 ${
+                            selectedSubcategory === subcategory.name 
+                              ? 'bg-blue-600 text-white shadow-md dark:bg-blue-700' 
+                              : 'bg-white dark:bg-gray-800 text-gray-700 dark:text-gray-300 border border-gray-300 dark:border-gray-600 hover:border-blue-300 dark:hover:border-blue-500 hover:bg-blue-50 dark:hover:bg-blue-900/20'
+                          }`}
+                        >
+                          {subcategory.name}
+                        </button>
+                      ))}
+                    </div>
                   </div>
                 </div>
               </>

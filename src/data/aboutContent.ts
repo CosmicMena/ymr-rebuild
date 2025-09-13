@@ -1,6 +1,5 @@
 export const aboutHero = {
   badge: 'About Us',
-  title: 'About YMR Industrial',
   description:
     'Your trusted partner in delivering industrial-grade products that improve safety, performance, and durability across Angola.'
 };

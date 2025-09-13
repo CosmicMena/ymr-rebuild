@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { contactInfo } from '../data/contactInfo';
 import { 
   Linkedin, Instagram, Facebook, ChevronUp, Mail, 
   ArrowRight, Shield, Award, Users, Globe, 
-  Heart, TrendingUp
+  Heart, TrendingUp, User, Activity, ShoppingBag, MessageCircle, Settings
 } from 'lucide-react';
+import { useAuth } from '../context/AuthContext';
 
 const Footer = () => {
   const [showScrollButton, setShowScrollButton] = useState(false);
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  const handleUserMenuClick = (tab: string) => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    setTimeout(() => navigate(`/userprofile?tab=${tab}`), 80);
+  };
 
   const scrollToTop = () => {
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -112,6 +120,7 @@ const Footer = () => {
                   { name: 'Categories', path: '/categories' },
                   { name: 'About Us', path: '/about' },
                   { name: 'Contact', path: '/contact' },
+                  { name: 'Settings', path: '/settings' },
                 ].map((link) => (
                   <li key={link.name}>
                     <Link 
@@ -125,6 +134,32 @@ const Footer = () => {
                 ))}
               </ul>
             </div>
+
+            {/* User Menu (apenas autenticado) */}
+            {isAuthenticated && (
+              <div>
+                <h3 className="text-xl font-bold mb-6 text-white">User Menu</h3>
+                <ul className="space-y-3">
+                  {[ 
+                    { name: 'Perfil', tab: 'profile', icon: User },
+                    { name: 'Atividades', tab: 'activity', icon: Activity },
+                    { name: 'Pedidos', tab: 'orders', icon: ShoppingBag },
+                    { name: 'Mensagens', tab: 'messages', icon: MessageCircle },
+                    { name: 'Configurações', tab: 'settings', icon: Settings },
+                  ].map((link) => (
+                    <li key={link.tab}>
+                      <button
+                        onClick={() => link.tab === 'settings' ? navigate('/settings') : handleUserMenuClick(link.tab)}
+                        className="w-full flex items-center space-x-3 text-left text-gray-300 hover:text-white transition-colors duration-200"
+                      >
+                        <link.icon className="h-4 w-4" />
+                        <span>{link.name}</span>
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
 
             {/* Social Media & Newsletter */}
             <div>

@@ -37,38 +37,9 @@ const Catalog = () => {
               <BookOpen className="h-5 w-5" />
               <span className="text-sm font-medium">Product Catalog</span>
             </div>
-            
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-              Catálogo de Produtos
-            </h1>
-            <p className="text-xl text-gray-300 max-w-4xl mx-auto mb-8">
+            <p className="text-lg text-gray-300 max-w-4xl mx-auto mb-8">
               Acesse nosso catálogo abrangente de produtos com especificações detalhadas, certificações e fichas técnicas completas.
             </p>
-            
-            {/* Quick Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
-                <div className="flex items-center justify-center space-x-2 mb-2">
-                  <FileText className="h-6 w-6 text-blue-400" />
-                  <span className="text-2xl font-bold">156</span>
-                </div>
-                <p className="text-sm text-gray-300">Páginas</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
-                <div className="flex items-center justify-center space-x-2 mb-2">
-                  <Award className="h-6 w-6 text-yellow-400" />
-                  <span className="text-2xl font-bold">500+</span>
-                </div>
-                <p className="text-sm text-gray-300">Produtos</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
-                <div className="flex items-center justify-center space-x-2 mb-2">
-                  <Users className="h-6 w-6 text-green-400" />
-                  <span className="text-2xl font-bold">24/7</span>
-                </div>
-                <p className="text-sm text-gray-300">Suporte</p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -82,7 +53,7 @@ const Catalog = () => {
               <FileText className="h-5 w-5 text-blue-600" />
               <span className="text-sm font-medium text-blue-800">Catálogo Completo</span>
             </div>
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
+            <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
               Catálogo de Soluções Industriais Completas
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
@@ -231,43 +202,6 @@ const Catalog = () => {
                   Baixe uma vez e acesse offline a qualquer momento. Perfeito para visitas ao local e apresentações.
                 </p>
               </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* ===== SEÇÃO CALL-TO-ACTION ===== */}
-      {/* Seção final que incentiva o contato para orçamentos personalizados */}
-      <section className="py-20 bg-gradient-to-br from-gray-900 via-blue-900 to-gray-900 relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10">
-          <div className="absolute inset-0" style={{
-            backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.1'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-          }} />
-        </div>
-        
-        <div className="relative max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <div className="bg-white/10 backdrop-blur-sm rounded-3xl p-12 border border-white/20">
-            <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
-              Precisa de um Orçamento Personalizado?
-            </h2>
-            <p className="text-xl text-gray-200 mb-10 max-w-3xl mx-auto leading-relaxed">
-              Tem requisitos específicos ou precisa de uma solução personalizada? Entre em contato com nossa equipe para assistência especializada.
-            </p>
-            <div className="flex flex-col sm:flex-row gap-6 justify-center">
-              <button 
-                onClick={downloadCatalog}
-                className="bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-10 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 shadow-lg flex items-center justify-center space-x-2"
-              >
-                <Download className="h-5 w-5" />
-                <span>Baixar Catálogo Primeiro</span>
-              </button>
-              <a 
-                href="/contact" 
-                className="border-2 border-white text-white hover:bg-white hover:text-gray-900 px-10 py-4 rounded-xl font-semibold text-lg transition-all duration-300 transform hover:scale-105 flex items-center justify-center space-x-2"
-              >
-                <Eye className="h-5 w-5" />
-                <span>Falar com Nossa Equipe</span>
-              </a>
             </div>
           </div>
         </div>

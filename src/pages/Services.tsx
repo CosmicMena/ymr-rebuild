@@ -54,39 +54,10 @@ const Services = () => {
               <Wrench className="h-5 w-5" />
               <span className="text-sm font-medium">Our Services</span>
             </div>
-            
-            <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-gradient-to-r from-white to-blue-200 bg-clip-text text-transparent">
-              Nossos Serviços
-            </h1>
-            <p className="text-xl text-gray-300 max-w-4xl mx-auto mb-8">
+            <p className="text-lg text-gray-300 max-w-4xl mx-auto mb-8">
               Soluções industriais completas para o mercado angolano, desde aluguer de equipamentos pesados 
               até consultoria especializada em hidrocarbonetos e geotérmica.
             </p>
-            
-            {/* Quick Stats */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto">
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
-                <div className="flex items-center justify-center space-x-2 mb-2">
-                  <Database className="h-6 w-6 text-blue-400" />
-                  <span className="text-2xl font-bold">3</span>
-                </div>
-                <p className="text-sm text-gray-300">Serviços Locais</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
-                <div className="flex items-center justify-center space-x-2 mb-2">
-                  <Target className="h-6 w-6 text-yellow-400" />
-                  <span className="text-2xl font-bold">25+</span>
-                </div>
-                <p className="text-sm text-gray-300">Anos de Experiência</p>
-              </div>
-              <div className="bg-white/10 backdrop-blur-sm rounded-lg p-6 border border-white/20 hover:bg-white/20 transition-all duration-300">
-                <div className="flex items-center justify-center space-x-2 mb-2">
-                  <CheckCircle className="h-6 w-6 text-green-400" />
-                  <span className="text-2xl font-bold">200+</span>
-                </div>
-                <p className="text-sm text-gray-300">Projetos Executados</p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -332,36 +303,36 @@ const Services = () => {
                   <div className="flex md:block items-center justify-center">
                     <div className="group text-center animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
                       <div className="relative inline-block">
-                        <img 
-                          src="./src/assets/logo/ymrlogo.png" 
-                          alt="YMR Industrial"
+                <img 
+                  src="./src/assets/logo/ymrlogo.png" 
+                  alt="YMR Industrial"
                           className="w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-blue-100 mx-auto object-cover shadow-lg group-hover:scale-105 transition-transform"
                           loading="lazy"
                           decoding="async"
-                        />
+                />
                         <span className="absolute -bottom-2 left-1/2 -translate-x-1/2 bg-white text-blue-700 text-[10px] px-2 py-0.5 rounded-full shadow md:hidden">YMR</span>
                       </div>
                       <p className="hidden md:block font-semibold text-gray-900 mt-3">YMR Industrial</p>
                     </div>
-                  </div>
+              </div>
 
                   {/* Middle badge with interactive pulsate */}
                   <div className="flex items-center justify-center">
                     <div className="relative">
                       <div className="absolute inset-0 rounded-full bg-red-500/20 blur-md animate-pulse" aria-hidden="true"></div>
                       <div className="relative bg-red-600 text-white px-4 py-2 rounded-full font-semibold shadow-lg select-none">
-                        PARCERIA
-                      </div>
+                  PARCERIA
+                </div>
                     </div>
-                  </div>
-
+              </div>
+              
                   {/* Right brand */}
                   <div className="flex md:block items-center justify-center">
                     <div className="group text-center animate-fade-in-up" style={{ animationDelay: '0.1s' }}>
                       <div className="relative inline-block">
-                        <img 
-                          src="./src/assets/logo/aboudlogo.png" 
-                          alt="Aboud Consultoria"
+                <img 
+                  src="./src/assets/logo/aboudlogo.png" 
+                  alt="Aboud Consultoria"
                           className="w-20 h-20 md:w-24 md:h-24 rounded-full border-4 border-blue-100 mx-auto object-cover shadow-lg group-hover:scale-105 transition-transform"
                           loading="lazy"
                           decoding="async"

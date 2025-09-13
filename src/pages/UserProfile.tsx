@@ -1,4 +1,5 @@
-import { useState, useRef } from 'react';
+import { useEffect, useState, useRef } from 'react';
+import { useLocation } from 'react-router-dom';
 import { 
   ShoppingBag, MessageCircle, 
   Mail, Clock,
@@ -24,20 +25,57 @@ const UserProfile = () => {
   const [isUploading, setIsUploading] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  
-  const [activeTab, setActiveTab] = useState('profile');
+
+  const [activeTab, setActiveTab] = useState(() => {
+    const params = new URLSearchParams(window.location.search);
+    return params.get('tab') || 'profile';
+  });
+  const location = useLocation();
+
+  // Atualizar estado ao navegar pelo histórico (voltar/avançar)
+  useEffect(() => {
+    const onPopState = () => {
+      const params = new URLSearchParams(window.location.search);
+      const tab = params.get('tab');
+      if (tab && tab !== activeTab) {
+        setActiveTab(tab);
+      }
+    };
+    window.addEventListener('popstate', onPopState);
+    return () => window.removeEventListener('popstate', onPopState);
+  }, [activeTab]);
+
+  // Atualizar estado quando a query mudar dentro da mesma página (navegação programática)
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const tab = params.get('tab');
+    if (tab && tab !== activeTab) {
+      setActiveTab(tab);
+    }
+  }, [location.search]);
+
+  // Escrever a query apenas quando divergir do estado atual
+  useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    const current = params.get('tab');
+    if (current !== activeTab) {
+      params.set('tab', activeTab);
+      const newUrl = `${window.location.pathname}?${params.toString()}`;
+      window.history.replaceState(null, '', newUrl);
+    }
+  }, [activeTab]);
 
   // ===== DADOS DO USUÁRIO =====
   const [userData, setUserData] = useState({
-    name: 'João Silva Santos',
-    email: 'joao.silva@email.com',
-    phone: '+244 923 456 789',
-    birthDate: '1985-03-15',
-    address: 'Rua da Independência, 123',
+    name: 'Mingoclénio Pascual',
+    email: 'mingo.mingadas@email.com',
+    phone: '+244 927 450 909',
+    birthDate: '2005-09-18',
+    address: 'Suleira, Projecto Morar',
     city: 'Luanda',
     country: 'Angola',
-    company: 'Petrolífera Nacional',
-    position: 'Engenheiro de Projetos',
+    company: 'Kunangas Unidos',
+    position: 'Engenheiro Informático',
     avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=150&h=150&fit=crop&crop=face'
   });
 
@@ -132,7 +170,7 @@ const UserProfile = () => {
       <UserHeader 
         userData={userData} 
         activeTab={activeTab} 
-        setActiveTab={setActiveTab}
+        setActiveTab={setActiveTab} 
         onAvatarClick={handleAvatarClick}
       />
 
@@ -368,45 +406,45 @@ const UserProfile = () => {
                 {/* Tabela para Desktop */}
                 <div className="hidden md:block overflow-x-auto -mx-4 md:mx-0">
                   <table className="w-full text-sm md:text-base min-w-[640px] md:min-w-0">
-                    <thead>
-                      <tr className="border-b border-gray-200">
-                        <th className="text-left py-3 px-4 font-semibold text-gray-900">ID</th>
-                        <th className="text-left py-3 px-4 font-semibold text-gray-900">Serviço</th>
-                        <th className="text-left py-3 px-4 font-semibold text-gray-900">Data</th>
-                        <th className="text-left py-3 px-4 font-semibold text-gray-900">Status</th>
-                        <th className="text-left py-3 px-4 font-semibold text-gray-900">Valor</th>
-                        <th className="text-left py-3 px-4 font-semibold text-gray-900">Ações</th>
+                  <thead>
+                    <tr className="border-b border-gray-200">
+                      <th className="text-left py-3 px-4 font-semibold text-gray-900">ID</th>
+                      <th className="text-left py-3 px-4 font-semibold text-gray-900">Serviço</th>
+                      <th className="text-left py-3 px-4 font-semibold text-gray-900">Data</th>
+                      <th className="text-left py-3 px-4 font-semibold text-gray-900">Status</th>
+                      <th className="text-left py-3 px-4 font-semibold text-gray-900">Valor</th>
+                      <th className="text-left py-3 px-4 font-semibold text-gray-900">Ações</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {orderHistory.map((order) => (
+                      <tr key={order.id} className="border-b border-gray-100 hover:bg-gray-50">
+                        <td className="py-4 px-4 font-mono text-sm text-gray-600">{order.id}</td>
+                        <td className="py-4 px-4 font-medium text-gray-900">{order.service}</td>
+                        <td className="py-4 px-4 text-gray-600">
+                          {new Date(order.date).toLocaleDateString('pt-BR')}
+                        </td>
+                        <td className="py-4 px-4">
+                          <span className={`px-2 py-1 rounded-full text-xs font-medium ${order.statusColor}`}>
+                            {order.status}
+                          </span>
+                        </td>
+                        <td className="py-4 px-4 font-semibold text-gray-900">{order.value}</td>
+                        <td className="py-4 px-4">
+                          <div className="flex items-center gap-2">
+                            <button className="text-blue-600 hover:text-blue-800 text-sm">
+                              Ver Detalhes
+                            </button>
+                            <button className="text-green-600 hover:text-green-800 text-sm">
+                              Baixar
+                            </button>
+                          </div>
+                        </td>
                       </tr>
-                    </thead>
-                    <tbody>
-                      {orderHistory.map((order) => (
-                        <tr key={order.id} className="border-b border-gray-100 hover:bg-gray-50">
-                          <td className="py-4 px-4 font-mono text-sm text-gray-600">{order.id}</td>
-                          <td className="py-4 px-4 font-medium text-gray-900">{order.service}</td>
-                          <td className="py-4 px-4 text-gray-600">
-                            {new Date(order.date).toLocaleDateString('pt-BR')}
-                          </td>
-                          <td className="py-4 px-4">
-                            <span className={`px-2 py-1 rounded-full text-xs font-medium ${order.statusColor}`}>
-                              {order.status}
-                            </span>
-                          </td>
-                          <td className="py-4 px-4 font-semibold text-gray-900">{order.value}</td>
-                          <td className="py-4 px-4">
-                            <div className="flex items-center gap-2">
-                              <button className="text-blue-600 hover:text-blue-800 text-sm">
-                                Ver Detalhes
-                              </button>
-                              <button className="text-green-600 hover:text-green-800 text-sm">
-                                Baixar
-                              </button>
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
 
                 {/* Cards para Mobile */}
                 <div className="md:hidden space-y-3">
@@ -496,8 +534,8 @@ const UserProfile = () => {
           </div>
         )}
 
-        {/* ===== TAB CONFIGURAÇÕES ===== */}
-        {activeTab === 'settings' && (
+        {/* ===== TAB CONFIGURAÇÕES REMOVIDO - AGORA EM PÁGINA SEPARADA ===== */}
+        {false && (
           <div className="space-y-8">
             <div className="text-center mb-8">
               <div className="inline-flex items-center space-x-2 bg-gray-100 rounded-full px-4 py-2 mb-4">
@@ -822,7 +860,7 @@ const UserProfile = () => {
           </div>
         </div>
       )}
-
+      
       {/* ===== CSS ADICIONAL PARA ANIMAÇÕES ===== */}
       <style>{`
         .animate-fade-in-up {

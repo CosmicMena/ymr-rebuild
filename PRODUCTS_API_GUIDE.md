@@ -1,14 +1,14 @@
 ## Guia de Consumo — Endpoints de Produtos
 
-- Base URL: `http://localhost:<PORT>/api/v1`
-- Swagger: `http://localhost:<PORT>/api/docs`
+- Base URL: `http://192.168.100.21:<PORT>/api/v1`
+- Swagger: `http://192.168.100.21:<PORT>/api/docs`
 - Autorização: todos os endpoints exigem `Authorization: Bearer <TOKEN>`
 
 ## 1) Autenticação (obter token)
 
 ```bash
 # Registrar usuário (opcional)
-curl -X POST "http://localhost:3000/api/v1/auth/register" \
+curl -X POST "http://192.168.137.1:3000/api/v1/auth/register" \
      -H "Content-Type: application/json" \
      -d '{
            "name":"Maria",
@@ -19,7 +19,7 @@ curl -X POST "http://localhost:3000/api/v1/auth/register" \
          }'
 
 # Login (retorna tokens)
-curl -X POST "http://localhost:3000/api/v1/auth/login" \
+curl -X POST "http://192.168.137.1:3000/api/v1/auth/login" \
      -H "Content-Type: application/json" \
      -d '{"email":"maria@example.com","password":"SenhaSegura123"}'
 ```
@@ -36,7 +36,7 @@ curl -X POST "http://localhost:3000/api/v1/auth/login" \
 
 ```bash
 TOKEN="<SEU_TOKEN>"
-BASE="http://localhost:3000/api/v1"
+BASE="http://192.168.137.1:3000/api/v1"
 
 curl "$BASE/products?page=1&limit=20&search=gerador&minPrice=1000&maxPrice=50000&sortBy=price&sortOrder=asc" \
   -H "Authorization: Bearer $TOKEN"
@@ -132,7 +132,7 @@ curl "$BASE/products/featured?limit=8" \
 ## 10) Exemplo JavaScript (fetch)
 
 ```javascript
-const BASE = 'http://localhost:3000/api/v1';
+const BASE = 'http://192.168.137.1:3000/api/v1';
 const TOKEN = '<SEU_TOKEN>'; // Authorization: Bearer
 
 async function listProducts() {
@@ -178,7 +178,7 @@ async function createProduct() {
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: 'http://localhost:3000/api/v1',
+  baseURL: 'http://192.168.137.1:3000/api/v1',
   headers: { Authorization: `Bearer <SEU_TOKEN>` },
 });
 

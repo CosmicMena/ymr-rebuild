@@ -15,6 +15,7 @@ import Catalog from './pages/Catalog';
 import Contact from './pages/Contact';
 import Service from './pages/Services';
 import UserProfile from './pages/UserProfile';
+import Settings from './pages/Settings';
 import ProductPage from './pages/ProductPage';
 import CartPage from './pages/cartPage';
 import Login from './pages/Login';
@@ -57,6 +58,7 @@ function App() {
                 <Route path="/contact" element={<Contact />} />
                 <Route path="/services" element={<Service />} />
                 <Route path="/userprofile" element={<RequireAuth><UserProfile /></RequireAuth>} />
+                <Route path="/settings" element={<Settings />} />
                 <Route path="/product/:id" element={<ProductPage />} />
                 <Route path="/cart" element={<RequireAuth><CartPage /></RequireAuth>} />
                 <Route path="/login" element={<Login />} />
@@ -73,7 +75,6 @@ function App() {
 
 function RequireAuth({ children }: { children: React.ReactNode }) {
   const { isAuthenticated } = useAuth();
-  const location = useLocation();
   if (!isAuthenticated) {
     return <Login />;
   }

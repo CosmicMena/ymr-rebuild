@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Search, User, ShoppingCart, X, ArrowRight, Menu } from 'lucide-react';
+import { Search, User, ShoppingCart, X, ArrowRight, Menu, Settings, Home, Mail, Info, Wrench } from 'lucide-react';
 import { useAuth } from '../../src/context/AuthContext';
 import { useCart } from '../../src/context/CartContext';
 import { apiFetch } from '../services/api';
@@ -183,6 +183,11 @@ const Header = () => {
     { to: '/services', label: 'Services' },
   ];
 
+  // ===== LINKS ADICIONAIS PARA USUÁRIOS AUTENTICADOS =====
+  const authenticatedNavItems = [
+    { to: '/settings', label: 'Settings' },
+  ];
+
   // ===== DADOS DOS IDIOMAS =====
   // Array contendo as opções de idioma disponíveis
   const languages = [
@@ -354,13 +359,30 @@ const Header = () => {
                 {isAuthenticated && (
                   <Link
                     to="/UserProfile"
-                    className={`relative flex items-center space-x-1 text-sm font-medium transition-colors hover:text-blue-200 ${location.pathname === '/UserProfile' ? 'text-blue-100' : ''} after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-gradient-to-r after:from-blue-300 after:to-blue-500 after:rounded-full after:transition-all after:duration-300 ${location.pathname === '/UserProfile' ? 'after:w-full' : 'after:w-0 hover:after:w-full'}`}
+                    className={`relative px-2 flex items-center space-x-1 text-sm font-medium transition-colors hover:text-blue-200 ${location.pathname === '/UserProfile' ? 'text-blue-100' : ''} after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-gradient-to-r after:from-blue-300 after:to-blue-500 after:rounded-full after:transition-all after:duration-300 ${location.pathname === '/UserProfile' ? 'after:w-full' : 'after:w-0 hover:after:w-full'}`}
                   >
                     <User className="h-4 w-4" />
-                    <span>{user?.name?.split(' ')[0] || 'Conta'}</span>
+                    <span className="lg:hidden">{user?.name?.split(' ')[0] || 'Conta'}</span>
                   </Link>
                 )}
               </div>
+
+              
+               {/* Settings sempre visível */}
+               {authenticatedNavItems.map((item) => {
+                 const isActive = location.pathname === item.to;
+                 return (
+                   <Link
+                     key={item.to}
+                     to={item.to}
+                     className={`relative px-2 text-sm font-medium transition-colors hover:text-blue-200 ${isActive ? 'text-blue-100' : ''} after:content-[''] after:absolute after:left-0 after:-bottom-1 after:h-[2px] after:bg-gradient-to-r after:from-blue-300 after:to-blue-500 after:rounded-full after:transition-all after:duration-300 ${isActive ? 'after:w-full' : 'after:w-0 hover:after:w-full'} flex items-center`}
+                     title={item.label}
+                   >
+                     <Settings className="h-4 w-4" />
+                     <span className="lg:hidden">{item.label}</span>
+                   </Link>
+                 );
+               })}
 
               {/* Seletor de Idioma */}
               <div className="relative inline-block text-left">
@@ -753,65 +775,91 @@ const Header = () => {
       {isMobileMenuOpen && (
         <div className="fixed inset-0 z-[70]">
           <div className={`absolute inset-0 bg-black/40 transition-opacity duration-200 ${isDrawerReady ? 'opacity-100' : 'opacity-0'}`} onClick={closeMobileMenu} />
-          <div className={`absolute left-0 top-0 bottom-0 w-72 max-w-[80vw] bg-white shadow-2xl p-6 overflow-y-auto transform transition-transform duration-200 ${isDrawerReady ? 'translate-x-0' : '-translate-x-full'}`}>
+          <div className={`absolute left-0 top-0 bottom-0 w-72 max-w-[80vw] bg-white dark:bg-gray-800 shadow-2xl p-6 overflow-y-auto transform transition-transform duration-200 ${isDrawerReady ? 'translate-x-0' : '-translate-x-full'}`}>
             <div className="flex items-center justify-between mb-6">
-              <span className="text-lg font-semibold text-gray-900">Menu</span>
+              <span className="text-lg font-semibold text-gray-900 dark:text-white">Menu</span>
               <button
                 type="button"
                 onClick={closeMobileMenu}
-                className="p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100"
+                className="p-2 rounded-md text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-gray-100 dark:hover:bg-gray-700"
                 aria-label="Fechar menu"
               >
                 <X className="h-5 w-5" />
               </button>
             </div>
             <nav className="space-y-1">
-              {primaryNavItems.map((item) => (
-                <Link
-                  key={item.to}
-                  to={item.to}
-                  onClick={closeMobileMenu}
-                  className="block px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-800 font-medium"
-                >
-                  {item.label}
-                </Link>
-              ))}
+              {primaryNavItems.map((item) => {
+                const isActive = location.pathname === item.to;
+                return (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    onClick={closeMobileMenu}
+                    className={`relative flex items-center gap-2 px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 font-medium transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-700 ${isActive ? 'dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : ''} after:content-[''] after:absolute after:left-3 after:bottom-2 after:h-[2px] after:bg-gradient-to-r after:from-blue-400 after:to-blue-600 after:rounded-full after:transition-all after:duration-300 ${isActive ? 'after:w-[calc(100%-1.5rem)]' : 'after:w-0 hover:after:w-[calc(100%-1.5rem)]'}`}
+                  >
+                    {item.to === '/' && <Home className="h-4 w-4" />}
+                    {item.to === '/contact' && <Mail className="h-4 w-4" />}
+                    {item.to === '/about' && <Info className="h-4 w-4" />}
+                    {item.to === '/services' && <Wrench className="h-4 w-4" />}
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
+              {/* Settings sempre visível no mobile */}
+              {authenticatedNavItems.map((item) => {
+                const isActive = location.pathname === item.to;
+                return (
+                  <Link
+                    key={item.to}
+                    to={item.to}
+                    onClick={closeMobileMenu}
+                    className={`relative flex items-center space-x-3 px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 font-medium transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-700 ${isActive ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : ''} after:content-[''] after:absolute after:left-3 after:bottom-2 after:h-[2px] after:bg-gradient-to-r after:from-blue-400 after:to-blue-600 after:rounded-full after:transition-all after:duration-300 ${isActive ? 'after:w-[calc(100%-1.5rem)]' : 'after:w-0 hover:after:w-[calc(100%-1.5rem)]'}`}
+                  >
+                    <Settings className="h-4 w-4" />
+                    <span>{item.label}</span>
+                  </Link>
+                );
+              })}
               <Link
                 to="/catalog"
                 onClick={closeMobileMenu}
-                className="block px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-800 font-medium"
+                className={`relative flex items-center gap-2 px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 font-medium transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-700 ${location.pathname === '/catalog' ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : ''} after:content-[''] after:absolute after:left-3 after:bottom-2 after:h-[2px] after:bg-gradient-to-r after:from-blue-400 after:to-blue-600 after:rounded-full after:transition-all after:duration-300 ${location.pathname === '/catalog' ? 'after:w-[calc(100%-1.5rem)]' : 'after:w-0 hover:after:w-[calc(100%-1.5rem)]'}`}
               >
-                Catalog
+                <ShoppingCart className="h-4 w-4" />
+                <span>Catalog</span>
               </Link>
               {!isAuthenticated ? (
                 <Link
                   to="/login"
                   onClick={closeMobileMenu}
-                  className="block px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-800 font-medium"
+                  className={`relative flex items-center gap-2 px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 font-medium transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-700 ${location.pathname === '/login' ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : ''} after:content-[''] after:absolute after:left-3 after:bottom-2 after:h-[2px] after:bg-gradient-to-r after:from-blue-400 after:to-blue-600 after:rounded-full after:transition-all after:duration-300 ${location.pathname === '/login' ? 'after:w-[calc(100%-1.5rem)]' : 'after:w-0 hover:after:w-[calc(100%-1.5rem)]'}`}
                 >
-                  Login
+                  <User className="h-4 w-4" />
+                  <span>Login</span>
                 </Link>
               ) : (
                 <Link
                   to="/UserProfile"
                   onClick={closeMobileMenu}
-                  className="flex items-center gap-2 px-3 py-2 rounded-lg hover:bg-gray-100 text-gray-800 font-medium"
+                  className={`relative flex items-center gap-2 px-3 py-2 rounded-lg text-gray-800 dark:text-gray-200 font-medium transition-all duration-200 hover:bg-gray-100 dark:hover:bg-gray-700 ${location.pathname === '/UserProfile' ? 'bg-blue-50 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400' : ''} after:content-[''] after:absolute after:left-3 after:bottom-2 after:h-[2px] after:bg-gradient-to-r after:from-blue-400 after:to-blue-600 after:rounded-full after:transition-all after:duration-300 ${location.pathname === '/UserProfile' ? 'after:w-[calc(100%-1.5rem)]' : 'after:w-0 hover:after:w-[calc(100%-1.5rem)]'}`}
                 >
                   <User className="h-4 w-4" />
                   <span>{user?.name?.split(' ')[0] || 'Conta'}</span>
                 </Link>
               )}
+              
+              {/* Removido item duplicado de Settings no final da lista */}
             </nav>
 
             {/* Idiomas */}
             <div className="mt-6">
-              <div className="text-xs uppercase tracking-wide text-gray-500 mb-2">Idioma</div>
+              <div className="text-xs uppercase tracking-wide text-gray-500 dark:text-gray-400 mb-2">Idioma</div>
               <div className="flex items-center gap-3">
                 {languages.map((language) => (
                   <button
                     key={language.code}
                     onClick={() => selectLanguage(language.code)}
-                    className={`flex items-center gap-2 px-3 py-2 rounded-md border transition-colors ${currentLanguage === language.code ? 'border-blue-500 bg-blue-50' : 'border-gray-200 hover:bg-gray-50'}`}
+                    className={`flex items-center gap-2 px-3 py-2 rounded-md border transition-colors ${currentLanguage === language.code ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20' : 'border-gray-200 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700'}`}
                   >
                     <span className="inline-block w-6 h-4 overflow-hidden rounded-sm">
                       <img
@@ -821,7 +869,7 @@ const Header = () => {
                         draggable={false}
                       />
                     </span>
-                    <span className="text-sm text-gray-700">{language.alt}</span>
+                    <span className="text-sm text-gray-700 dark:text-gray-300">{language.alt}</span>
                   </button>
                 ))}
               </div>
